@@ -1,11 +1,12 @@
 import { Outlet } from 'react-router-dom';
 
-import { Header } from '../../components'
+import { Header, Dashboard } from '../../components'
 
 function PublicLayout() {
   return (
     <div className="">
       <Header />
+      <Dashboard />
       <main>
         <Outlet />
       </main>

@@ -1,0 +1,73 @@
+.dashboard {
+  width: 100%;
+  background-color: var(--light-blue-opacity);
+}
+
+.dashboard ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.dashboard ul li {
+  margin: 0 15px;
+}
+
+.dashboard a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  position: relative;
+  padding: 10px 15px;
+  display: inline-block;
+}
+
+.dashboard a:hover {
+  color: #0057b3c2;
+}
+
+.logoutbtn:hover {
+  color: #c82333c4;
+}
+
+.dashboard a::after,
+.logoutbtn::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+.dashboard a::after {
+  background-color: var(--blue-btn-hover);
+}
+
+.logoutbtn::after {
+  background-color: #c82333c4;
+}
+
+.dashboard a:hover::after,
+.logoutbtn:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.logoutbtn {
+  color: var(--default-white);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.3s;
+  font-size: 16px;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  position: relative;
+  padding: 10px 15px;
+}

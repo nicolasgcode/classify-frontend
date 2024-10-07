@@ -1,0 +1,10 @@
+:root {
+  --blue-btn: #007bffaf;
+  --blue-btn-hover: #0056b3;
+  --light-blue-opacity: rgba(72, 175, 243, 0.5);
+  --border-highlighter: #007bff;
+  --black-opacity: rgba(0, 0, 0, 0.603);
+  --default-white: #ffff;
+  --success-color: #28a745;
+  --error-color: #e84a5f;
+}

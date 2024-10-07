@@ -42,6 +42,7 @@ const CourseList: React.FC<CourseListProps> = ({ courses, isLoading, error }) =>
                 <p>No hay tópicos disponibles.</p>
               )}
             </div>
+            <button className={styles.addBtn}> Add + </button>
           </li>
         ))}
       </ul>

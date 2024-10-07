@@ -51,3 +51,18 @@
   border-radius: 5px;
   margin: 5px 0;
 }
+
+.addBtn {
+  background-color: #007bff; /* Color de fondo */
+  color: white; /* Color del texto */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 10px 15px; /* Espaciado interno */
+  margin-top: 15px;
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  transition: background-color 0.3s; /* Transición suave para el cambio de color */
+}
+
+.addBtn:hover {
+  background-color: #0056b3; /* Color de fondo al pasar el mouse */
+}

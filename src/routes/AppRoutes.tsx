@@ -8,7 +8,8 @@ import {
 import { PublicLayout } from '../layouts';
 import {
   LoginPage,
-  HomePage
+  HomePage,
+  CoursesPage
 } from '../pages';
 
 function AppRoutes() {
@@ -22,6 +23,8 @@ function AppRoutes() {
           <Route index element={<LoginPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/courses" element={<CoursesPage />} />
+
         </Route>
 
         {/* Rutas privadas */}

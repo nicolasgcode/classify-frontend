@@ -14,7 +14,7 @@
 }
 
 .courseItem {
-  background-color: #fff;
+  background-color: var(--default-white);
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
@@ -53,16 +53,16 @@
 }
 
 .addBtn {
-  background-color: #007bff; /* Color de fondo */
-  color: white; /* Color del texto */
-  border: none; /* Sin borde */
-  border-radius: 5px; /* Bordes redondeados */
-  padding: 10px 15px; /* Espaciado interno */
+  background-color: var(--blue-btn);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
   margin-top: 15px;
-  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-  transition: background-color 0.3s; /* Transición suave para el cambio de color */
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .addBtn:hover {
-  background-color: #0056b3; /* Color de fondo al pasar el mouse */
+  background-color: var(--blue-btn-hover);
 }

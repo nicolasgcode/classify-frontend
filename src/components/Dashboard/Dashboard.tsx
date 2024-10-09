@@ -1,9 +1,16 @@
 import { NavLink } from 'react-router-dom';
 
+import { useAuth } from '../../context'
+
 import styles from './Dashboard.module.css'
 
 
 function Dashboard() {
+   const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
   return (
     <nav className={styles.dashboard}>
       <ul>
@@ -17,7 +24,7 @@ function Dashboard() {
           <NavLink to="/account">Account</NavLink>
         </li>
         <li>
-          <button className={styles.logoutbtn}>Logout</button>
+          <button onClick={handleLogout} className={styles.logoutbtn}>Logout</button>
         </li>
       </ul>
     </nav>

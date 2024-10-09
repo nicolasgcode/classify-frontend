@@ -1,6 +1,8 @@
 import React from 'react';
 import { useForm } from '../../hooks';
 
+import styles from './LoginForm.module.css'
+
 const validateLoginFields = (values: { email: string; password: string }) => {
   const errors: { [key: string]: string } = {};
   if (!values.email) {
@@ -22,35 +24,38 @@ const LoginForm: React.FC<{ onSubmit: (email: string, password: string) => Promi
     await onSubmit(values.email, values.password);
   };
 
-  return (
-    <form onSubmit={handleSubmit(submitForm)}>
-      <div>
-        <label htmlFor="username">Email:</label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          value={values.email}
-          onChange={handleChange}
-          required
-        />
-        {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
-      </div>
-      <div>
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={values.password}
-          onChange={handleChange}
-          required
-        />
-        {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
-      </div>
+   return (
+    <div className={styles.loginform}>
+      <form onSubmit={handleSubmit(submitForm)}>
+        <div className={styles.formgroup}>
+          <label htmlFor="email">Email:</label>
+          <input
+            id="email"
+            name="email"
+            value={values.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div className={styles.formgroup}>
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={values.password}
+            onChange={handleChange}
+          />
+        </div>
+        <button className={styles.loginBtn}>Iniciar sesión</button>
+      </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      <button type="submit">Log in</button>
-    </form>
+      {errors.email && (
+        <span className={styles.fieldError}>{errors.email}</span>
+      )}
+      {errors.password && (
+        <span className={styles.fieldError}>{errors.password}</span>
+      )}
+    </div>
   );
 };
 

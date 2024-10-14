@@ -4,10 +4,14 @@ import { AuthContextType, AuthProviderProps } from '../types';
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [token, setToken] = useState<string | null>(null);
+  const [user, setUser] = useState<{ id: string; email: string; role: string } | null>(null);
   const [role, setRole] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const login = async (email: string, password: string) => {
+    setIsLoading(true);
     try {
       const response = await fetch('http://localhost:3000/login', {
         method: 'POST',
@@ -23,6 +27,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       const data = await response.json();
       setToken(data.token);
+      setUser(data.user);
       setRole(data.role);
     } catch (error) {
       console.error(error);
@@ -31,12 +36,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const logout = () => {
-    setToken(null);
-    setRole(null);
+    setUser(null)
+    console.log('logged out')
   };
 
   return (
-    <AuthContext.Provider value={{ token, role, login, logout }}>
+    <AuthContext.Provider value={{ user, token, role, login, isLoading, logout }}>
       {children}
     </AuthContext.Provider>
   );

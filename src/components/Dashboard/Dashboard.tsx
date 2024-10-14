@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
 
 import { useAuth } from '../../context'
 
@@ -6,12 +6,14 @@ import styles from './Dashboard.module.css'
 
 
 function Dashboard() {
-   const { logout } = useAuth();
+   const { logout, user } = useAuth();
 
   const handleLogout = () => {
     logout();
+    <Navigate to={"/login"}/>
   };
   return (
+    user &&
     <nav className={styles.dashboard}>
       <ul>
         <li>

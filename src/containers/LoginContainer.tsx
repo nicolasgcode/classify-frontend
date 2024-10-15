@@ -6,6 +6,7 @@ import { useAuthStore } from '../store'
 
 const LoginContainer: React.FC = () => {
   const setToken = useAuthStore(state => state.setToken)
+  const setRole = useAuthStore(state => state.setRole)
   const navigate = useNavigate();
   const [error, setError] = useState<string>('');
 
@@ -13,6 +14,7 @@ const LoginContainer: React.FC = () => {
     try {
       const resLogin = await loginRequest(email, password);
       setToken(resLogin.data.token)
+      setRole(resLogin.data.role)
       navigate('/courses');
       console.log("Logged in!")
       console.log(resLogin)

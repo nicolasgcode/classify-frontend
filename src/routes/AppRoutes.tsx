@@ -5,33 +5,47 @@ import {
   Navigate,
 } from 'react-router-dom';
 
-import { PublicLayout } from '../layouts';
+import { PublicLayout, PrivateLayout } from '../layouts';
 import {
   LoginPage,
   HomePage,
   CoursesPage
 } from '../pages';
 
+import { PrivateRoutes } from '../routes'
+
+import { useAuthStore } from '../store'
+
+
 
 function AppRoutes() {
+  const isAuth = useAuthStore(state => state.isAuth)
   return (
     <Router>
       <Routes>
 
         {/* Rutas públicas */}
         <Route path="/" element={<PublicLayout />}>
-      
-        
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/courses" element={<CoursesPage />} />
+
+          <Route
+            index
+            element={isAuth ? <Navigate to="/home" /> : <LoginPage />}
+          />
+
+          <Route path="/login" element={isAuth ? <HomePage /> : <LoginPage />} />
 
         </Route>
 
 
-  
+       {/* Rutas privadas */}
+        <Route element={<PrivateRoutes isAllowed={isAuth} />}>
+          <Route path="/" element={<PrivateLayout />}>
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/courses" element={<CoursesPage />} />
+          </Route>
+        </Route>
     
-        <Route path="*" element={ <Navigate to={'/login'} />} />
+        <Route path="*" element={ isAuth ? <Navigate to={'/home'} />: <Navigate to={'/login'} />} />
       </Routes>
     </Router>
   );

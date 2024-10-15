@@ -1,22 +1,12 @@
-import { Course } from '../types';
+import axios from '../libs/axios';
+import { Course, coursesResponse } from '../types';
 
 export const getCourses = async (): Promise<Course[]> => {
   try {
-    const response = await fetch('http://localhost:3000/api/courses', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await axios.get<coursesResponse>('/api/courses');
 
-    if (!response.ok) {
-      throw new Error('Bad network response');
-    }
-
-    const result = await response.json();
-
-    if (result && Array.isArray(result.data)) {
-      return result.data;
+    if (response.data.courses && Array.isArray(response.data.courses)) {
+      return response.data.courses;
     } else {
       throw new Error('Unexpected response structure');
     }

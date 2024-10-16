@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import styles from './Dashboard.module.css'
 
 
-import {useAuthStore} from '../../store'
+import { useAuthStore } from '../../store'
 
 
 function Dashboard() {

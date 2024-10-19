@@ -3,5 +3,5 @@ export interface loginResponse {
   status: number;
   success: boolean;
   token: string;
-  role: string;
+  admin: boolean;
 }

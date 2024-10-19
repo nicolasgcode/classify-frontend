@@ -1,45 +1,15 @@
-import { NavLink } from 'react-router-dom';
-
-import { useNavigate } from 'react-router-dom'
-
-
-import styles from './Dashboard.module.css'
-
-
-import { useAuthStore } from '../../store'
-
+import { useAuthStore } from '../../store';
+import { UserDashboard, AdminDashboard } from './..';
 
 function Dashboard() {
+  const isAuth = useAuthStore(state => state.isAuth);
+  const admin = useAuthStore(state => state.admin);
 
-  const logout = useAuthStore(state => state.logout)
-  const role = useAuthStore(state => state.role)
+  if (!isAuth) {
+    return <div>Please log in.</div>;
+  }
 
-  const navigate = useNavigate()
-
-
-  const handleLogout = () => {
-    logout();
-    navigate('/login')
-  };
-  return (
-    role == "member" &&
-    <nav className={styles.dashboard}>
-      <ul>
-        <li>
-          <NavLink to="/home">Home</NavLink>
-        </li>
-        <li>
-          <NavLink to="/courses">Courses</NavLink>
-        </li>
-        <li>
-          <NavLink to="/account">Account</NavLink>
-        </li>
-        <li>
-          <button onClick={handleLogout} className={styles.logoutbtn}>Logout</button>
-        </li>
-      </ul>
-    </nav>
-  )
+  return admin ? <AdminDashboard /> : <UserDashboard />;
 }
 
-export default Dashboard
+export default Dashboard;

@@ -6,10 +6,10 @@ import styles from './LoginForm.module.css'
 const validateLoginFields = (values: { email: string; password: string }) => {
   const errors: { [key: string]: string } = {};
   if (!values.email) {
-    errors.email = 'El nombre de usuario es requerido';
+    errors.email = 'Email is required';
   }
   if (!values.password) {
-    errors.password = 'La contraseña es requerida';
+    errors.password = 'Password is required';
   }
   return errors;
 };

@@ -3,13 +3,13 @@ import { persist } from 'zustand/middleware';
 
 type State = {
   token: string;
-  role: string;
+  admin: boolean;
   isAuth: boolean;
 };
 
 type Actions = {
   setToken: (token: string) => void;
-  setRole: (token: string) => void;
+  setAdmin: (admin: boolean) => void;
   logout: () => void;
 };
 
@@ -17,21 +17,22 @@ export const useAuthStore = create(
   persist<State & Actions>(
     (set) => ({
       token: '',
-      role: '',
+      admin: false,
       isAuth: false,
       setToken: (token: string) =>
         set({
           token,
           isAuth: true,
         }),
-      setRole: (role: string) =>
+      setAdmin: (admin: boolean) =>
         set({
-          role,
+          admin,
         }),
       logout: () =>
         set({
           token: '',
           isAuth: false,
+          admin: false,
         }),
     }),
     {

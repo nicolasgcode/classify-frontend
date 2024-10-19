@@ -1,12 +1,14 @@
 import React from 'react';
 import { UserListProps } from '../../types';
 
+
 import styles from './UserList.module.css'
 
 const UserList: React.FC<UserListProps> = ({ users, isLoading, error }) => {
 
+
  if (isLoading) {
-    return <div className={styles.container}>Cargando cursos...</div>;
+    return <div className={styles.container}>Loading users...</div>;
   }
 
   if (error) {
@@ -23,6 +25,10 @@ const UserList: React.FC<UserListProps> = ({ users, isLoading, error }) => {
       <ul className={styles.userList}>
         {users.map((user, index) => (
           <li key={index} className={styles.userItem}>
+            {user.admin && 
+            <div className={styles.adminHeader}>
+              <strong>Admin</strong>
+            </div>}
             <div className={styles.userHeader}>
               <strong>{user.name} {user.surname}</strong>
             </div>

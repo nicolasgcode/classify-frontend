@@ -1,9 +1,12 @@
 import React from 'react';
 import { CourseListProps } from '../../types';
+import { useAuthStore } from '../../store'
 
 import styles from './CourseList.module.css'
 
 const CourseList: React.FC<CourseListProps> = ({ courses, isLoading, error }) => {
+
+  const admin = useAuthStore(state => state.admin)
 
  if (isLoading) {
     return <div className={styles.container}>Cargando cursos...</div>;
@@ -18,8 +21,17 @@ const CourseList: React.FC<CourseListProps> = ({ courses, isLoading, error }) =>
   }
 
   return (
+
+  
     <div className={styles.container}>
-      <h1 className={styles.title}>Cursos</h1>
+
+      <div className={styles.header}>
+     
+      <h1 className={styles.title}>Courses</h1>
+       {admin && (
+        <button className={styles.addCourseBtn}>Add Course</button>
+      )}
+      </div>
       <ul style={{ listStyleType: 'none', padding: 0 }}>
         {courses.map((course, index) => (
           <li key={index} className={styles.courseItem}>
@@ -39,10 +51,15 @@ const CourseList: React.FC<CourseListProps> = ({ courses, isLoading, error }) =>
                   ))}
                 </div>
               ) : (
-                <p>No hay tópicos disponibles.</p>
+                <p>No topics available.</p>
               )}
+              
             </div>
-            <button className={styles.addBtn}> Add + </button>
+            {!admin && <button className={styles.addBtn}>Add +</button>}
+            <div className={styles.adminButtons}>
+              <button className={styles.editBtn}>Edit</button>
+              <button className={styles.deleteBtn}>Delete</button>
+            </div>
           </li>
         ))}
       </ul>

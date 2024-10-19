@@ -28,7 +28,7 @@ function AdminDashboard() {
           <NavLink to="/admin/reports">Reports</NavLink>
         </li>
         <li>
-          <NavLink to="/courses">Courses</NavLink>
+          <NavLink to="admin/courses">Courses</NavLink>
         </li>
         <li>
           <NavLink to="/admin/users">Manage Users</NavLink>

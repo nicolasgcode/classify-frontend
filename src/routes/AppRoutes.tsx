@@ -9,7 +9,8 @@ import { PublicLayout, PrivateLayout } from '../layouts';
 import {
   LoginPage,
   HomePage,
-  CoursesPage
+  CoursesPage,
+  UsersPage
 } from '../pages';
 
 import { PrivateRoutes } from '../routes'
@@ -42,6 +43,8 @@ function AppRoutes() {
           <Route path="/" element={<PrivateLayout />}>
             <Route path="/home" element={<HomePage />} />
             <Route path="/courses" element={<CoursesPage />} />
+            <Route path="admin/courses" element={<CoursesPage />} />
+            <Route path="admin/users" element={<UsersPage />} />
           </Route>
         </Route>
     

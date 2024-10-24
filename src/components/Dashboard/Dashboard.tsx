@@ -6,7 +6,7 @@ function Dashboard() {
   const admin = useAuthStore(state => state.admin);
 
   if (!isAuth) {
-    return <div>Please log in.</div>;
+    return <div>Please log in or create an account</div>;
   }
 
   return admin ? <AdminDashboard /> : <UserDashboard />;

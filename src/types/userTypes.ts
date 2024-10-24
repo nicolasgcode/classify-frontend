@@ -8,3 +8,11 @@ export interface User {
   admin: boolean;
   PurchaseRecord: Array<{ id: number }>;
 }
+
+export interface UserData {
+  dni: number;
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+}

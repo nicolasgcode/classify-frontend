@@ -10,7 +10,8 @@ import {
   LoginPage,
   HomePage,
   CoursesPage,
-  UsersPage
+  UsersPage,
+  SignUpPage
 } from '../pages';
 
 import { PrivateRoutes } from '../routes'
@@ -34,6 +35,8 @@ function AppRoutes() {
           />
 
           <Route path="/login" element={isAuth ? <HomePage /> : <LoginPage />} />
+          <Route path="/signup" element={ <SignUpPage />} />
+
 
         </Route>
 

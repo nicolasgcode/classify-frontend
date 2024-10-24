@@ -1,18 +1,36 @@
-import React, { useState } from 'react';
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { LoginForm } from '../components';
 import { loginRequest } from '../services'
 import { useAuthStore } from '../store'
+import { useForm } from '../hooks'
 
-const LoginContainer: React.FC = () => {
+const validateLoginFields = (values: { email: string; password: string }) => {
+  const errors: { [key: string]: string } = {};
+  if (!values.email) {
+    errors.email = 'Email is required';
+  }
+  if (!values.password) {
+    errors.password = 'Password is required';
+  }
+  return errors;
+};
+
+
+function LoginContainer () {
   const setToken = useAuthStore(state => state.setToken)
   const setAdmin = useAuthStore(state => state.setAdmin)
   const navigate = useNavigate();
   const [error, setError] = useState<string>('');
 
-  const handleSubmit = async (email: string, password: string) => {
-    try {
-      const resLogin = await loginRequest(email, password);
+   const { values, handleChange, handleSubmit, errors } = useForm(
+    { email: '', password: '' },
+    validateLoginFields
+  );
+
+  const submitForm = async () => {
+      try {
+      const resLogin = await loginRequest(values.email, values.password);
       setToken(resLogin.data.token)
       setAdmin(resLogin.data.admin)
       navigate('/courses');
@@ -22,9 +40,11 @@ const LoginContainer: React.FC = () => {
       setError('Invalid credentials');
     }
   };
+  
+
 
   return (
-    <LoginForm onSubmit={handleSubmit} error={error} />
+    <LoginForm values={values} onSubmit={handleSubmit(submitForm)} error={error} handleChange={handleChange} errors={errors} />
   );
 };
 

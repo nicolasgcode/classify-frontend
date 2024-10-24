@@ -56,10 +56,13 @@ const CourseList: React.FC<CourseListProps> = ({ courses, isLoading, error }) =>
               
             </div>
             {!admin && <button className={styles.addBtn}>Add +</button>}
-            <div className={styles.adminButtons}>
+            {admin && 
+              <div className={styles.adminButtons}>
               <button className={styles.editBtn}>Edit</button>
               <button className={styles.deleteBtn}>Delete</button>
             </div>
+            }
+            
           </li>
         ))}
       </ul>

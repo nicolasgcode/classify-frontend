@@ -7,3 +7,5 @@ export * from './authProps';
 export * from './loginResponse';
 export * from './coursesResponse';
 export * from './usersResponse';
+export * from './signUpFormProps';
+export * from './loginFormProps';

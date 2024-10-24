@@ -77,3 +77,14 @@ input:focus {
   background: var(--blue-btn-hover);
   cursor: pointer;
 }
+
+.signUpPrompt {
+  margin-top: 10px;
+}
+
+.signUpLink {
+  padding: 5px;
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}

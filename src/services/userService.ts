@@ -1,5 +1,5 @@
 import axios from '../libs/axios';
-import { User, usersResponse } from '../types';
+import { User, usersResponse, UserData } from '../types';
 
 export const getUsers = async (): Promise<User[]> => {
   try {
@@ -15,5 +15,15 @@ export const getUsers = async (): Promise<User[]> => {
       'Error fetching users: ' +
         (err instanceof Error ? err.message : 'Unknown error')
     );
+  }
+};
+
+export const createUser = async (userData: UserData): Promise<UserData> => {
+  try {
+    const response = await axios.post<UserData>('/api/users', userData);
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    throw new Error('Error creating user: ' + (err as Error).message);
   }
 };

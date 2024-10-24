@@ -15,7 +15,8 @@ function useForm<T>(initialValues: T, validate: ValidateFunction<T>) {
   };
 
   const handleSubmit =
-    (callback: () => Promise<void>) => async (event: React.FormEvent) => {
+    (callback: () => Promise<void>) =>
+    async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
       const validationErrors = validate(values);

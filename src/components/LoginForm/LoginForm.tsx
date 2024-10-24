@@ -1,32 +1,18 @@
-import React from 'react';
-import { useForm } from '../../hooks';
-
+import { LoginFormProps } from '../../types'
 import styles from './LoginForm.module.css'
+import { NavLink } from 'react-router-dom';
 
-const validateLoginFields = (values: { email: string; password: string }) => {
-  const errors: { [key: string]: string } = {};
-  if (!values.email) {
-    errors.email = 'Email is required';
-  }
-  if (!values.password) {
-    errors.password = 'Password is required';
-  }
-  return errors;
-};
-
-const LoginForm: React.FC<{ onSubmit: (email: string, password: string) => Promise<void>; error: string }> = ({ onSubmit, error }) => {
-  const { values, handleChange, handleSubmit, errors } = useForm(
-    { email: '', password: '' },
-    validateLoginFields
-  );
-
-  const submitForm = async () => {
-    await onSubmit(values.email, values.password);
-  };
-
+function LoginForm({
+  values,
+  handleChange,
+  onSubmit,
+  errors,
+  error,
+}: LoginFormProps) {
+ 
    return (
     <div className={styles.loginform}>
-      <form onSubmit={handleSubmit(submitForm)}>
+      <form onSubmit={onSubmit}>
         <div className={styles.formgroup}>
           <label htmlFor="email">Email:</label>
           <input
@@ -55,6 +41,12 @@ const LoginForm: React.FC<{ onSubmit: (email: string, password: string) => Promi
       {errors.password && (
         <span className={styles.fieldError}>{errors.password}</span>
       )}
+      <p className={styles.signUpPrompt}>
+        Don't have an account? 
+        <NavLink to="/signup" className={styles.signUpLink}>
+          Sign up
+        </NavLink>
+      </p>
     </div>
   );
 };

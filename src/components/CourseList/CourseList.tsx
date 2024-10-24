@@ -4,7 +4,7 @@ import { useAuthStore } from '../../store'
 
 import styles from './CourseList.module.css'
 
-const CourseList: React.FC<CourseListProps> = ({ courses, isLoading, error }) => {
+const CourseList: React.FC<CourseListProps> = ({ courses, isLoading, error, handleSearch, searchTerm }) => {
 
   const admin = useAuthStore(state => state.admin)
 
@@ -22,7 +22,6 @@ const CourseList: React.FC<CourseListProps> = ({ courses, isLoading, error }) =>
 
   return (
 
-  
     <div className={styles.container}>
 
       <div className={styles.header}>
@@ -31,6 +30,16 @@ const CourseList: React.FC<CourseListProps> = ({ courses, isLoading, error }) =>
        {admin && (
         <button className={styles.addCourseBtn}>Add Course</button>
       )}
+
+      <div className={styles.searchContainer}>
+        <input
+          type="text"
+          placeholder="Search course by title..."
+          value={searchTerm}
+          onChange={handleSearch}
+          className={styles.searchInput}
+        />
+      </div>
       </div>
       <ul style={{ listStyleType: 'none', padding: 0 }}>
         {courses.map((course, index) => (

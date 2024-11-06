@@ -60,3 +60,21 @@
   border-radius: 4px;
   font-size: 14px;
 }
+
+.editBtn,
+.deleteBtn {
+  background-color: var(--blue-btn);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-top: 15px;
+  margin-left: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.editBtn:hover,
+.deleteBtn:hover {
+  background-color: var(--blue-btn-hover);
+}

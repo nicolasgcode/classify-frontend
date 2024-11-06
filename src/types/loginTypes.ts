@@ -5,3 +5,11 @@ export interface LoginFormProps {
   values: { email: string; password: string };
   errors: { [key: string]: string };
 }
+
+export interface loginResponse {
+  message: string;
+  status: number;
+  success: boolean;
+  token: string;
+  admin: boolean;
+}

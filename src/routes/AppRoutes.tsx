@@ -5,16 +5,16 @@ import {
   Navigate,
 } from 'react-router-dom';
 
-import { PublicLayout, PrivateLayout } from '../layouts';
+import { PublicLayout, PrivateLayout, AdminLayout } from '../layouts';
 import {
   LoginPage,
   HomePage,
   CoursesPage,
   UsersPage,
-  SignUpPage
+  SignUpPage,
 } from '../pages';
 
-import { PrivateRoutes } from '../routes'
+import { PrivateRoutes, AdminRoutes } from '../routes'
 
 import { useAuthStore } from '../store'
 
@@ -22,6 +22,7 @@ import { useAuthStore } from '../store'
 
 function AppRoutes() {
   const isAuth = useAuthStore(state => state.isAuth)
+  const isAdmin = useAuthStore(state => state.admin)
   return (
     <Router>
       <Routes>
@@ -46,6 +47,11 @@ function AppRoutes() {
           <Route path="/" element={<PrivateLayout />}>
             <Route path="/home" element={<HomePage />} />
             <Route path="/courses" element={<CoursesPage />} />
+          </Route>
+        </Route>
+
+         <Route element={<AdminRoutes isAllowed={isAdmin} />}>
+          <Route path="/" element={<AdminLayout />}>
             <Route path="admin/courses" element={<CoursesPage />} />
             <Route path="admin/users" element={<UsersPage />} />
           </Route>

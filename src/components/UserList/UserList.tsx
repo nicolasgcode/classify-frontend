@@ -49,6 +49,10 @@ const UserList: React.FC<UserListProps> = ({ users, isLoading, error }) => {
                 <p>No purchase records available.</p>
               )}
             </div>
+            <div className={styles.adminButtons}>
+              <button className={styles.editBtn}>Edit</button>
+              <button className={styles.deleteBtn}>Delete</button>
+            </div>
           </li>
         ))}
       </ul>

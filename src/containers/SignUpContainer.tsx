@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useForm } from '../hooks';
 import { createUser } from '../services';
 import { UserData } from '../types';
+import { useNavigate } from 'react-router-dom';
 
 const validateSignUpFields = (values: { dni: number; name: string; surname: string; email: string; password: string }) => {
   const errors: { [key: string]: string } = {};
@@ -30,6 +31,7 @@ const validateSignUpFields = (values: { dni: number; name: string; surname: stri
 };
 
 function SignUpContainer() {
+  const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -50,6 +52,7 @@ function SignUpContainer() {
     try {
       await createUser(userData);
       setSuccess('User created successfully!');
+      navigate('/login')
       setError(null);
       reset();
     } catch (err) {

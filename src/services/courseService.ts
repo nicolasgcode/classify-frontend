@@ -1,7 +1,7 @@
 import axios from '../libs/axios';
-import { Course, coursesResponse } from '../types';
+import { CourseData, coursesResponse } from '../types';
 
-export const getCourses = async (): Promise<Course[]> => {
+export const getCourses = async (): Promise<CourseData[]> => {
   try {
     const response = await axios.get<coursesResponse>('/api/courses');
 
@@ -13,6 +13,17 @@ export const getCourses = async (): Promise<Course[]> => {
   } catch (err) {
     throw new Error(
       'Error fetching courses: ' +
+        (err instanceof Error ? err.message : 'Unknown error')
+    );
+  }
+};
+
+export const createCourse = async (course: CourseData): Promise<void> => {
+  try {
+    await axios.post('/api/courses', course);
+  } catch (err) {
+    throw new Error(
+      'Error adding course: ' +
         (err instanceof Error ? err.message : 'Unknown error')
     );
   }

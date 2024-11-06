@@ -1,4 +1,4 @@
-import { UserData } from '.';
+import { UserData } from './userTypes';
 
 export interface SignUpFormProps {
   values: UserData;

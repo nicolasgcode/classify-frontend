@@ -7,3 +7,4 @@ export * from './LoadingSpinner';
 export * from './UserDashboard';
 export * from './AdminDashboard';
 export * from './SignUpForm';
+export * from './CourseForm';

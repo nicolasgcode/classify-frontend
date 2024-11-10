@@ -1,3 +1,4 @@
+
 import { SignUpFormProps } from '../../types';
 
 import styles from './SignUp.module.css'

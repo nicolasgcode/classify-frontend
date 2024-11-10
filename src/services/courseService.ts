@@ -1,5 +1,13 @@
 import axios from '../libs/axios';
-import { CourseData, coursesResponse } from '../types';
+import {
+  CourseData,
+  coursesResponse,
+  courseDetails,
+  Level,
+  Topic,
+  Unit,
+  CreateCourseResponse,
+} from '../types';
 
 export const getCourses = async (): Promise<CourseData[]> => {
   try {
@@ -18,12 +26,81 @@ export const getCourses = async (): Promise<CourseData[]> => {
   }
 };
 
-export const createCourse = async (course: CourseData): Promise<void> => {
+export const getCourse = async (courseId: number): Promise<CourseData> => {
   try {
-    await axios.post('/api/courses', course);
+    const response = await axios.get<courseDetails>(`/api/courses/${courseId}`);
+    console.log(response.data.course);
+
+    return response.data.course;
+  } catch (err) {
+    throw new Error(
+      'Error fetching course details: ' +
+        (err instanceof Error ? err.message : 'Unknown error')
+    );
+  }
+};
+
+export const createCourse = async (course: CourseData): Promise<CourseData> => {
+  try {
+    // Especificamos que la respuesta de axios será de tipo CourseData
+    const response = await axios.post<CreateCourseResponse>(
+      '/api/courses',
+      course
+    );
+    const createdCourse = response.data.course.courseCreated;
+    console.log(response.data.course.courseCreated.id);
+    return createdCourse;
   } catch (err) {
     throw new Error(
       'Error adding course: ' +
+        (err instanceof Error ? err.message : 'Unknown error')
+    );
+  }
+};
+
+export const getTopics = async (): Promise<Topic[]> => {
+  try {
+    const response = await axios.get<{ data: Topic[] }>('/api/topics');
+    return response.data.data;
+  } catch (err) {
+    throw new Error(
+      'Error fetching topics: ' +
+        (err instanceof Error ? err.message : 'Unknown error')
+    );
+  }
+};
+
+export const getLevels = async (): Promise<Level[]> => {
+  try {
+    const response = await axios.get<{ data: Level[] }>('/api/levels');
+
+    return response.data.data;
+  } catch (err) {
+    throw new Error(
+      'Error fetching levels: ' +
+        (err instanceof Error ? err.message : 'Unknown error')
+    );
+  }
+};
+
+export const addUnitToLevel = async (
+  courseId: number, // ID del curso al que pertenece el nivel
+  levelId: number, // ID del nivel al que se agregará la unidad
+  unitData: Unit // Datos de la nueva unidad
+): Promise<void> => {
+  try {
+    // Realizamos la solicitud POST para agregar la unidad al nivel
+    const response = await axios.patch(
+      `/api/courses/${courseId}/levels/${levelId}/units`, // Ruta para agregar una unidad al nivel
+      unitData // Datos de la nueva unidad
+    );
+
+    // Si la operación es exitosa, no se espera ninguna respuesta específica, pero se puede hacer algo si lo deseas.
+    console.log('Unit added successfully:', response.data);
+  } catch (err) {
+    // Manejo de errores
+    throw new Error(
+      'Error adding unit to level: ' +
         (err instanceof Error ? err.message : 'Unknown error')
     );
   }

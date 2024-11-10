@@ -12,6 +12,8 @@ import {
   CoursesPage,
   UsersPage,
   SignUpPage,
+  AddCoursePage,
+  AddUnitPage
 } from '../pages';
 
 import { PrivateRoutes, AdminRoutes } from '../routes'
@@ -54,6 +56,8 @@ function AppRoutes() {
           <Route path="/" element={<AdminLayout />}>
             <Route path="admin/courses" element={<CoursesPage />} />
             <Route path="admin/users" element={<UsersPage />} />
+            <Route path="add-course" element={<AddCoursePage />} />
+            <Route path="/add-units/:courseId" element={<AddUnitPage />} />
           </Route>
         </Route>
     

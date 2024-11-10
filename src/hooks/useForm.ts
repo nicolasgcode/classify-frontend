@@ -6,12 +6,32 @@ function useForm<T>(initialValues: T, validate: ValidateFunction<T>) {
   const [values, setValues] = useState<T>(initialValues);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value, type, selectedOptions } =
+      e.target as HTMLSelectElement;
+
+    if (type === 'select-one' || type === 'select-multiple') {
+      // Si es un select de una o más opciones (por ejemplo, topics o levels)
+      if (name === 'topics' || name === 'levelIds') {
+        // Para los selects múltiples, recogemos todos los valores seleccionados
+        const selectedIds = Array.from(selectedOptions).map(
+          (option) => option.value
+        );
+        // Actualiza el estado correspondiente a 'topics' o 'levels'
+        setValues((prevValues) => ({
+          ...prevValues,
+          [name]: selectedIds, // 'topics' o 'levels' se actualizan con los IDs seleccionados
+        }));
+      }
+    } else {
+      // Si es un campo de texto (por ejemplo, 'title' o 'price')
+      setValues((prevValues) => ({
+        ...prevValues,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit =

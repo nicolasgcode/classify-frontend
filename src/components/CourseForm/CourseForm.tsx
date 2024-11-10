@@ -1,17 +1,19 @@
+import { CourseFormProps } from '../../types';
 import styles from './CourseForm.module.css';
 
-import { CourseFormProps } from '../../types';
-
-const CourseForm: React.FC<CourseFormProps> = ({
+function CourseForm({
   values,
   handleChange,
   onSubmit,
-  handleCancel,
   success,
   error,
   errors,
   isEditing,
-}) => {
+  handleAddTopic,
+  levelsList,
+  topicsList,
+}: CourseFormProps) {
+
   return (
     <div className={styles.container}>
       <h2>{isEditing ? 'Edit Course' : 'Add Course'}</h2>
@@ -26,59 +28,68 @@ const CourseForm: React.FC<CourseFormProps> = ({
             onChange={handleChange}
             className={styles.input}
           />
+          {errors.title && <span className={styles.fieldError}>{errors.title}</span>}
         </div>
+
         <div>
           <label htmlFor="price">Price</label>
           <input
-            type="text"
+            type="number"
             id="price"
             name="price"
             value={values.price}
             onChange={handleChange}
             className={styles.input}
           />
+          {errors.price && <span className={styles.fieldError}>{errors.price}</span>}
         </div>
+
         <div>
           <label htmlFor="topics">Topics</label>
-          <input
-            type="text"
+          <select
             id="topics"
             name="topics"
-            value={values.topics.map(topic => topic.description).join(', ')}
+            multiple
+            value={values.topics}
             onChange={handleChange}
             className={styles.input}
-          />
+          >
+            {topicsList.map((topic) => (
+              <option key={topic.id} value={topic.id}>{topic.description}</option>
+            ))}
+          </select>
+          {errors.topics && <span className={styles.fieldError}>{errors.topics}</span>}
+          <button type="button" className={styles.btn} onClick={handleAddTopic}>Add New Topic</button>
         </div>
+
         <div>
-          <label htmlFor="levels">Levels</label>
-          <input
-            type="text"
-            id="levels"
-            name="levels"
-            value={values.levels.map(level => level.name).join(', ')}
+          <label htmlFor="levelIds">Levels</label>
+          <select
+            id="levelIds"
+            name="levelIds"
+            multiple
+            value={values.levelIds}
             onChange={handleChange}
             className={styles.input}
-          />
+          >
+            {levelsList.map((level) => (
+              <option key={level.id} value={level.id}>{level.name}</option>
+            ))}
+          </select>
+          {errors.levelIds && <span className={styles.fieldError}>{errors.levelIds}</span>}
         </div>
-    
-        <button type="submit" className={styles.btn}>
-          {isEditing ? 'Save Changes' : 'Add Course'}
-        </button>
-        {isEditing && (
-          <button type="button" className={styles.btn} onClick={handleCancel}>
-            Cancel
-          </button>
-        )}
+
+        <button type="submit" className={styles.btn}>{isEditing ? 'Save Changes' : 'Add Course'}</button>
       </form>
-      {error &&  <span className={styles.fieldError}>{error}</span>}
-      {success &&  <span className={styles.fieldError}>{success}</span>}
-      {errors.firstName && <span className={styles.fieldError}>{errors.firstName}</span>}
-      {errors.lastName && <span className={styles.fieldError}>{errors.lastName}</span>}
-      {errors.position && <span className={styles.fieldError}>{errors.position}</span>}
-      {errors.department && <span className={styles.fieldError}>{errors.department}</span>}
-      {errors.email && <span className={styles.fieldError}>{errors.email}</span>}
+
+      {error && <span className={styles.fieldError}>{error}</span>}
+      {success && <span className={styles.fieldSuccess}>{success}</span>}
     </div>
   );
-};
+}
 
 export default CourseForm;
+
+
+
+

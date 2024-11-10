@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { loadCourses } from '../utils'
-import { Course } from '../types'
+import { CourseData } from '../types'
 import { CourseList }  from '../components'
 
 
 const CoursesContainer: React.FC = () => {
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState<CourseData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');

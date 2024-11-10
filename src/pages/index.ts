@@ -3,3 +3,5 @@ export * from './HomePage';
 export * from './CoursesPage';
 export * from './UsersPage';
 export * from './SignUpPage';
+export * from './AddCoursePage';
+export * from './AddUnitPage';

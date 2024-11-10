@@ -16,3 +16,13 @@ export interface UserData {
   email: string;
   password: string;
 }
+
+export interface usersResponse {
+  users: User[];
+}
+
+export interface UserListProps {
+  users: User[];
+  isLoading: boolean;
+  error: string;
+}

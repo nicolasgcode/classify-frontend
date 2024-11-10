@@ -16,7 +16,6 @@ const validateLoginFields = (values: { email: string; password: string }) => {
   return errors;
 };
 
-
 function LoginContainer () {
   const setToken = useAuthStore(state => state.setToken)
   const setAdmin = useAuthStore(state => state.setAdmin)

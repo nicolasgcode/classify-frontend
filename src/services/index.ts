@@ -3,6 +3,8 @@ export {
   getCourses,
   getCourse,
   getLevels,
+  getUnits,
+  deleteUnit,
   getTopics,
   deleteTopic,
   addUnitToLevel,

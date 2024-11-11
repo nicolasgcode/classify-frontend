@@ -3,6 +3,7 @@ import { UnitFormProps, Level, Unit } from '../../types';
 import { addUnitToLevel } from '../../services'; 
 import { useForm } from '../../hooks'; 
 import styles from './UnitForm.module.css';
+import { useNavigate } from 'react-router-dom';
 
 function validateUnitFields(values: Unit) {
   const errors: { [key: string]: string } = {};
@@ -36,6 +37,11 @@ function UnitForm({
 
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  const seeUnits = () => {
+    navigate(`/see-units`);
+  }
 
   const handleUnitSubmit = async (e: React.FormEvent) => {
     if (handleSubmit(e)) {
@@ -124,6 +130,7 @@ function UnitForm({
         </div>
 
         <button type="submit" className={styles.btn}>Add Unit</button>
+        <button type="button" onClick={seeUnits} className={styles.btn}>See units</button>
       </form>
     </div>
   );

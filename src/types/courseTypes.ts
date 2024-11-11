@@ -17,6 +17,7 @@ export interface Level {
 }
 
 export interface Unit {
+  id?: number;
   title: string;
   description: string;
   content: string;
@@ -52,6 +53,15 @@ export interface UnitFormProps {
   selectedLevelId: number | null; // ID del nivel seleccionado
   setSelectedLevelId: React.Dispatch<React.SetStateAction<number | null>>; // Función para cambiar el nivel seleccionado
   courseId: number; // ID del curso
+}
+
+export interface UnitListProps {
+  units: Unit[];
+  isLoading: boolean;
+  error: string | null;
+  handleSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  searchTerm: string;
+  onDeleteUnit: (unitId: number) => void;
 }
 
 export interface coursesResponse {

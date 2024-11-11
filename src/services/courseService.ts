@@ -81,9 +81,33 @@ export const deleteTopic = async (topicId: number): Promise<void> => {
   }
 };
 
+export const deleteUnit = async (unitId: number): Promise<void> => {
+  try {
+    await axios.delete(`/api/units/${unitId}`);
+  } catch (err) {
+    throw new Error(
+      'Error deleting topic: ' +
+        (err instanceof Error ? err.message : 'Unknown error')
+    );
+  }
+};
+
 export const getLevels = async (): Promise<Level[]> => {
   try {
     const response = await axios.get<{ data: Level[] }>('/api/levels');
+
+    return response.data.data;
+  } catch (err) {
+    throw new Error(
+      'Error fetching levels: ' +
+        (err instanceof Error ? err.message : 'Unknown error')
+    );
+  }
+};
+
+export const getUnits = async (): Promise<Unit[]> => {
+  try {
+    const response = await axios.get<{ data: Unit[] }>('/api/units');
 
     return response.data.data;
   } catch (err) {

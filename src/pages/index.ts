@@ -5,3 +5,4 @@ export * from './UsersPage';
 export * from './SignUpPage';
 export * from './AddCoursePage';
 export * from './AddUnitPage';
+export * from './UnitsPage';

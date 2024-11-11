@@ -13,7 +13,8 @@ import {
   UsersPage,
   SignUpPage,
   AddCoursePage,
-  AddUnitPage
+  AddUnitPage,
+  UnitsPage
 } from '../pages';
 
 import { PrivateRoutes, AdminRoutes } from '../routes'
@@ -58,6 +59,7 @@ function AppRoutes() {
             <Route path="admin/users" element={<UsersPage />} />
             <Route path="add-course" element={<AddCoursePage />} />
             <Route path="/add-units/:courseId" element={<AddUnitPage />} />
+            <Route path="/see-units" element={<UnitsPage />} />
           </Route>
         </Route>
     

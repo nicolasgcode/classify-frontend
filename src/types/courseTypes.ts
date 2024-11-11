@@ -32,10 +32,11 @@ export interface CourseFormProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   handleCancel?: () => void;
   handleAddTopic: () => void;
+  handleEditTopic: (topicId: number) => void;
   success: string | null;
   error: string | null;
   errors: { [key: string]: string };
-  isEditing: boolean;
+  isEditing?: boolean;
   topicsList: Topic[];
   levelsList: Level[];
 }

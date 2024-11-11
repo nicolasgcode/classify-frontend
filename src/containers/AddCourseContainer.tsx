@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useForm } from '../hooks';
-import { createCourse } from '../services';
+import { createCourse, deleteTopic } from '../services';
 import { loadTopics, loadLevels } from '../utils';
 import { CourseForm, TopicModal } from '../components';
 import { CourseData, Topic, Level } from '../types';
@@ -17,11 +17,11 @@ const validateCourseFields = (values: CourseData) => {
     errors.price = 'Price is required';
   }
 
-  if (!values.topics) {
+  if (!values.topics || values.topics.length === 0) {
     errors.topics = 'Topics cannot be empty';
   }
 
-  if (!values.levelIds) {
+  if (!values.levelIds || values.levelIds.length === 0) {
     errors.levelIds = 'Levels cannot be empty';
   }
 
@@ -34,15 +34,14 @@ function AddCourseContainer() {
   const [topics, setTopics] = useState<Topic[]>([]); // Lista de tópicos
   const [levelIds, setLevelIds] = useState<Level[]>([]); // Lista de niveles
   const [isTopicModalOpen, setIsTopicModalOpen] = useState(false); // Estado para abrir/cerrar el modal de tópico
-  const [newTopic, setNewTopic] = useState<Topic | null>(null); // Para almacenar el nuevo tópico creado
-
+  const [editingTopic, setEditingTopic] = useState<Topic | null>(null); // Para manejar la edición de un tópico
   const navigate = useNavigate();
 
   const { values, handleChange, reset, errors, handleSubmit } = useForm<CourseData>(
     {
       title: '',
       price: 0,
-      topics: [],
+      topics: [], // Este estado contiene los IDs de los tópicos seleccionados
       levelIds: []
     },
     validateCourseFields
@@ -53,33 +52,72 @@ function AddCourseContainer() {
     loadLevels(setLevelIds, setError); // Cargar los niveles
   }, []);
 
-  // Función para abrir el modal de "Add Topic"
   const openTopicModal = () => {
+    setEditingTopic(null); // Aseguramos que no se esté editando un tópico cuando se crea uno nuevo
     setIsTopicModalOpen(true);
   };
 
-  // Función para cerrar el modal
   const closeTopicModal = () => {
     setIsTopicModalOpen(false);
   };
 
-  // Función para manejar el nuevo tópico creado en el modal
   const handleNewTopicAdded = (newTopic: Topic) => {
-    setNewTopic(newTopic);
-    setTopics((prevTopics) => [...prevTopics, newTopic]); // Agregar el nuevo tópico a la lista
-    values.topics.push(newTopic.id.toString()); // Añadir el ID del nuevo tópico al estado de 'topics'
-    setIsTopicModalOpen(false); // Cerrar el modal
+    if (editingTopic) {
+      // Si estamos editando un tópico, reemplazamos el tópico en la lista de 'topics'
+      setTopics((prevTopics) =>
+        prevTopics.map((topic) =>
+          topic.id === editingTopic.id ? { ...topic, description: newTopic.description } : topic
+        )
+      );
+      // Actualizamos el 'editingTopic' para que tenga la descripción más reciente
+      setEditingTopic((prev) => prev?.id === editingTopic.id ? { ...prev, description: newTopic.description } : prev);
+
+      // Actualizamos 'values.topics' de forma inmutable
+      values.topics = values.topics.map((id) => (id === editingTopic.id.toString() ? newTopic.id.toString() : id));
+    } else {
+      // Si estamos agregando un nuevo tópico
+      setTopics((prevTopics) => [...prevTopics, newTopic]);
+      values.topics.push(newTopic.id.toString()); // Añadir el ID del nuevo tópico a 'topics'
+    }
   };
 
-  const courseData = {
-    ...values,
-    topics: values.topics.map(Number), // Convertir los IDs de los tópicos a números
-    levelIds: values.levelIds.map(Number), // Convertir los IDs de los niveles a números
+  const handleEditTopic = (topicId: number) => {
+    const topic = topics.find((t) => t.id === topicId);
+    if (topic) {
+      setEditingTopic(topic); // Establecer el tópico a editar
+      setIsTopicModalOpen(true); // Abrir el modal en modo edición
+    }
   };
+
+  const borrarTopic = async (topicId: number) => {
+    try {
+      await deleteTopic(topicId);
+    } catch (err) {
+      setError('Error deleting topic: ' + (err as Error).message);
+    }
+  }
+
+const UpdateTopics = (topicId: number) => {
+    // Eliminar el tópico de la lista de tópicos seleccionados
+    setTopics((prevTopics) => prevTopics.filter((topic) => topic.id !== topicId));
+
+    // Eliminar el tópico de 'values.topics'
+    values.topics = values.topics.filter((id) => id !== topicId.toString());
+  };
+
+  const handleDeleteTopic = (topicId: number ) => {
+    borrarTopic(topicId);
+    UpdateTopics(topicId);
+  }
+
 
   const submitForm = async () => {
     try {
-      const createdCourse = await createCourse(courseData);
+      const createdCourse = await createCourse({
+        ...values,
+        topics: values.topics.map(Number), // Convertir los IDs de tópicos a números
+        levelIds: values.levelIds.map(Number) // Convertir los IDs de niveles a números
+      });
       setSuccess('Course added successfully!');
       setError(null);
       reset();
@@ -99,22 +137,26 @@ function AddCourseContainer() {
         success={success}
         errors={errors}
         error={error}
-        isEditing={false}
-        topicsList={topics} // Lista de tópicos que se muestra en el formulario
+        topicsList={topics}
         levelsList={levelIds}
-        handleAddTopic={openTopicModal} // Función para abrir el modal
+        handleAddTopic={openTopicModal}
+        handleEditTopic={handleEditTopic} 
+        handleDeleteTopic={handleDeleteTopic}
       />
 
-      {/* Modal para agregar nuevo tópico */}
+      {/* Modal para agregar o editar tópico */}
       <TopicModal
         isOpen={isTopicModalOpen}
         onClose={closeTopicModal}
-        onTopicAdded={handleNewTopicAdded} // Pasamos la función para manejar el nuevo tópico
+        onTopicAdded={handleNewTopicAdded}
+        topicToEdit={editingTopic} 
       />
     </div>
   );
 }
 
 export default AddCourseContainer;
+
+
 
 

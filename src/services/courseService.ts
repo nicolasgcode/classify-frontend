@@ -70,6 +70,17 @@ export const getTopics = async (): Promise<Topic[]> => {
   }
 };
 
+export const deleteTopic = async (topicId: number): Promise<void> => {
+  try {
+    await axios.delete(`/api/topics/${topicId}`);
+  } catch (err) {
+    throw new Error(
+      'Error deleting topic: ' +
+        (err instanceof Error ? err.message : 'Unknown error')
+    );
+  }
+};
+
 export const getLevels = async (): Promise<Level[]> => {
   try {
     const response = await axios.get<{ data: Level[] }>('/api/levels');

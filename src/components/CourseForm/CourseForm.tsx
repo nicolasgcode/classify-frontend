@@ -10,10 +10,11 @@ function CourseForm({
   errors,
   isEditing,
   handleAddTopic,
+  handleEditTopic,
+  handleDeleteTopic, // Recibe la función de eliminar
   levelsList,
   topicsList,
 }: CourseFormProps) {
-
   return (
     <div className={styles.container}>
       <h2>{isEditing ? 'Edit Course' : 'Add Course'}</h2>
@@ -59,7 +60,31 @@ function CourseForm({
             ))}
           </select>
           {errors.topics && <span className={styles.fieldError}>{errors.topics}</span>}
-          <button type="button" className={styles.btn} onClick={handleAddTopic}>Add New Topic</button>
+
+          <div className={styles.buttons}>
+            <button type="button" className={styles.btn} onClick={handleAddTopic}>
+              Add New Topic
+            </button>
+            {values.topics.length === 1 && (
+              <>
+                <button
+                  type="button"
+                  className={styles.btn}
+                  onClick={() => handleEditTopic(Number(values.topics))}
+                >
+                  Edit Selected Topic
+                </button>
+
+                <button
+                  type="button"
+                  className={styles.btn}
+                  onClick={() => handleDeleteTopic(Number(values.topics))}
+                >
+                  Delete Selected Topic
+                </button>
+              </>
+            )}
+          </div>
         </div>
 
         <div>
@@ -79,7 +104,9 @@ function CourseForm({
           {errors.levelIds && <span className={styles.fieldError}>{errors.levelIds}</span>}
         </div>
 
-        <button type="submit" className={styles.btn}>{isEditing ? 'Save Changes' : 'Add Course'}</button>
+        <button type="submit" className={styles.btn}>
+          {isEditing ? 'Save Changes' : 'Add Course'}
+        </button>
       </form>
 
       {error && <span className={styles.fieldError}>{error}</span>}
@@ -89,6 +116,8 @@ function CourseForm({
 }
 
 export default CourseForm;
+
+
 
 
 

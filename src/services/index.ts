@@ -4,6 +4,7 @@ export {
   getCourse,
   getLevels,
   getTopics,
+  deleteTopic,
   addUnitToLevel,
 } from './courseService';
 export { loginRequest } from './authService';

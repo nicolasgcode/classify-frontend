@@ -58,7 +58,7 @@ function AppRoutes() {
             <Route path="admin/courses" element={<CoursesPage />} />
             <Route path="admin/users" element={<UsersPage />} />
             <Route path="add-course" element={<AddCoursePage />} />
-            <Route path="/add-units/:courseId" element={<AddUnitPage />} />
+            <Route path="/add-units" element={<AddUnitPage />} />
             <Route path="/see-units" element={<UnitsPage />} />
           </Route>
         </Route>

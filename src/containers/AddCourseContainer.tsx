@@ -5,6 +5,7 @@ import { loadTopics, loadLevels } from '../utils';
 import { CourseForm, TopicModal } from '../components';
 import { CourseData, Topic, Level } from '../types';
 import { useNavigate } from 'react-router-dom';
+import { useCourseStore } from '../store';
 
 const validateCourseFields = (values: CourseData) => {
   const errors: { [key: string]: string } = {};
@@ -36,6 +37,8 @@ function AddCourseContainer() {
   const [isTopicModalOpen, setIsTopicModalOpen] = useState(false); // Estado para abrir/cerrar el modal de tópico
   const [editingTopic, setEditingTopic] = useState<Topic | null>(null); // Para manejar la edición de un tópico
   const navigate = useNavigate();
+  const { setCourseId } = useCourseStore();
+
 
   const { values, handleChange, reset, errors, handleSubmit } = useForm<CourseData>(
     {
@@ -121,7 +124,8 @@ const UpdateTopics = (topicId: number) => {
       setSuccess('Course added successfully!');
       setError(null);
       reset();
-      navigate(`/add-units/${createdCourse.id}`);
+      setCourseId(createdCourse.id);
+      navigate('/add-units');
     } catch (err) {
       setError('Error adding course: ' + (err as Error).message);
       setSuccess(null);

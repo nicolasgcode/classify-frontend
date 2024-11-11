@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { getCourse } from '../services'; 
 import { UnitForm } from '../components'; 
 import { CourseData, Unit } from '../types';
+import { useCourseStore } from '../store'
 
 function AddUnitContainer() {
-  const { courseId } = useParams<{ courseId: string }>(); 
+  const courseId = useCourseStore((state) => state.courseId);
   const [course, setCourse] = useState<CourseData | null>(null);
   const [unitData, setUnitData] = useState<Unit>({
     title: '',

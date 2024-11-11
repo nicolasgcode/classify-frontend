@@ -51,7 +51,7 @@ function UnitsContainer() {
       error={error}
       handleSearch={handleSearch}
       searchTerm={searchTerm}
-      onDeleteUnit={removeAndUpdateUnits} // Pasar la función de eliminación
+      onDeleteUnit={removeAndUpdateUnits} 
     />
   );
 }

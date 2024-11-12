@@ -20,11 +20,8 @@ function UnitList({
     return <div className={styles.container}>Error: {error}</div>;
   }
 
-
-
   return (
     <div className={styles.container}>
-
       <div className={styles.header}>
         <h1 className={styles.title}>Units</h1>
 
@@ -39,24 +36,28 @@ function UnitList({
         </div>
       </div>
 
-  <ul style={{ listStyleType: 'none', padding: 0 }}>
-  {units.map((unit, index) => (
-    <li key={index} className={styles.courseItem}>
-      <div className={styles.courseHeader}>
-        <div><strong>Title:</strong> {unit.title}</div>
-        <div><strong>Description:</strong> {unit.description}</div>
-        <div><strong>Content:</strong> {unit.content}</div>
-      </div>
+      <ul style={{ listStyleType: 'none', padding: 0 }}>
+        {units.map((unit, index) => (
+          <li key={index} className={styles.courseItem}>
+            <div className={styles.courseHeader}>
+              <div><strong>Title:</strong> {unit.title}</div>
+              <div><strong>Description:</strong> {unit.description}</div>
+              <div><strong>Content:</strong> {unit.content}</div>
+            </div>
 
-      <div className={styles.adminButtons}>
-        <button className={styles.editBtn}>Edit</button>
-        <button className={styles.deleteBtn} onClick={() => onDeleteUnit(unit.id)}>Delete</button>
-      </div>
-    </li>
-  ))}
-</ul>
+            <div className={styles.adminButtons}>
+              <button className={styles.editBtn}>
+                Edit
+              </button>
+              <button className={styles.deleteBtn} onClick={() => onDeleteUnit(unit.id)}>
+                Delete
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-export default UnitList; 
+export default UnitList;

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { loadCourses } from '../utils'
 import { CourseData } from '../types'
 import { CourseList }  from '../components'
+import { deleteCourse } from '../services'
 
 
 const CoursesContainer: React.FC = () => {
@@ -18,6 +19,23 @@ const CoursesContainer: React.FC = () => {
     setSearchTerm(event.target.value.toLowerCase());
   };
 
+  const handleDelete = async (courseId: number) => {
+    const isConfirmed = window.confirm('Are you sure you want to delete this unit?');
+    if (!isConfirmed) {
+      return;
+    }
+    try {
+      await deleteCourse(courseId);
+      updateList(courseId); // Llama al backend para eliminar la unidad
+    } catch (err) {
+      setError('Error deleting course: ' + (err as Error).message);
+    }
+  };
+
+  const updateList = (courseId: number) => {
+    setCourses((prevCourses) => prevCourses.filter((course) => course.id !== courseId));
+  }
+
   const filteredCourses = courses.filter((course) =>
     `${course.title}`
       .toLowerCase()
@@ -26,7 +44,7 @@ const CoursesContainer: React.FC = () => {
 
   return (
     <CourseList courses = {filteredCourses} isLoading = {isLoading} error={error} handleSearch={handleSearch}
-      searchTerm={searchTerm}/>
+      searchTerm={searchTerm} onDelete={handleDelete}/>
   )
 }
 

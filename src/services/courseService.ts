@@ -57,6 +57,17 @@ export const createCourse = async (course: CourseData): Promise<CourseData> => {
   }
 };
 
+export const deleteCourse = async (courseId: number): Promise<void> => {
+  try {
+    await axios.delete(`/api/courses/${courseId}`);
+  } catch (error) {
+    throw new Error(
+      'Error deleting course: ' +
+        (error instanceof Error ? error.message : 'Unknown error')
+    );
+  }
+};
+
 export const getTopics = async (): Promise<Topic[]> => {
   try {
     const response = await axios.get<{ data: Topic[] }>('/api/topics');

@@ -37,10 +37,7 @@ function UnitsContainer() {
     setUnits((prevUnits) => prevUnits.filter((unit) => unit.id !== unitId));
   };
 
-  const removeAndUpdateUnits = async (unitId: number) => {
-    handleDeleteUnit(unitId);
-    updateList(unitId);
-  }
+
 
   const filteredUnits = units.filter((unit) =>
     unit.title.toLowerCase().includes(searchTerm)
@@ -53,7 +50,7 @@ function UnitsContainer() {
       error={error}
       handleSearch={handleSearch}
       searchTerm={searchTerm}
-      onDeleteUnit={removeAndUpdateUnits} 
+      onDeleteUnit={handleDeleteUnit} 
     />
   );
 }

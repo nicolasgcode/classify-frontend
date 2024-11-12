@@ -7,6 +7,7 @@ export {
   getTopics,
   deleteTopic,
   addUnitToLevel,
+  deleteCourse,
 } from './courseService';
 export { loginRequest } from './authService';
 export { createUser, getUsers } from './userService';

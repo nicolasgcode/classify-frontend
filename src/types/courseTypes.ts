@@ -76,4 +76,5 @@ export interface CourseListProps {
   courses: CourseData[];
   isLoading: boolean;
   error: string;
+  onDelete: (courseId: number) => void;
 }

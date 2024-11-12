@@ -10,6 +10,7 @@ function CourseList({
   error,
   handleSearch,
   searchTerm,
+  onDelete,
 }: CourseListProps) {
 
   const admin = useAuthStore(state => state.admin);
@@ -76,7 +77,7 @@ function CourseList({
             {admin && (
               <div className={styles.adminButtons}>
                 <button className={styles.editBtn}>Edit</button>
-                <button className={styles.deleteBtn}>Delete</button>
+                <button className={styles.deleteBtn} onClick={() => onDelete(course.id)}>Delete</button>
               </div>
             )}
           </li>

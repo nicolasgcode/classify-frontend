@@ -12,7 +12,6 @@ function AddUnitContainer() {
   });
 
 
-
   return (
     <div>
       {courseId && (

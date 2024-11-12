@@ -1,14 +1,14 @@
-import { LoginFormProps } from '../../types'
+import { loginFormProps } from '../../types'
 import styles from './LoginForm.module.css'
 import { NavLink } from 'react-router-dom';
 
-function LoginForm({
-  values,
-  handleChange,
+function LoginForm<FormFields>({
+  register,
   onSubmit,
-  errors,
   error,
-}: LoginFormProps) {
+  errors,
+  isSubmitting
+}: loginFormProps<FormFields>) {
  
    return (
     <div className={styles.loginform}>
@@ -17,30 +17,24 @@ function LoginForm({
           <label htmlFor="email">Email:</label>
           <input
             id="email"
-            name="email"
-            value={values.email}
-            onChange={handleChange}
+            type='email'
+            {...register("email")}
           />
         </div>
+        {errors.email && <p style={{ color: 'red' }}>{errors.email.message}</p>}
         <div className={styles.formgroup}>
           <label htmlFor="password">Password:</label>
           <input
             type="password"
             id="password"
-            name="password"
-            value={values.password}
-            onChange={handleChange}
+            {...register("password")}
           />
+    
         </div>
-        <button className={styles.loginBtn}>Iniciar sesión</button>
+        {errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}
+        <button className={styles.loginBtn} type='submit' disabled={isSubmitting}> {isSubmitting ? "Loading..." : "Log in"}</button>
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      {errors.email && (
-        <span className={styles.fieldError}>{errors.email}</span>
-      )}
-      {errors.password && (
-        <span className={styles.fieldError}>{errors.password}</span>
-      )}
       <p className={styles.signUpPrompt}>
         Don't have an account? 
         <NavLink to="/signup" className={styles.signUpLink}>

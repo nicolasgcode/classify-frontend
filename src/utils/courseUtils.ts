@@ -1,11 +1,10 @@
 import {
   getCourses,
-  getLevels,
   getTopics,
-  getUnits,
+  getUnitsByCourse,
   deleteUnit,
 } from '../services';
-import { CourseData, Level, Topic, Unit } from '../types';
+import { CourseData, Topic, Unit } from '../types';
 
 export const loadCourses = async (
   setCourses: React.Dispatch<React.SetStateAction<CourseData[]>>,
@@ -30,31 +29,6 @@ export const loadCourses = async (
     }
   } finally {
     setIsLoading(false);
-  }
-};
-
-export const loadLevels = async (
-  setLevels: React.Dispatch<React.SetStateAction<Level[]>>,
-  setError: React.Dispatch<React.SetStateAction<string | null>>
-) => {
-  try {
-    const data = await getLevels();
-    if (
-      Array.isArray(data) &&
-      data.every(
-        (item) => typeof item === 'object' && 'id' in item && 'name' in item
-      )
-    ) {
-      setLevels(data);
-    } else {
-      setError('Expected an array of levels');
-    }
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      setError(err.message);
-    } else {
-      setError('An unknown error occurred');
-    }
   }
 };
 
@@ -86,14 +60,17 @@ export const loadTopics = async (
 };
 
 export const loadUnits = async (
+  courseId: number, // Recibe el courseId
   setUnits: React.Dispatch<React.SetStateAction<Unit[]>>,
   setError: React.Dispatch<React.SetStateAction<string | null>>,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   setIsLoading(true);
   try {
-    const data = await getUnits();
+    // Pasa el courseId a la función getUnitsByCourse
+    const data = await getUnitsByCourse(courseId);
 
+    // Verificar que los datos recibidos sean una lista de unidades
     if (
       Array.isArray(data) &&
       data.every(
@@ -102,9 +79,8 @@ export const loadUnits = async (
       )
     ) {
       setUnits(data);
-      setIsLoading(false);
     } else {
-      setError('Expected an array of topics');
+      setError('Expected an array of units');
     }
   } catch (err: unknown) {
     if (err instanceof Error) {
@@ -112,6 +88,9 @@ export const loadUnits = async (
     } else {
       setError('An unknown error occurred');
     }
+  } finally {
+    // Asegúrate de que setIsLoading se actualice en el bloque finally
+    setIsLoading(false);
   }
 };
 

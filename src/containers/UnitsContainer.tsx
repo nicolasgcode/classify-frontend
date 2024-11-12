@@ -2,15 +2,17 @@ import { useEffect, useState } from 'react';
 import { loadUnits, removeUnit } from '../utils';
 import { Unit } from '../types';
 import { UnitList } from '../components';
+import { useCourseStore } from '../store';
 
 function UnitsContainer() {
   const [units, setUnits] = useState<Unit[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const courseId = useCourseStore((state) => state.courseId);
 
   useEffect(() => {
-    loadUnits(setUnits, setError, setIsLoading);
+    loadUnits(courseId, setUnits, setError, setIsLoading);
   }, []);
 
   function handleSearch(event: React.ChangeEvent<HTMLInputElement>): void {

@@ -23,13 +23,7 @@ function validateUnitFields(values: Unit) {
   return errors;
 }
 
-function UnitForm({
-  levels,
-  selectedLevelId,
-  setSelectedLevelId,
-  courseId,
-}: UnitFormProps
-  ) {
+function UnitForm({ courseId }: UnitFormProps) {
   const { values, handleChange, reset, errors, handleSubmit } = useForm<Unit>(
     { title: '', description: '', content: '' },
     validateUnitFields
@@ -41,23 +35,19 @@ function UnitForm({
 
   const seeUnits = () => {
     navigate(`/see-units`);
-  }
+  };
 
   const handleUnitSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); // Evitar que se recargue la página al enviar el formulario
     if (handleSubmit(e)) {
-      if (selectedLevelId) {
-        try {
-          // Llamada al servicio para agregar la unidad al nivel
-          await addUnitToLevel(courseId, selectedLevelId, values);
+      try {
+          await addUnitToLevel(courseId, values); // Se pasa el levelId al servicio
           setSuccess('Unit added successfully!');
           setError(null);
           reset(); // Limpiar los datos del formulario después de enviar
-        } catch (err) {
-          setError('Error adding unit: ' + (err as Error).message);
-          setSuccess(null);
-        }
-      } else {
-        setError('Please select a level.');
+      } catch (err) {
+        setError('Error adding unit: ' + (err as Error).message);
+        setSuccess(null);
       }
     }
   };
@@ -69,25 +59,6 @@ function UnitForm({
       {success && <div className="success">{success}</div>}
 
       <form className={styles.form} onSubmit={handleUnitSubmit}>
-        <div>
-          <label htmlFor="level">Select Level</label>
-          <select
-            id="level"
-            name="level"
-            value={selectedLevelId ?? ''}
-            onChange={(e) => setSelectedLevelId(Number(e.target.value))}
-            required
-            className={styles.input}
-          >
-            <option value="">Select Level</option>
-            {levels.map((level: Level) => (
-              <option key={level.id} value={level.id}>
-                {level.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
         <div>
           <label htmlFor="title">Unit Title</label>
           <input
@@ -137,6 +108,9 @@ function UnitForm({
 }
 
 export default UnitForm;
+
+
+
 
 
 

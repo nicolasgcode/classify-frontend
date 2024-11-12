@@ -12,7 +12,6 @@ function CourseForm({
   handleAddTopic,
   handleEditTopic,
   handleDeleteTopic, // Recibe la función de eliminar
-  levelsList,
   topicsList,
 }: CourseFormProps) {
   return (
@@ -88,21 +87,20 @@ function CourseForm({
         </div>
 
         <div>
-          <label htmlFor="levelIds">Levels</label>
-          <select
-            id="levelIds"
-            name="levelIds"
-            multiple
-            value={values.levelIds}
-            onChange={handleChange}
-            className={styles.input}
-          >
-            {levelsList.map((level) => (
-              <option key={level.id} value={level.id}>{level.name}</option>
-            ))}
-          </select>
-          {errors.levelIds && <span className={styles.fieldError}>{errors.levelIds}</span>}
-        </div>
+            <label htmlFor="level">Level</label>
+            <select
+              id="level"
+              name="level"
+              value={values.level}
+              onChange={handleChange} 
+              className={styles.input}
+            >
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+            {errors.level && <span className={styles.fieldError}>{errors.level}</span>}
+          </div>
 
         <button type="submit" className={styles.btn}>
           {isEditing ? 'Save Changes' : 'Add Course'}

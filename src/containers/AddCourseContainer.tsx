@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useForm } from '../hooks';
 import { createCourse, deleteTopic } from '../services';
-import { loadTopics, loadLevels } from '../utils';
+import { loadTopics } from '../utils';
 import { CourseForm, TopicModal } from '../components';
-import { CourseData, Topic, Level } from '../types';
+import { CourseData, Topic } from '../types';
 import { useNavigate } from 'react-router-dom';
 import { useCourseStore } from '../store';
 
@@ -22,8 +22,8 @@ const validateCourseFields = (values: CourseData) => {
     errors.topics = 'Topics cannot be empty';
   }
 
-  if (!values.levelIds || values.levelIds.length === 0) {
-    errors.levelIds = 'Levels cannot be empty';
+  if (!values.level) {
+    errors.level = 'Level is required';
   }
 
   return errors;
@@ -32,10 +32,9 @@ const validateCourseFields = (values: CourseData) => {
 function AddCourseContainer() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [topics, setTopics] = useState<Topic[]>([]); // Lista de tópicos
-  const [levelIds, setLevelIds] = useState<Level[]>([]); // Lista de niveles
-  const [isTopicModalOpen, setIsTopicModalOpen] = useState(false); // Estado para abrir/cerrar el modal de tópico
-  const [editingTopic, setEditingTopic] = useState<Topic | null>(null); // Para manejar la edición de un tópico
+  const [topics, setTopics] = useState<Topic[]>([]); 
+  const [isTopicModalOpen, setIsTopicModalOpen] = useState(false); 
+  const [editingTopic, setEditingTopic] = useState<Topic | null>(null); 
   const navigate = useNavigate();
   const { setCourseId } = useCourseStore();
 
@@ -45,14 +44,13 @@ function AddCourseContainer() {
       title: '',
       price: 0,
       topics: [], // Este estado contiene los IDs de los tópicos seleccionados
-      levelIds: []
+      level: '',
     },
     validateCourseFields
   );
 
   useEffect(() => {
     loadTopics(setTopics, setError); // Cargar los tópicos existentes
-    loadLevels(setLevelIds, setError); // Cargar los niveles
   }, []);
 
   const openTopicModal = () => {
@@ -119,7 +117,6 @@ const UpdateTopics = (topicId: number) => {
       const createdCourse = await createCourse({
         ...values,
         topics: values.topics.map(Number), // Convertir los IDs de tópicos a números
-        levelIds: values.levelIds.map(Number) // Convertir los IDs de niveles a números
       });
       setSuccess('Course added successfully!');
       setError(null);
@@ -142,7 +139,6 @@ const UpdateTopics = (topicId: number) => {
         errors={errors}
         error={error}
         topicsList={topics}
-        levelsList={levelIds}
         handleAddTopic={openTopicModal}
         handleEditTopic={handleEditTopic} 
         handleDeleteTopic={handleDeleteTopic}

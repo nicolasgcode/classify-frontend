@@ -13,16 +13,22 @@ function useForm<T>(initialValues: T, validate: ValidateFunction<T>) {
       e.target as HTMLSelectElement;
 
     if (type === 'select-one' || type === 'select-multiple') {
-      // Si es un select de una o más opciones (por ejemplo, topics o levels)
-      if (name === 'topics' || name === 'levelIds') {
+      // Si es un select de una o más opciones (por ejemplo, topics o level)
+      if (name === 'topics') {
         // Para los selects múltiples, recogemos todos los valores seleccionados
         const selectedIds = Array.from(selectedOptions).map(
           (option) => option.value
         );
-        // Actualiza el estado correspondiente a 'topics' o 'levels'
+        // Actualiza el estado correspondiente a 'topics'
         setValues((prevValues) => ({
           ...prevValues,
-          [name]: selectedIds, // 'topics' o 'levels' se actualizan con los IDs seleccionados
+          [name]: selectedIds, // 'topics' se actualiza con los IDs seleccionados
+        }));
+      } else if (name === 'level') {
+        // Si el campo es 'level', lo tratamos como un campo de texto simple
+        setValues((prevValues) => ({
+          ...prevValues,
+          [name]: value, // Actualiza el valor de 'level' con el valor seleccionado
         }));
       }
     } else {

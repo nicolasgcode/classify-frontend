@@ -2,18 +2,13 @@ export interface CourseData {
   id?: number;
   title: string;
   price: number;
+  level: string;
   topics: Topic[];
-  levelIds: Level[];
 }
 
 export interface Topic {
   id: number;
   description: string;
-}
-
-export interface Level {
-  id: number;
-  name: string;
 }
 
 export interface Unit {
@@ -39,7 +34,6 @@ export interface CourseFormProps {
   errors: { [key: string]: string };
   isEditing?: boolean;
   topicsList: Topic[];
-  levelsList: Level[];
 }
 
 export interface UnitFormProps {
@@ -49,9 +43,6 @@ export interface UnitFormProps {
   success: string | null; // Mensaje de éxito
   error: string | null; // Mensaje de error
   errors: { [key: string]: string }; // Errores de validación por campo
-  levelIds: Level[]; // Niveles disponibles para seleccionar
-  selectedLevelId: number | null; // ID del nivel seleccionado
-  setSelectedLevelId: React.Dispatch<React.SetStateAction<number | null>>; // Función para cambiar el nivel seleccionado
   courseId: number; // ID del curso
 }
 

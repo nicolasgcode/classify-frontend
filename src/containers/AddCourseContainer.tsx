@@ -43,18 +43,18 @@ function AddCourseContainer() {
     {
       title: '',
       price: 0,
-      topics: [], // Este estado contiene los IDs de los tópicos seleccionados
+      topics: [], 
       level: '',
     },
     validateCourseFields
   );
 
   useEffect(() => {
-    loadTopics(setTopics, setError); // Cargar los tópicos existentes
+    loadTopics(setTopics, setError); 
   }, []);
 
   const openTopicModal = () => {
-    setEditingTopic(null); // Aseguramos que no se esté editando un tópico cuando se crea uno nuevo
+    setEditingTopic(null); 
     setIsTopicModalOpen(true);
   };
 
@@ -64,29 +64,28 @@ function AddCourseContainer() {
 
   const handleNewTopicAdded = (newTopic: Topic) => {
     if (editingTopic) {
-      // Si estamos editando un tópico, reemplazamos el tópico en la lista de 'topics'
       setTopics((prevTopics) =>
         prevTopics.map((topic) =>
           topic.id === editingTopic.id ? { ...topic, description: newTopic.description } : topic
         )
       );
-      // Actualizamos el 'editingTopic' para que tenga la descripción más reciente
+
       setEditingTopic((prev) => prev?.id === editingTopic.id ? { ...prev, description: newTopic.description } : prev);
 
-      // Actualizamos 'values.topics' de forma inmutable
+      
       values.topics = values.topics.map((id) => (id === editingTopic.id.toString() ? newTopic.id.toString() : id));
     } else {
       // Si estamos agregando un nuevo tópico
       setTopics((prevTopics) => [...prevTopics, newTopic]);
-      values.topics.push(newTopic.id.toString()); // Añadir el ID del nuevo tópico a 'topics'
+      values.topics.push(newTopic.id.toString()); 
     }
   };
 
   const handleEditTopic = (topicId: number) => {
     const topic = topics.find((t) => t.id === topicId);
     if (topic) {
-      setEditingTopic(topic); // Establecer el tópico a editar
-      setIsTopicModalOpen(true); // Abrir el modal en modo edición
+      setEditingTopic(topic); 
+      setIsTopicModalOpen(true); 
     }
   };
 
@@ -99,10 +98,8 @@ function AddCourseContainer() {
   }
 
 const UpdateTopics = (topicId: number) => {
-    // Eliminar el tópico de la lista de tópicos seleccionados
     setTopics((prevTopics) => prevTopics.filter((topic) => topic.id !== topicId));
 
-    // Eliminar el tópico de 'values.topics'
     values.topics = values.topics.filter((id) => id !== topicId.toString());
   };
 
@@ -116,7 +113,7 @@ const UpdateTopics = (topicId: number) => {
     try {
       const createdCourse = await createCourse({
         ...values,
-        topics: values.topics.map(Number), // Convertir los IDs de tópicos a números
+        topics: values.topics.map(Number),
       });
       setSuccess('Course added successfully!');
       setError(null);
@@ -144,7 +141,6 @@ const UpdateTopics = (topicId: number) => {
         handleDeleteTopic={handleDeleteTopic}
       />
 
-      {/* Modal para agregar o editar tópico */}
       <TopicModal
         isOpen={isTopicModalOpen}
         onClose={closeTopicModal}

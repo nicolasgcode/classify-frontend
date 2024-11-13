@@ -10,7 +10,8 @@ export interface User {
 }
 
 export interface UserData {
-  dni: number;
+  id: number;
+  dni: string;
   name: string;
   surname: string;
   email: string;

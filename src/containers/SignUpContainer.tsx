@@ -1,81 +1,78 @@
 import { SignUpForm } from '../components'
 import { useState } from 'react';
-import { useForm } from '../hooks';
-import { createUser } from '../services';
-import { UserData } from '../types';
+import { createUser, updateUser } from '../services';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form'
+import {z} from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod';
+import { UserData } from '../types';
 
-const validateSignUpFields = (values: { dni: number; name: string; surname: string; email: string; password: string }) => {
-  const errors: { [key: string]: string } = {};
+const schema = z.object({
+  dni: z.string(),
+  name: z.string(),
+  surname: z.string(),
+  email: z.string().email(),
+  password: z.string().min(8),
+});
 
-  if (!values.dni) {
-    errors.dni = 'DNI is required';
-  }
+export type SignUpFields = z.infer<typeof schema>;
 
-  if (!values.name) {
-    errors.name = 'Name is required';
-  }
+type UserFormProps = {
+  user? : UserData
+  handleCancelEdit?: () => void;
+}
 
-  if (!values.surname) {
-    errors.surname = 'Surname is required';
-  }
-
-  if (!values.email) {
-    errors.email = 'Email is required';
-  }
-  if (!values.password) {
-    errors.password = 'Password is required';
-  }
-
-  return errors;
-};
-
-function SignUpContainer() {
+export default function SignUpContainer({ user, handleCancelEdit }: UserFormProps) {
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  const { values, handleChange, handleSubmit, reset, errors } = useForm<UserData>(
-    {
-      dni: 0,
-      name: '',
-      surname: '',
-      email: '',
-      password: ''
-    },
-    validateSignUpFields
-  );
+ const { register, handleSubmit, formState: {errors, isSubmitting}, } = useForm<SignUpFields>({defaultValues: user ? {
+    dni: user.dni,
+    name: user.name,
+    surname: user.surname,
+    email: user.email,
+    password: user.password
+ } : undefined, 
+ resolver: zodResolver(schema)});
 
-  const userData = { ...values, dni: Number(values.dni)}
-
-  const submitForm = async () => {
+  async function onSubmit(data: SignUpFields) {
+    if (user) {
+      try {
+        await updateUser(user.id, data);
+        setSuccess('User updated successfully!');
+        setError(null);
+      } catch {
+        setError('Error updating user, please try again');
+        setSuccess(null);
+      }
+    } else {
     try {
-      await createUser(userData);
+      await createUser(data);
       setSuccess('User created successfully!');
       navigate('/login')
       setError(null);
-      reset();
-    } catch (err) {
-      setError('Error creating user: ' + (err as Error).message);
+    } catch {
+      setError('Error creating user, please try again');
       setSuccess(null);
     }
+  }
   };
 
   return (
     <SignUpForm 
-      values={values}
-      handleChange={handleChange}
-      onSubmit={handleSubmit(submitForm)}
+      user={user}
+      register={register}
+      onSubmit={handleSubmit(onSubmit)}
       success={success}
+      isSubmitting={isSubmitting}
       errors={errors}
       error={error}
+      handleCancelEdit={handleCancelEdit}
       />
-      // isEditing={false}/>
   )
 }
 
-
-export default SignUpContainer;
 
 
 

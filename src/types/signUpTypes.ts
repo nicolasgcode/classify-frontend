@@ -1,10 +1,12 @@
-import { UserData } from './userTypes';
+import { UseFormRegister, FieldErrors } from 'react-hook-form';
+
+import { SignUpFields } from '../containers/SignUpContainer.tsx';
 
 export interface SignUpFormProps {
-  values: UserData;
+  register: UseFormRegister<SignUpFields>;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  isSubmitting: boolean;
   success: string | null;
-  errors: { [key: string]: string };
+  errors: FieldErrors<SignUpFields>;
   error: string | null;
 }

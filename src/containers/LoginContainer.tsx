@@ -36,7 +36,7 @@ function LoginContainer () {
   };
   
   return (
-    <LoginForm register={register} onSubmit={handleSubmit(onSubmit)} error={error}  errors={errors} isSubmitting={isSubmitting} />
+    <LoginForm register={register} onSubmit={handleSubmit(onSubmit)} error={error} errors={errors} isSubmitting={isSubmitting} />
   );
 };
 

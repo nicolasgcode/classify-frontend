@@ -1,22 +1,36 @@
-import { useEffect, useState } from 'react'
-import { loadUsers } from '../utils'
-import { User } from '../types'
-import { UserList }  from '../components'
+import { useEffect, useState } from 'react';
+import { loadUsers } from '../utils';
+import { User } from '../types';
+import { UserList } from '../components';
+import { SignUpContainer } from '../containers';
 
-
-const UsersContainer: React.FC = () => {
+export default function UsersContainer() {
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   useEffect(() => {
     loadUsers(setUsers, setError, setIsLoading);
   }, []);
 
+  const handleEdit = (user: User) => {
+    setSelectedUser(user);
+  };
+
+  const handleCancelEdit = () => {
+    setSelectedUser(null);
+    loadUsers(setUsers, setError, setIsLoading); 
+  };
+
   return (
-    <UserList users = {users} isLoading = {isLoading} error={error}/>
-  )
+    <div>
+      {selectedUser ? (
+        <SignUpContainer user={selectedUser} handleCancelEdit={handleCancelEdit}/>
+      ) : (
+        <UserList users={users} isLoading={isLoading} error={error} onEdit={handleEdit} />
+      )}
+    </div>
+  );
 }
 
-
-export default UsersContainer;

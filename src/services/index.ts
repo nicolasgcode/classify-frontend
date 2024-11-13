@@ -10,4 +10,4 @@ export {
   deleteCourse,
 } from './courseService';
 export { loginRequest } from './authService';
-export { createUser, getUsers } from './userService';
+export { createUser, getUsers, updateUser } from './userService';

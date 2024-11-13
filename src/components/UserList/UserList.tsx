@@ -1,13 +1,9 @@
 import React from 'react';
-import { UserListProps } from '../../types';
+import { UserListProps, User } from '../../types';
+import styles from './UserList.module.css';
 
-
-import styles from './UserList.module.css'
-
-const UserList: React.FC<UserListProps> = ({ users, isLoading, error }) => {
-
-
- if (isLoading) {
+export default function UserList({ users, isLoading, error, onEdit }: UserListProps & { onEdit: (user: User) => void }) {
+  if (isLoading) {
     return <div className={styles.container}>Loading users...</div>;
   }
 
@@ -19,16 +15,16 @@ const UserList: React.FC<UserListProps> = ({ users, isLoading, error }) => {
     return <div className={styles.container}>Error: users is not an array</div>;
   }
 
- return (
+  return (
     <div className={styles.container}>
       <h1 className={styles.title}>Users</h1>
       <ul className={styles.userList}>
         {users.map((user, index) => (
           <li key={index} className={styles.userItem}>
             {user.admin && 
-            <div className={styles.adminHeader}>
-              <strong>Admin</strong>
-            </div>}
+              <div className={styles.adminHeader}>
+                <strong>Admin</strong>
+              </div>}
             <div className={styles.userHeader}>
               <strong>{user.name} {user.surname}</strong>
             </div>
@@ -50,7 +46,7 @@ const UserList: React.FC<UserListProps> = ({ users, isLoading, error }) => {
               )}
             </div>
             <div className={styles.adminButtons}>
-              <button className={styles.editBtn}>Edit</button>
+              <button className={styles.editBtn} onClick={() => onEdit(user)}>Edit</button>
               <button className={styles.deleteBtn}>Delete</button>
             </div>
           </li>
@@ -59,6 +55,3 @@ const UserList: React.FC<UserListProps> = ({ users, isLoading, error }) => {
     </div>
   );
 }
-
-
-export default UserList;

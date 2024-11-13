@@ -20,7 +20,7 @@ const CoursesContainer: React.FC = () => {
   };
 
   const handleDelete = async (courseId: number) => {
-    const isConfirmed = window.confirm('Are you sure you want to delete this unit?');
+    const isConfirmed = window.confirm('Are you sure you want to delete this course?');
     if (!isConfirmed) {
       return;
     }

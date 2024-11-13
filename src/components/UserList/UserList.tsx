@@ -2,7 +2,7 @@ import React from 'react';
 import { UserListProps, User } from '../../types';
 import styles from './UserList.module.css';
 
-export default function UserList({ users, isLoading, error, onEdit }: UserListProps & { onEdit: (user: User) => void }) {
+export default function UserList({ users, isLoading, error, onEdit, onDelete}: UserListProps & { onEdit: (user: User) => void } & {onDelete: (courseId: number) => void;}) {
   if (isLoading) {
     return <div className={styles.container}>Loading users...</div>;
   }
@@ -47,7 +47,7 @@ export default function UserList({ users, isLoading, error, onEdit }: UserListPr
             </div>
             <div className={styles.adminButtons}>
               <button className={styles.editBtn} onClick={() => onEdit(user)}>Edit</button>
-              <button className={styles.deleteBtn}>Delete</button>
+              <button className={styles.deleteBtn} onClick={() => onDelete(user.id)}>Delete</button>
             </div>
           </li>
         ))}

@@ -46,3 +46,14 @@ export const updateUser = async (
     throw new Error('Error creating user: ' + (err as Error).message);
   }
 };
+
+export const deleteUser = async (userId: number): Promise<void> => {
+  try {
+    await axios.delete(`/api/users/${userId}`);
+  } catch (error) {
+    throw new Error(
+      'Error deleting user: ' +
+        (error instanceof Error ? error.message : 'Unknown error')
+    );
+  }
+};

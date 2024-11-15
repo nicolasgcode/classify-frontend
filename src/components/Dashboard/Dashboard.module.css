@@ -71,3 +71,28 @@
   position: relative;
   padding: 10px 15px;
 }
+
+.welcomeMessage {
+  text-align: center; /* Centrar el contenido */
+  font-family: 'Arial', sans-serif; /* Fuente sencilla y legible */
+  padding: 40px 20px; /* Espaciado alrededor del mensaje */
+  background-color: #48aff3; /* Azul del formulario de login */
+  color: white; /* Texto blanco para contraste */
+  border-radius: 8px; /* Bordes redondeados */
+  max-width: 600px; /* Ancho máximo */
+  margin: 50px auto; /* Centrado horizontal y separación vertical */
+  box-sizing: border-box; /* Aseguramos que el padding no afecte el tamaño total */
+}
+
+.welcomeMessage span {
+  display: block; /* Aseguramos que el título ocupe toda la línea */
+  font-size: 24px; /* Tamaño de fuente más grande para el título */
+  font-weight: bold; /* Negrita para el título */
+  margin-bottom: 10px; /* Espacio entre el título y el subtítulo */
+}
+
+.welcomeMessage p {
+  font-size: 16px; /* Un tamaño de fuente más pequeño para el mensaje */
+  font-weight: normal; /* Normal para el subtítulo */
+  margin-top: 0; /* Sin margen extra arriba */
+}

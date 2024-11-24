@@ -25,7 +25,7 @@ export default function UsersContainer() {
   };
 
    const handleDelete = async (userId: number) => {
-    const isConfirmed = window.confirm('Are you sure you want to delete this unit?');
+    const isConfirmed = window.confirm('Are you sure you want to delete this user?');
     if (!isConfirmed) {
       return;
     }

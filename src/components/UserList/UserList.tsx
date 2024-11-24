@@ -1,8 +1,8 @@
-import React from 'react';
 import { UserListProps, User } from '../../types';
 import styles from './UserList.module.css';
 
 export default function UserList({ users, isLoading, error, onEdit, onDelete}: UserListProps & { onEdit: (user: User) => void } & {onDelete: (courseId: number) => void;}) {
+  
   if (isLoading) {
     return <div className={styles.container}>Loading users...</div>;
   }

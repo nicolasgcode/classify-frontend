@@ -3,7 +3,7 @@ import { SignUpContainer } from '../../containers'
 
 function SignUpPage() {
   return (
-    < SignUpContainer/>
+    <SignUpContainer/>
   )
 }
 

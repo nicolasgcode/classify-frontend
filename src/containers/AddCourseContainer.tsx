@@ -1,35 +1,29 @@
 import { useState, useEffect } from 'react';
-import { useForm } from '../hooks';
-import { createCourse, deleteTopic } from '../services';
+import { useForm } from 'react-hook-form';
+import { createCourse, deleteTopic, updateCourse } from '../services';
 import { loadTopics } from '../utils';
 import { CourseForm, TopicModal } from '../components';
 import { CourseData, Topic } from '../types';
 import { useNavigate } from 'react-router-dom';
 import { useCourseStore } from '../store';
+import {z} from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-const validateCourseFields = (values: CourseData) => {
-  const errors: { [key: string]: string } = {};
+const schema = z.object({
+  title: z.string().min(1),
+  price: z.string().min(1),
+  level: z.string().min(1),
+  topics: z.array(z.string()).min(1),
+});
 
-  if (!values.title) {
-    errors.title = 'Title is required';
-  }
+export type CourseFields = z.infer<typeof schema>;
 
-  if (!values.price) {
-    errors.price = 'Price is required';
-  }
+type CourseFormProps = {
+  course? : CourseData
+  handleCancelEdit?: () => void;
+}
 
-  if (!values.topics || values.topics.length === 0) {
-    errors.topics = 'Topics cannot be empty';
-  }
-
-  if (!values.level) {
-    errors.level = 'Level is required';
-  }
-
-  return errors;
-};
-
-function AddCourseContainer() {
+function AddCourseContainer({ course, handleCancelEdit }: CourseFormProps) {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [topics, setTopics] = useState<Topic[]>([]); 
@@ -38,16 +32,13 @@ function AddCourseContainer() {
   const navigate = useNavigate();
   const { setCourseId } = useCourseStore();
 
-
-  const { values, handleChange, reset, errors, handleSubmit } = useForm<CourseData>(
-    {
-      title: '',
-      price: 0,
-      topics: [], 
-      level: '',
-    },
-    validateCourseFields
-  );
+const { register, handleSubmit, control, setValue, formState: {errors, isSubmitting}, } = useForm<CourseFields>({defaultValues: course ? {
+  title: course.title,
+  price: course.price.toString(),
+  level: course.level,
+  topics: course.topics.map((topic) => topic.id.toString()),
+ } : undefined, 
+ resolver: zodResolver(schema)});
 
   useEffect(() => {
     loadTopics(setTopics, setError); 
@@ -72,7 +63,6 @@ function AddCourseContainer() {
 
       setEditingTopic((prev) => prev?.id === editingTopic.id ? { ...prev, description: newTopic.description } : prev);
 
-      
       values.topics = values.topics.map((id) => (id === editingTopic.id.toString() ? newTopic.id.toString() : id));
     } else {
       // Si estamos agregando un nuevo tópico
@@ -109,33 +99,56 @@ const UpdateTopics = (topicId: number) => {
   }
 
 
-  const submitForm = async () => {
+  async function onSubmit(data: CourseFields) {
+
+    const price = parseFloat(data.price);
+    const topics = data.topics.map((topicId) => parseInt(topicId, 10));
+
+    const updatedData = {
+      ...data,
+      price,  
+      topics
+    };
+
+    if (course) {
+      try {
+        await updateCourse(course.id, updatedData);
+        setSuccess('Course updated successfully!');
+        setError(null);
+      } catch {
+        setError('Error updating course, please try again');
+        console.log(updatedData)
+        setSuccess(null);
+      }
+    } else {
     try {
-      const createdCourse = await createCourse({
-        ...values,
-        topics: values.topics.map(Number),
-      });
-      setSuccess('Course added successfully!');
+      await createCourse(updatedData);
+      setSuccess('Course created successfully!');
+      navigate('/login')
       setError(null);
-      reset();
-      setCourseId(createdCourse.id);
-      navigate('/add-units');
-    } catch (err) {
-      setError('Error adding course: ' + (err as Error).message);
+      setCourseId(course.id);
+    } catch {
+      setError('Error creating course, please try again');
+      console.log(data)
       setSuccess(null);
     }
+  }
   };
 
   return (
     <div>
       <CourseForm
-        values={values}
-        handleChange={handleChange}
-        onSubmit={handleSubmit(submitForm)}
+        register={register}
+        setValue={setValue}
+        control={control}
+        isSubmitting={isSubmitting}
+        course={course}
+        onSubmit={handleSubmit(onSubmit)}
         success={success}
         errors={errors}
         error={error}
         topicsList={topics}
+        handleCancelEdit={handleCancelEdit}
         handleAddTopic={openTopicModal}
         handleEditTopic={handleEditTopic} 
         handleDeleteTopic={handleDeleteTopic}

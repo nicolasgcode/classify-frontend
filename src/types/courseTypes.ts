@@ -1,5 +1,8 @@
+import { UseFormRegister, FieldErrors } from 'react-hook-form';
+import { CourseFields } from '../containers/AddCourseContainer.tsx';
+
 export interface CourseData {
-  id?: number;
+  id: number;
   title: string;
   price: number;
   level: string;
@@ -7,7 +10,7 @@ export interface CourseData {
 }
 
 export interface Topic {
-  id: number;
+  id?: number | null;
   description: string;
 }
 
@@ -19,20 +22,18 @@ export interface Unit {
 }
 
 export interface CourseFormProps {
-  values: CourseData;
-  handleChange: (
-    event:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>
-  ) => void;
+  register: UseFormRegister<CourseFields>;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   handleCancel?: () => void;
   handleAddTopic: () => void;
   handleEditTopic: (topicId: number) => void;
+  handleCancelEdit: () => void;
+  handleDeleteTopic: (topicId: number) => void;
+  course: CourseData | null;
   success: string | null;
   error: string | null;
-  errors: { [key: string]: string };
-  isEditing?: boolean;
+  isSubmitting: boolean;
+  errors: FieldErrors<CourseFields>;
   topicsList: Topic[];
 }
 

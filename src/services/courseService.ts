@@ -39,21 +39,32 @@ export const getCourse = async (courseId: number): Promise<CourseData> => {
   }
 };
 
-export const createCourse = async (course: CourseData): Promise<CourseData> => {
+export const createCourse = async (data: CourseData): Promise<CourseData> => {
   try {
-    // Especificamos que la respuesta de axios será de tipo CourseData
-    const response = await axios.post<CreateCourseResponse>(
-      '/api/courses',
-      course
-    );
-    const createdCourse = response.data.course.courseCreated;
-    console.log(response.data.course.courseCreated.id);
-    return createdCourse;
+    const response = await axios.post<CourseData>('/api/courses', {
+      ...data,
+      price: Number(data.price),
+    });
+    console.log(response);
+    return response.data;
   } catch (err) {
-    throw new Error(
-      'Error adding course: ' +
-        (err instanceof Error ? err.message : 'Unknown error')
-    );
+    throw new Error('Error creating user: ' + (err as Error).message);
+  }
+};
+
+export const updateCourse = async (
+  id: number,
+  data: CourseData
+): Promise<CourseData> => {
+  try {
+    const response = await axios.patch<CourseData>(`/api/courses/${id}`, {
+      ...data,
+      price: Number(data.price),
+    });
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    throw new Error('Error creating user: ' + (err as Error).message);
   }
 };
 
@@ -77,6 +88,30 @@ export const getTopics = async (): Promise<Topic[]> => {
       'Error fetching topics: ' +
         (err instanceof Error ? err.message : 'Unknown error')
     );
+  }
+};
+
+export const createTopic = async (data: Topic): Promise<Topic> => {
+  try {
+    const response = await axios.post<Topic>('/api/topics', {
+      ...data,
+    });
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    throw new Error('Error creating user: ' + (err as Error).message);
+  }
+};
+
+export const updateTopic = async (id: number, data: Topic): Promise<Topic> => {
+  try {
+    const response = await axios.patch<Topic>(`/api/users/${id}`, {
+      ...data,
+    });
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    throw new Error('Error creating user: ' + (err as Error).message);
   }
 };
 

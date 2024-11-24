@@ -1,17 +1,19 @@
 import { CourseListProps } from '../../types';
 import { useAuthStore } from '../../store';
 import { useNavigate } from 'react-router-dom';
+import { CourseData } from '../../types';
 
 import styles from './CourseList.module.css';
 
-function CourseList({
+export default function CourseList({
   courses,
   isLoading,
   error,
   handleSearch,
   searchTerm,
   onDelete,
-}: CourseListProps) {
+  onEdit
+}: CourseListProps & { onDelete: (courseId: number) => void; onEdit: (course: CourseData) => void }) {
 
   const admin = useAuthStore(state => state.admin);
   const navigate = useNavigate();
@@ -76,7 +78,7 @@ function CourseList({
             {!admin && <button className={styles.addBtn}>Add +</button>}
             {admin && (
               <div className={styles.adminButtons}>
-                <button className={styles.editBtn}>Edit</button>
+                <button className={styles.editBtn} onClick={ ()=> onEdit(course)}>Edit</button>
                 <button className={styles.deleteBtn} onClick={() => onDelete(course.id)}>Delete</button>
               </div>
             )}
@@ -88,4 +90,3 @@ function CourseList({
   );
 }
 
-export default CourseList;

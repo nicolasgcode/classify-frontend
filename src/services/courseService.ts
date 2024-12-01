@@ -5,7 +5,6 @@ import {
   courseDetails,
   Topic,
   Unit,
-  CreateCourseResponse,
 } from '../types';
 
 export const getCourses = async (): Promise<CourseData[]> => {
@@ -105,7 +104,7 @@ export const createTopic = async (data: Topic): Promise<Topic> => {
 
 export const updateTopic = async (id: number, data: Topic): Promise<Topic> => {
   try {
-    const response = await axios.patch<Topic>(`/api/users/${id}`, {
+    const response = await axios.put<Topic>(`/api/topics/${id}`, {
       ...data,
     });
     console.log(response);
@@ -153,23 +152,32 @@ export const getUnitsByCourse = async (courseId: number): Promise<Unit[]> => {
   }
 };
 
-export const addUnitToLevel = async (
-  courseId: number, // ID del curso al que pertenece el nivel
-  unitData: Unit // Datos de la nueva unidad
+export const addUnitToCourse = async (
+  courseId: number,
+  unitData: Unit
 ): Promise<void> => {
   try {
-    // Realizamos la solicitud POST para agregar la unidad al nivel
     const response = await axios.post(
-      `/api/courses/${courseId}/units`, // Ruta para agregar una unidad al nivel
-      unitData // Datos de la nueva unidad
+      `/api/courses/${courseId}/units`,
+      unitData
     );
-
     console.log('Unit added successfully:', response.data);
   } catch (err) {
-    // Manejo de errores
     throw new Error(
       'Error adding unit to level: ' +
         (err instanceof Error ? err.message : 'Unknown error')
     );
+  }
+};
+
+export const updateUnit = async (id: number, data: Unit): Promise<Unit> => {
+  try {
+    const response = await axios.put<Unit>(`/api/units/${id}`, {
+      ...data,
+    });
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    throw new Error('Error updating unit: ' + (err as Error).message);
   }
 };

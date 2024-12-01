@@ -80,6 +80,7 @@ export default function CourseList({
               <div className={styles.adminButtons}>
                 <button className={styles.editBtn} onClick={ ()=> onEdit(course)}>Edit</button>
                 <button className={styles.deleteBtn} onClick={() => onDelete(course.id)}>Delete</button>
+                <button className={styles.seeUnits} onClick={() => navigate('/see-units')}>See Units</button>
               </div>
             )}
           </li>

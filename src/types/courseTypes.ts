@@ -1,5 +1,6 @@
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
 import { CourseFields } from '../containers/AddCourseContainer.tsx';
+import { UnitFields } from '../containers/AddUnitContainer.tsx';
 
 export interface CourseData {
   id: number;
@@ -15,7 +16,7 @@ export interface Topic {
 }
 
 export interface Unit {
-  id?: number;
+  id: number;
   title: string;
   description: string;
   content: string;
@@ -38,13 +39,14 @@ export interface CourseFormProps {
 }
 
 export interface UnitFormProps {
-  unitData: Unit; // Datos de la unidad
-  setUnitData: React.Dispatch<React.SetStateAction<Unit>>; // Función para cambiar los datos de la unidad
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void; // Función para manejar el submit del formulario
-  success: string | null; // Mensaje de éxito
-  error: string | null; // Mensaje de error
-  errors: { [key: string]: string }; // Errores de validación por campo
-  courseId: number; // ID del curso
+  register: UseFormRegister<UnitFields>;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  handleCancelEdit: () => void;
+  unit: Unit | null;
+  success: string | null;
+  error: string | null;
+  isSubmitting: boolean;
+  errors: FieldErrors<UnitFields>;
 }
 
 export interface UnitListProps {

@@ -59,6 +59,23 @@ export function CourseForm({
                 <label htmlFor={`topic-${topic.id}`} className={styles.checkboxLabel}>
                   {topic.description}
                 </label>
+
+                <div className={styles.buttons}>
+                  <button
+                    type="button"
+                    className={styles.btn}
+                    onClick={() => handleEditTopic(topic.id)}
+                  >
+                    Edit Topic
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.btn}
+                    onClick={() => handleDeleteTopic(topic.id)}
+                  >
+                    Delete Topic
+                  </button>
+                </div>
               </div>
             ))}
           </div>
@@ -68,25 +85,6 @@ export function CourseForm({
             <button type="button" className={styles.btn} onClick={handleAddTopic}>
               Add New Topic
             </button>
-            {course && course.topics.length === 1 && (
-              <>
-                <button
-                  type="button"
-                  className={styles.btn}
-                  onClick={() => handleEditTopic(course.topics[0].id)}
-                >
-                  Edit Selected Topic
-                </button>
-
-                <button
-                  type="button"
-                  className={styles.btn}
-                  onClick={() => handleDeleteTopic(course.topics[0].id)}
-                >
-                  Delete Selected Topic
-                </button>
-              </>
-            )}
           </div>
         </div>
 
@@ -98,18 +96,18 @@ export function CourseForm({
             render={({ field }) => (
               <Select
                 {...field}
-                options={ [ { value: 'beginner', label: 'Beginner' }, { value: 'intermediate', label: 'Intermediate' }, { value: 'advanced', label: 'Advanced' } ] }
+                options={[
+                  { value: 'beginner', label: 'Beginner' },
+                  { value: 'intermediate', label: 'Intermediate' },
+                  { value: 'advanced', label: 'Advanced' }
+                ]}
                 onChange={(selectedOption) => {
-                  // Log the selected value
                   console.log('Selected value:', selectedOption?.value);
-
-                  // Update the form field with the selected value (string)
                   field.onChange(selectedOption?.value);
                 }}
-                value={field.value ? { value: field.value, label: field.value } : null} // Ensure proper display in Select
+                value={field.value ? { value: field.value, label: field.value } : null}
               />
             )}
-            
           />
           {errors.level && <span className={styles.fieldError}>{errors.level.message}</span>}
         </div>
@@ -132,6 +130,7 @@ export function CourseForm({
 }
 
 export default CourseForm;
+
 
 
 

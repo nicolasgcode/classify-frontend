@@ -31,6 +31,7 @@ function AddCourseContainer({ course, handleCancelEdit }: CourseFormProps) {
   const [editingTopic, setEditingTopic] = useState<Topic | null>(null); 
   const navigate = useNavigate();
   const { setCourseId } = useCourseStore();
+  const courseId = useCourseStore((state) => state.courseId);
 
 const { register, handleSubmit, control, setValue, formState: {errors, isSubmitting}, } = useForm<CourseFields>({defaultValues: course ? {
   title: course.title,
@@ -53,24 +54,6 @@ const { register, handleSubmit, control, setValue, formState: {errors, isSubmitt
     setIsTopicModalOpen(false);
   };
 
-  const handleNewTopicAdded = (newTopic: Topic) => {
-    if (editingTopic) {
-      setTopics((prevTopics) =>
-        prevTopics.map((topic) =>
-          topic.id === editingTopic.id ? { ...topic, description: newTopic.description } : topic
-        )
-      );
-
-      setEditingTopic((prev) => prev?.id === editingTopic.id ? { ...prev, description: newTopic.description } : prev);
-
-      values.topics = values.topics.map((id) => (id === editingTopic.id.toString() ? newTopic.id.toString() : id));
-    } else {
-      // Si estamos agregando un nuevo tópico
-      setTopics((prevTopics) => [...prevTopics, newTopic]);
-      values.topics.push(newTopic.id.toString()); 
-    }
-  };
-
   const handleEditTopic = (topicId: number) => {
     const topic = topics.find((t) => t.id === topicId);
     if (topic) {
@@ -90,14 +73,12 @@ const { register, handleSubmit, control, setValue, formState: {errors, isSubmitt
 const UpdateTopics = (topicId: number) => {
     setTopics((prevTopics) => prevTopics.filter((topic) => topic.id !== topicId));
 
-    values.topics = values.topics.filter((id) => id !== topicId.toString());
   };
 
   const handleDeleteTopic = (topicId: number ) => {
     borrarTopic(topicId);
     UpdateTopics(topicId);
   }
-
 
   async function onSubmit(data: CourseFields) {
 
@@ -122,11 +103,13 @@ const UpdateTopics = (topicId: number) => {
       }
     } else {
     try {
-      await createCourse(updatedData);
+      const createdCourse = await createCourse(updatedData);
       setSuccess('Course created successfully!');
-      navigate('/login')
+      setCourseId(createdCourse.course.courseCreated.id);
+      console.log(courseId)
+      console.log(setCourseId)
       setError(null);
-      setCourseId(course.id);
+      navigate('/add-units')
     } catch {
       setError('Error creating course, please try again');
       console.log(data)
@@ -155,9 +138,9 @@ const UpdateTopics = (topicId: number) => {
       />
 
       <TopicModal
+        topic={editingTopic}
         isOpen={isTopicModalOpen}
         onClose={closeTopicModal}
-        onTopicAdded={handleNewTopicAdded}
         topicToEdit={editingTopic} 
       />
     </div>

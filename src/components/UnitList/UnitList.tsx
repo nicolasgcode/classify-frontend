@@ -1,15 +1,16 @@
-import { UnitListProps } from '../../types';
+import { UnitListProps, Unit } from '../../types';
 
 import styles from './UnitList.module.css';
 
 function UnitList({
   units,
+  onEdit,
   isLoading,
   error,
   handleSearch,
   searchTerm,
   onDeleteUnit,
-}: UnitListProps) {
+}: UnitListProps & { onEdit: (unit: Unit) => void } & {onDelete: (unitId: number) => void;}) {
 
 
   if (isLoading) {
@@ -46,7 +47,7 @@ function UnitList({
             </div>
 
             <div className={styles.adminButtons}>
-              <button className={styles.editBtn}>
+              <button className={styles.editBtn} onClick={() => onEdit(unit)}>
                 Edit
               </button>
               <button className={styles.deleteBtn} onClick={() => onDeleteUnit(unit.id)}>

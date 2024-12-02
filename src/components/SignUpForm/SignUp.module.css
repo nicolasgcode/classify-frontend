@@ -1,74 +1,76 @@
+/* Estilos para el formulario de registro */
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 40px 20px; /* Aumento de padding superior/inferior */
   border-radius: 8px;
   width: 100%;
-  max-width: 600px;
+  max-width: 450px; /* Reducción del ancho máximo */
   margin: 0 auto;
 }
 
 .container h2 {
   color: var(--black-opacity);
-  margin: 20px 0px 20px 0px;
+  margin: 20px 0;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  background-color: rgba(72, 175, 243, 0.5);
-  gap: 20px;
+  background-color: #48aff3; /* Azul sólido */
+  padding: 30px; /* Aumentar el padding dentro del formulario */
+  gap: 25px; /* Mayor separación entre los elementos */
+  width: 100%;
+  border-radius: 8px;
+  border: none; /* Eliminamos borde */
+}
+
+/* Agrupación de cada par label + input */
+.formgroup {
+  display: flex;
+  flex-direction: row; /* Cambiar a fila para alinear label e input horizontalmente */
+  align-items: center; /* Alinear los elementos verticalmente */
+  gap: 10px; /* Espacio entre el label y el input */
   width: 100%;
 }
 
-.form input {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
+/* Etiquetas alineadas a la izquierda y al mismo nivel que los inputs */
 .form label {
   color: var(--black-opacity);
   font-size: 14px;
-  font-style: bold;
+  font-weight: bold;
+  text-align: left; /* Alineación de los labels a la izquierda */
+  margin-bottom: 0; /* Eliminamos margen inferior para que no haya desplazamiento */
+  width: 70px; /* Ancho fijo para los labels */
+  line-height: 40px; /* Ajustar el line-height para alinear el texto verticalmente */
 }
 
+/* Estilo para los inputs */
 .input {
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
   width: 100%;
+  max-width: 300px; /* Reducir el ancho de los inputs */
   box-sizing: border-box;
+  background-color: white;
+  line-height: 20px; /* Ajustar line-height para que coincida con el de los labels */
 }
 
-.btn {
-  padding: 12px 15px;
-  background-color: var(--blue-btn);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  width: 100%;
-  max-width: 200px;
-  margin: 0 auto;
-  font-weight: bold;
+/* Focus en los inputs */
+.input:focus {
+  outline: none;
+  border: 1px solid var(--border-highlighter);
 }
 
-.btn:hover {
-  background-color: var(--blue-btn-hover);
-}
-
+/* Estilos para errores */
 .error {
   color: red;
-  font-size: 14px;
-}
-
-.success {
-  color: green;
   font-size: 14px;
 }
 
@@ -83,4 +85,66 @@
   margin-top: 5px;
   opacity: 1;
   transition: opacity 0.5s ease-out;
+}
+
+/* Estilo para el botón */
+.btn {
+  padding: 12px 15px;
+  background-color: var(--blue-btn);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  max-width: 300px; /* Aseguramos que el botón tenga el mismo ancho que los inputs */
+  margin: 0 auto; /* Alineación centrada */
+  font-weight: bold;
+}
+
+.btn:hover {
+  background-color: var(--blue-btn-hover);
+}
+
+/* Mensajes de éxito y error */
+.success {
+  color: green;
+  font-size: 14px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+}
+
+.signUpPrompt {
+  color: var(--black-opacity);
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.signUpLink {
+  color: var(--black-opacity);
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 5px;
+}
+
+.loginBtn:disabled {
+  background-color: #aaa7a7;
+  cursor: not-allowed;
+}
+
+input[type='number'] {
+  -webkit-appearance: none; /* For Safari and Chrome */
+  -moz-appearance: textfield; /* For Firefox */
+  appearance: none; /* Standard property */
+}
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none; /* Oculta los botones */
+  margin: 0;
 }

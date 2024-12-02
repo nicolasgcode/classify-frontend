@@ -3,47 +3,40 @@ import { useNavigate } from 'react-router-dom';
 import { LoginForm } from '../components';
 import { loginRequest } from '../services'
 import { useAuthStore } from '../store'
-import { useForm } from '../hooks'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import {z} from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod';
 
-const validateLoginFields = (values: { email: string; password: string }) => {
-  const errors: { [key: string]: string } = {};
-  if (!values.email) {
-    errors.email = 'Email is required';
-  }
-  if (!values.password) {
-    errors.password = 'Password is required';
-  }
-  return errors;
-};
+const schema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
+
+export type FormFields = z.infer<typeof schema>;
 
 function LoginContainer () {
   const setToken = useAuthStore(state => state.setToken)
   const setAdmin = useAuthStore(state => state.setAdmin)
   const navigate = useNavigate();
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+  const { register, handleSubmit, formState: {errors, isSubmitting}, } = useForm<FormFields>({resolver: zodResolver(schema)});
 
-   const { values, handleChange, handleSubmit, errors } = useForm(
-    { email: '', password: '' },
-    validateLoginFields
-  );
-
-  const submitForm = async () => {
+  const onSubmit: SubmitHandler<FormFields> = async (data) => {
       try {
-      const resLogin = await loginRequest(values.email, values.password);
+      const resLogin = await loginRequest(data);
       setToken(resLogin.data.token)
       setAdmin(resLogin.data.admin)
-      navigate('/courses');
+      navigate('/home');
       console.log("Logged in!")
       console.log(resLogin)
     } catch {
-      setError('Invalid credentials');
+      setError('Error logging in: invalid credentials' );
+      console.log(data)
     }
   };
   
-
-
   return (
-    <LoginForm values={values} onSubmit={handleSubmit(submitForm)} error={error} handleChange={handleChange} errors={errors} />
+    <LoginForm register={register} onSubmit={handleSubmit(onSubmit)} error={error} errors={errors} isSubmitting={isSubmitting} />
   );
 };
 

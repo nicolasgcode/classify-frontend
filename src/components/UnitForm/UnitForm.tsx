@@ -1,76 +1,32 @@
-import { useState } from 'react';
-import { UnitFormProps, Level, Unit } from '../../types';
-import { addUnitToLevel } from '../../services'; 
-import { useForm } from '../../hooks'; 
+import { UnitFormProps } from '../../types';
 import styles from './UnitForm.module.css';
-import { useNavigate } from 'react-router-dom';
 
-function validateUnitFields(values: Unit) {
-  const errors: { [key: string]: string } = {};
-
-  if (!values.title) {
-    errors.title = 'Title is required';
-  }
-
-  if (!values.description) {
-    errors.description = 'Description is required';
-  }
-
-  if (!values.content) {
-    errors.content = 'Content is required';
-  }
-
-  return errors;
-}
-
-function UnitForm({ courseId }: UnitFormProps) {
-  const { values, handleChange, reset, errors, handleSubmit } = useForm<Unit>(
-    { title: '', description: '', content: '' },
-    validateUnitFields
-  );
-
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
-  const navigate = useNavigate();
-
-  const seeUnits = () => {
-    navigate(`/see-units`);
-  };
-
-  const handleUnitSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Evitar que se recargue la página al enviar el formulario
-    if (handleSubmit(e)) {
-      try {
-          await addUnitToLevel(courseId, values); // Se pasa el levelId al servicio
-          setSuccess('Unit added successfully!');
-          setError(null);
-          reset(); // Limpiar los datos del formulario después de enviar
-      } catch (err) {
-        setError('Error adding unit: ' + (err as Error).message);
-        setSuccess(null);
-      }
-    }
-  };
+function UnitForm({ register,
+  onSubmit,
+  success,
+  error,
+  errors,
+  unit,
+  handleCancelEdit,
+  }: UnitFormProps) {
 
   return (
     <div className={styles.container}>
-      <h2>Add Unit</h2>
+      <h2>{unit ? "Update course unit" : "Add unit to course"}</h2>
       {error && <div className="error">{error}</div>}
       {success && <div className="success">{success}</div>}
 
-      <form className={styles.form} onSubmit={handleUnitSubmit}>
+      <form className={styles.form} onSubmit={onSubmit}>
         <div>
           <label htmlFor="title">Unit Title</label>
           <input
             type="text"
             id="title"
-            name="title"
-            value={values.title}
-            onChange={handleChange}
+            {...register('title')}
             required
             className={styles.input}
           />
-          {errors.title && <div className="fieldError">{errors.title}</div>}
+          {errors.title && <div className="fieldError">{errors.title.message}</div>}
         </div>
 
         <div>
@@ -78,30 +34,30 @@ function UnitForm({ courseId }: UnitFormProps) {
           <input
             type="text"
             id="description"
-            name="description"
-            value={values.description}
-            onChange={handleChange}
+            {...register('description')}
             required
             className={styles.input}
           />
-          {errors.description && <div className="fieldError">{errors.description}</div>}
+          {errors.description && <div className="fieldError">{errors.description.message}</div>}
         </div>
 
         <div>
           <label htmlFor="content">Unit Content</label>
           <textarea
             id="content"
-            name="content"
-            value={values.content}
-            onChange={handleChange}
+            {...register('content')}
             required
             className={styles.input}
           />
-          {errors.content && <div className="fieldError">{errors.content}</div>}
+          {errors.content && <div className="fieldError">{errors.content.message}</div>}
         </div>
 
-        <button type="submit" className={styles.btn}>Add Unit</button>
-        <button type="button" onClick={seeUnits} className={styles.btn}>See units</button>
+        <button type="submit" className={styles.btn}>{unit ? "Update Unit" : "Add Unit"}</button>
+         {unit && (
+          <button onClick={handleCancelEdit} className={styles.btn}>
+            Cancel Edit
+          </button>
+        )}
       </form>
     </div>
   );

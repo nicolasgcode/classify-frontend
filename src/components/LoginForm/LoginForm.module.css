@@ -1,33 +1,62 @@
+/* Estilos para el formulario principal */
 .loginform {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
-  gap: 20px;
-}
-
-.loginform h1 {
-  color: var(--secondary-color);
+  padding: 100px; /* Aumentamos el padding para dar más espacio en la parte superior e inferior */
+  border-radius: 8px;
+  width: 100%;
+  max-width: 450px; /* Reducimos el ancho máximo del formulario */
+  margin: 0 auto;
 }
 
 .formgroup {
   display: flex;
+  flex-direction: row; /* Alineamos los elementos en fila (horizontalmente) */
+  gap: 10px; /* Espacio entre el label y el input */
+  align-items: center; /* Alineamos verticalmente al centro */
   width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
 }
 
-form {
+.loginform form {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  background-color: #48aff3; /* Azul sólido */
+  padding: 30px; /* Aumentamos el padding dentro del formulario */
+  gap: 25px; /* Aumentamos el gap entre los elementos dentro del formulario */
+  width: 100%;
+  border-radius: 8px;
+  border: none; /* Eliminar borde */
+}
+
+.loginform label {
+  color: var(--black-opacity);
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 0; /* Eliminamos el margen inferior para que no se desalineen */
+  width: 65px; /* Ancho fijo para los labels, puedes ajustarlo si es necesario */
+  text-align: right; /* Alineamos el texto del label a la derecha para mayor claridad */
+}
+
+.loginform input {
+  padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: rgba(72, 175, 243, 0.5);
-  gap: 10px;
-  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%; /* Hacemos que el input ocupe el 100% del espacio restante */
+  max-width: 300px; /* Reducimos el max-width de los inputs para hacerlos un poco más estrechos */
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.loginform input:focus {
+  outline: none;
+  border: 1px solid var(--border-highlighter);
+}
+
+.error {
+  color: red;
+  font-size: 14px;
 }
 
 .fieldError {
@@ -43,47 +72,44 @@ form {
   transition: opacity 0.5s ease-out;
 }
 
-label {
-  color: var(--default-white);
-  font-size: 12px;
-}
-
-input {
-  background-color: var(--default-white);
-  border: 1px solid rgb(97, 96, 96);
-  border-radius: 5px;
-  padding: 5px;
-  color: black;
-  font-size: 12px;
-}
-
-input:focus {
-  outline: none;
-  border: 1px solid var(--border-highlighter);
-}
-
 .loginBtn {
+  padding: 12px 15px;
   background-color: var(--blue-btn);
-  color: var(--default-white);
+  color: white;
   border: none;
-  padding: 5px;
-  border-radius: 5px;
-  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
   font-weight: bold;
 }
 
 .loginBtn:hover {
-  background: var(--blue-btn-hover);
-  cursor: pointer;
+  background-color: var(--blue-btn-hover);
 }
 
 .signUpPrompt {
+  color: var(--black-opacity);
+  font-size: 14px;
   margin-top: 10px;
 }
 
 .signUpLink {
-  padding: 5px;
-  color: blue;
+  color: var(--black-opacity);
+  font-weight: bold;
   cursor: pointer;
   text-decoration: underline;
+  padding: 5px;
+}
+
+.success {
+  color: green;
+  font-size: 14px;
+}
+
+.loginBtn:disabled {
+  background-color: #aaa7a7; /* Cambia el color cuando el botón está deshabilitado */
+  cursor: not-allowed;
 }

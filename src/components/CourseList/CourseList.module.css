@@ -47,7 +47,8 @@
   font-size: 1.2rem;
 }
 
-.topics {
+.topics,
+.units {
   margin-top: 15px;
   font-size: 1rem;
   color: #666;
@@ -80,7 +81,8 @@
 
 .addBtn,
 .editBtn,
-.deleteBtn {
+.deleteBtn,
+.seeUnits {
   background-color: var(--blue-btn);
   color: white;
   border: none;
@@ -94,7 +96,8 @@
 
 .addBtn:hover,
 .editBtn:hover,
-.deleteBtn:hover {
+.deleteBtn:hover,
+.seeUnits:hover {
   background-color: var(--blue-btn-hover);
 }
 

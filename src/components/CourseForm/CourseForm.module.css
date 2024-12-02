@@ -2,46 +2,90 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 40px 20px; /* Aumento de padding superior/inferior */
   border-radius: 8px;
   width: 100%;
-  max-width: 600px;
+  max-width: 450px; /* Reducción del ancho máximo */
   margin: 0 auto;
 }
 
 .container h2 {
   color: var(--black-opacity);
-  margin: 20px 0px 20px 0px;
+  margin: 20px 0;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  background-color: rgba(72, 175, 243, 0.5);
-  gap: 20px;
+  background-color: #48aff3; /* Azul sólido */
+  padding: 30px; /* Aumentar el padding dentro del formulario */
+  gap: 25px; /* Mayor separación entre los elementos */
+  width: 100%;
+  border-radius: 8px;
+  border: none; /* Eliminamos borde */
+}
+
+/* Agrupación de cada par label + input */
+.formgroup {
+  display: flex;
+  flex-direction: column; /* Cambiar a columna para que los inputs no se apilen */
+  align-items: flex-start; /* Alinear etiquetas e inputs a la izquierda */
+  gap: 10px; /* Espacio entre el label y el input */
   width: 100%;
 }
 
-.form input {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.form label {
-  color: var(--black-opacity);
-  font-size: 14px;
-  font-style: bold;
-}
-
+/* Estilo para los inputs */
 .input {
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
   width: 100%;
+  max-width: 300px;
   box-sizing: border-box;
+  background-color: white;
+  line-height: 20px;
+}
+
+/* Estilo para los checkbox containers */
+.checkboxContainer {
+  display: flex;
+  flex-direction: column; /* Cambio a columna para alinear mejor */
+  align-items: flex-start; /* Alineación a la izquierda */
+  margin-bottom: 12px; /* Un poco más de espacio entre elementos */
+}
+
+/* Estilo para la etiqueta del checkbox */
+.checkboxLabel {
+  font-size: 14px;
+  color: var(--black-opacity);
+  margin-left: 8px;
+  cursor: pointer;
+  line-height: 20px; /* Asegurar que esté bien alineada */
+}
+
+/* Estilo para los botones de editar y eliminar */
+.buttons {
+  display: flex;
+  gap: 8px; /* Separación entre los botones */
+  margin-top: 8px; /* Un poco de margen superior */
+}
+
+.deleteTopicBtn,
+.editTopicBtn {
+  padding: 8px 12px; /* Hacer los botones más pequeños */
+  background-color: var(--blue-btn);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px; /* Reducir el tamaño de la fuente */
+  width: auto; /* Ajuste para que no ocupen todo el ancho */
+  max-width: 150px; /* Ajustar el ancho máximo */
+  font-weight: bold;
 }
 
 .btn {
@@ -53,25 +97,18 @@
   cursor: pointer;
   font-size: 16px;
   width: 100%;
-  max-width: 200px;
+  max-width: 300px;
   margin: 0 auto;
   font-weight: bold;
 }
 
-.btn:hover {
+.btn:hover,
+.deleteTopicBtn:hover,
+.editTopicBtn:hover {
   background-color: var(--blue-btn-hover);
 }
 
-.error {
-  color: red;
-  font-size: 14px;
-}
-
-.success {
-  color: green;
-  font-size: 14px;
-}
-
+/* Mensajes de error para los campos */
 .fieldError {
   background-color: var(--error-color);
   color: #fff;
@@ -83,4 +120,12 @@
   margin-top: 5px;
   opacity: 1;
   transition: opacity 0.5s ease-out;
+}
+
+/* Estilo para los mensajes de éxito */
+.success {
+  color: green;
+  font-size: 14px;
+  margin-top: 20px;
+  text-align: center;
 }

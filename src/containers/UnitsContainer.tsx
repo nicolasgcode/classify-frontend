@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { loadUnits, removeUnit } from '../utils';
 import { Unit } from '../types';
 import { UnitList } from '../components';
+import { AddUnitContainer } from '../containers';
 import { useCourseStore } from '../store';
 
 function UnitsContainer() {
@@ -9,11 +10,22 @@ function UnitsContainer() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedUnit, setSelectedUnit] = useState<Unit | null >(null);
   const courseId = useCourseStore((state) => state.courseId);
 
   useEffect(() => {
     loadUnits(courseId, setUnits, setError, setIsLoading);
-  }, []);
+  }, [courseId]);
+
+  const handleEdit = (unit: Unit) => {
+    setSelectedUnit(unit);
+  };
+
+  const handleCancelEdit = () => {
+    if (selectedUnit !== null) {
+    setSelectedUnit(null);
+    }
+  };
 
   function handleSearch(event: React.ChangeEvent<HTMLInputElement>): void {
     setSearchTerm(event.target.value.toLowerCase());
@@ -25,33 +37,38 @@ function UnitsContainer() {
       return;
     }
     try {
-      await removeUnit(unitId); // Llama al backend para eliminar la unidad
-      updateList(unitId); // Actualiza la lista local después de la eliminación
+      await removeUnit(unitId); 
+      updateList(unitId);
     } catch (err) {
       setError('Error deleting unit: ' + (err as Error).message);
     }
   };
 
   const updateList = (unitId: number) => {
-    // Filtra la unidad eliminada del estado 'units'
     setUnits((prevUnits) => prevUnits.filter((unit) => unit.id !== unitId));
   };
-
-
 
   const filteredUnits = units.filter((unit) =>
     unit.title.toLowerCase().includes(searchTerm)
   );
 
+  console.log(selectedUnit)
+
   return (
-    <UnitList
-      units={filteredUnits}
-      isLoading={isLoading}
-      error={error}
-      handleSearch={handleSearch}
-      searchTerm={searchTerm}
-      onDeleteUnit={handleDeleteUnit} 
-    />
+    <div>
+      {selectedUnit ? ( <AddUnitContainer unit={selectedUnit} handleCancelEdit={handleCancelEdit}/> ) 
+      : (
+        <UnitList
+          units={filteredUnits}
+          isLoading={isLoading}
+          error={error}
+          onEdit={handleEdit}
+          handleSearch={handleSearch}
+          searchTerm={searchTerm}
+          onDelete={handleDeleteUnit} 
+        />
+      )}
+    </div>
   );
 }
 

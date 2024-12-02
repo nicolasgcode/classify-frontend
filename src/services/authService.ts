@@ -1,9 +1,9 @@
 import axios from '../libs/axios.ts';
-import { loginResponse } from '../types';
+import { loginResponse, loginRequestData } from '../types';
 
-export const loginRequest = async (email: string, password: string) => {
+export const loginRequest = async (data: loginRequestData) => {
   return await axios.post<loginResponse>('/login', {
-    email,
-    password,
+    email: data.email,
+    password: data.password,
   });
 };

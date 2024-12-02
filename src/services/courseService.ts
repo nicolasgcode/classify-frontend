@@ -5,7 +5,6 @@ import {
   courseDetails,
   Topic,
   Unit,
-  CreateCourseResponse,
 } from '../types';
 
 export const getCourses = async (): Promise<CourseData[]> => {
@@ -39,21 +38,32 @@ export const getCourse = async (courseId: number): Promise<CourseData> => {
   }
 };
 
-export const createCourse = async (course: CourseData): Promise<CourseData> => {
+export const createCourse = async (data: CourseData): Promise<CourseData> => {
   try {
-    // Especificamos que la respuesta de axios será de tipo CourseData
-    const response = await axios.post<CreateCourseResponse>(
-      '/api/courses',
-      course
-    );
-    const createdCourse = response.data.course.courseCreated;
-    console.log(response.data.course.courseCreated.id);
-    return createdCourse;
+    const response = await axios.post<CourseData>('/api/courses', {
+      ...data,
+      price: Number(data.price),
+    });
+    console.log(response);
+    return response.data;
   } catch (err) {
-    throw new Error(
-      'Error adding course: ' +
-        (err instanceof Error ? err.message : 'Unknown error')
-    );
+    throw new Error('Error creating user: ' + (err as Error).message);
+  }
+};
+
+export const updateCourse = async (
+  id: number,
+  data: CourseData
+): Promise<CourseData> => {
+  try {
+    const response = await axios.patch<CourseData>(`/api/courses/${id}`, {
+      ...data,
+      price: Number(data.price),
+    });
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    throw new Error('Error creating user: ' + (err as Error).message);
   }
 };
 
@@ -77,6 +87,30 @@ export const getTopics = async (): Promise<Topic[]> => {
       'Error fetching topics: ' +
         (err instanceof Error ? err.message : 'Unknown error')
     );
+  }
+};
+
+export const createTopic = async (data: Topic): Promise<Topic> => {
+  try {
+    const response = await axios.post<Topic>('/api/topics', {
+      ...data,
+    });
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    throw new Error('Error creating user: ' + (err as Error).message);
+  }
+};
+
+export const updateTopic = async (id: number, data: Topic): Promise<Topic> => {
+  try {
+    const response = await axios.put<Topic>(`/api/topics/${id}`, {
+      ...data,
+    });
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    throw new Error('Error creating user: ' + (err as Error).message);
   }
 };
 
@@ -118,23 +152,32 @@ export const getUnitsByCourse = async (courseId: number): Promise<Unit[]> => {
   }
 };
 
-export const addUnitToLevel = async (
-  courseId: number, // ID del curso al que pertenece el nivel
-  unitData: Unit // Datos de la nueva unidad
+export const addUnitToCourse = async (
+  courseId: number,
+  unitData: Unit
 ): Promise<void> => {
   try {
-    // Realizamos la solicitud POST para agregar la unidad al nivel
     const response = await axios.post(
-      `/api/courses/${courseId}/units`, // Ruta para agregar una unidad al nivel
-      unitData // Datos de la nueva unidad
+      `/api/courses/${courseId}/units`,
+      unitData
     );
-
     console.log('Unit added successfully:', response.data);
   } catch (err) {
-    // Manejo de errores
     throw new Error(
       'Error adding unit to level: ' +
         (err instanceof Error ? err.message : 'Unknown error')
     );
+  }
+};
+
+export const updateUnit = async (id: number, data: Unit): Promise<Unit> => {
+  try {
+    const response = await axios.put<Unit>(`/api/units/${id}`, {
+      ...data,
+    });
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    throw new Error('Error updating unit: ' + (err as Error).message);
   }
 };

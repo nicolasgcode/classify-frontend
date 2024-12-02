@@ -1,57 +1,64 @@
-import axios from '../../libs/axios.ts';
-
 import { useEffect, useState } from 'react';
 import styles from './TopicModal.module.css'; 
-import { useForm } from '../../hooks';
+import { useForm } from 'react-hook-form';
+import { createTopic, updateTopic } from '../../services';
+import { Topic } from '../../types';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
+const schema = z.object({
+  description: z.string().min(1),
+});
 
-interface TopicModalProps {
-  isOpen: boolean; 
-  onClose: () => void; 
-  onTopicAdded: (newTopic: Topic) => void; 
-  topicToEdit?: Topic; 
+export type TopicFields = z.infer<typeof schema>;
+
+type TopicModalProps = {
+  topic?: Topic
+  handleCancelEdit?: () => void;
 }
 
-function TopicModal({ isOpen, onClose, onTopicAdded, topicToEdit }: TopicModalProps) {
-  const validate = (values: { description: string }) => {
-    const errors: { [key: string]: string } = {};
-    if (!values.description) {
-      errors.description = 'Topic description is required';
-    }
-    return errors;
-  };
+function TopicModal({ isOpen, onClose, topic, }: TopicModalProps) {
 
-  const { values, handleChange, handleSubmit, reset, errors } = useForm(
-    { description: topicToEdit ? topicToEdit.description : '' },
-    validate
-  );
+  const [success, setSuccess] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
+ const { register, handleSubmit, reset,  formState: {errors, isSubmitting}, } = useForm<TopicFields>({defaultValues: topic ? {
+    description: topic.description
+ } : undefined, 
+ resolver: zodResolver(schema)});
 
  const [hasInitialized, setHasInitialized] = useState(false);
 
   useEffect(() => {
-    if (topicToEdit && !hasInitialized) {
-      // Solo resetear una vez, cuando el modal se abre y no se ha inicializado aún
-      reset({ description: topicToEdit.description });
-      setHasInitialized(true); // Marcar como inicializado
+    if (topic && !hasInitialized) {
+      reset({ description: topic.description });
+      setHasInitialized(true); 
     }
-  }, [topicToEdit, reset, hasInitialized]);
+  }, [topic, reset, hasInitialized]);
 
-  const handleAddTopic = async () => {
+
+  async function onSubmit(data: TopicFields) {
+    if (topic) {
+      try {
+        await updateTopic(topic.id, data);
+        setSuccess('Topic updated successfully!');
+        setError(null);
+        onClose();
+      } catch {
+        setError('Error updating topic, please try again');
+        setSuccess(null);
+      }
+    } else {
     try {
-      const response = topicToEdit
-        ? await axios.put(`http://localhost:3000/api/topics/${topicToEdit.id}`, {
-            description: values.description,
-          })
-        : await axios.post('http://localhost:3000/api/topics', { description: values.description });
-
-      const newTopic = response.data.data;
-      onTopicAdded(newTopic); 
-      reset();
-      onClose(); 
-    } catch (error) {
-      console.error('Error adding or updating topic:', error);
+      await createTopic(data);
+      setSuccess('Topic created successfully!');
+      onClose();
+      setError(null);
+    } catch {
+      setError('Error creating topic, please try again');
+      setSuccess(null);
     }
+  }
   };
 
   if (!isOpen) return null;
@@ -59,24 +66,22 @@ function TopicModal({ isOpen, onClose, onTopicAdded, topicToEdit }: TopicModalPr
   return (
     <div className={styles.modal}>
       <div className={styles.modalContent}>
-        <h2>{topicToEdit ? 'Edit Topic' : 'Add New Topic'}</h2>
-        <form onSubmit={handleSubmit(handleAddTopic)}>
+        <h2>{topic ? 'Edit Topic' : 'Add New Topic'}</h2>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label htmlFor="description">Topic Description</label>
             <input
               id="description"
               type="text"
-              name="description"
-              value={values.description}
-              onChange={handleChange}
+              {...register('description')}
               className={styles.input}
             />
-            {errors.description && <div className={styles.fieldError}>{errors.description}</div>}
+            {errors.description && <div className={styles.fieldError}>{errors.description.message}</div>}
           </div>
 
           <div className={styles.buttons}>
-            <button type="submit" className={styles.addBtn}>
-              {topicToEdit ? 'Save Changes' : 'Add Topic'}
+            <button type="submit" className={styles.addBtn} disabled={isSubmitting}>
+              {topic ? 'Save Changes' : 'Add Topic'}
             </button>
             <button type="button" onClick={onClose} className={styles.closeBtn}>
               Close
@@ -84,6 +89,8 @@ function TopicModal({ isOpen, onClose, onTopicAdded, topicToEdit }: TopicModalPr
           </div>
         </form>
       </div>
+      {success && <p className={styles.success}>{success}</p>}
+      {error && <p className={styles.error}>{error}</p>}
     </div>
   );
 }

@@ -1,119 +1,138 @@
 import { CourseFormProps } from '../../types';
 import styles from './CourseForm.module.css';
+import Select from 'react-select';
+import { Controller } from 'react-hook-form';
 
-function CourseForm({
-  values,
-  handleChange,
+export function CourseForm({
+  register,
   onSubmit,
   success,
   error,
   errors,
-  isEditing,
   handleAddTopic,
   handleEditTopic,
-  handleDeleteTopic, // Recibe la función de eliminar
+  handleDeleteTopic,
   topicsList,
+  course,
+  handleCancelEdit,
+  control,
 }: CourseFormProps) {
   return (
     <div className={styles.container}>
-      <h2>{isEditing ? 'Edit Course' : 'Add Course'}</h2>
+      <h2>{course ? 'Edit Course' : 'Add Course'}</h2>
       <form className={styles.form} onSubmit={onSubmit}>
-        <div>
+        
+        <div className={styles.formgroup}>
           <label htmlFor="title">Title</label>
           <input
             type="text"
             id="title"
-            name="title"
-            value={values.title}
-            onChange={handleChange}
+            {...register('title')}
             className={styles.input}
           />
-          {errors.title && <span className={styles.fieldError}>{errors.title}</span>}
+          {errors.title && <span className={styles.fieldError}>{errors.title.message}</span>}
         </div>
 
-        <div>
+        <div className={styles.formgroup}>
           <label htmlFor="price">Price</label>
           <input
             type="number"
             id="price"
-            name="price"
-            value={values.price}
-            onChange={handleChange}
+            {...register('price')}
             className={styles.input}
           />
-          {errors.price && <span className={styles.fieldError}>{errors.price}</span>}
+          {errors.price && <span className={styles.fieldError}>{errors.price.message}</span>}
         </div>
 
-        <div>
-          <label htmlFor="topics">Topics</label>
-          <select
-            id="topics"
-            name="topics"
-            multiple
-            value={values.topics}
-            onChange={handleChange}
-            className={styles.input}
-          >
+        <div className={styles.formgroup}>
+          <label>Topics</label>
+          <div className={styles.topicsList}>
             {topicsList.map((topic) => (
-              <option key={topic.id} value={topic.id}>{topic.description}</option>
+              <div key={topic.id} className={styles.checkboxContainer}>
+                <input
+                  type="checkbox"
+                  id={`topic-${topic.id}`}
+                  value={topic.id.toString()}
+                  {...register('topics')}
+                  className={styles.input}
+                />
+                <label htmlFor={`topic-${topic.id}`} className={styles.checkboxLabel}>
+                  {topic.description}
+                </label>
+
+                <div className={styles.buttons}>
+                  <button
+                    type="button"
+                    className={styles.editTopicBtn}
+                    onClick={() => handleEditTopic(topic.id)}
+                  >
+                    Edit Topic
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.deleteTopicBtn}
+                    onClick={() => handleDeleteTopic(topic.id)}
+                  >
+                    Delete Topic
+                  </button>
+                </div>
+              </div>
             ))}
-          </select>
-          {errors.topics && <span className={styles.fieldError}>{errors.topics}</span>}
+          </div>
+          {errors.topics && <span className={styles.fieldError}>{errors.topics.message}</span>}
 
           <div className={styles.buttons}>
             <button type="button" className={styles.btn} onClick={handleAddTopic}>
               Add New Topic
             </button>
-            {values.topics.length === 1 && (
-              <>
-                <button
-                  type="button"
-                  className={styles.btn}
-                  onClick={() => handleEditTopic(Number(values.topics))}
-                >
-                  Edit Selected Topic
-                </button>
-
-                <button
-                  type="button"
-                  className={styles.btn}
-                  onClick={() => handleDeleteTopic(Number(values.topics))}
-                >
-                  Delete Selected Topic
-                </button>
-              </>
-            )}
           </div>
         </div>
 
-        <div>
-            <label htmlFor="level">Level</label>
-            <select
-              id="level"
-              name="level"
-              value={values.level}
-              onChange={handleChange} 
-              className={styles.input}
-            >
-              <option value="beginner">Beginner</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="advanced">Advanced</option>
-            </select>
-            {errors.level && <span className={styles.fieldError}>{errors.level}</span>}
-          </div>
+        <div className={styles.formgroup}>
+          <Controller
+            name="level"
+            control={control}
+            defaultValue={course ? course.level : 'Beginner'}
+            render={({ field }) => (
+              <Select
+                {...field}
+                options={[
+                  { value: 'beginner', label: 'Beginner' },
+                  { value: 'intermediate', label: 'Intermediate' },
+                  { value: 'advanced', label: 'Advanced' }
+                ]}
+                onChange={(selectedOption) => {
+                  console.log('Selected value:', selectedOption?.value);
+                  field.onChange(selectedOption?.value);
+                }}
+                value={field.value ? { value: field.value, label: field.value } : null}
+              />
+            )}
+          />
+          {errors.level && <span className={styles.fieldError}>{errors.level.message}</span>}
+        </div>
 
         <button type="submit" className={styles.btn}>
-          {isEditing ? 'Save Changes' : 'Add Course'}
+          {course ? 'Save Changes' : 'Add Course'}
         </button>
+
+        {course && (
+          <button onClick={handleCancelEdit} className={styles.btn}>
+            Cancel Edit
+          </button>
+        )}
       </form>
 
       {error && <span className={styles.fieldError}>{error}</span>}
-      {success && <span className={styles.fieldSuccess}>{success}</span>}
+      {success && <span className={styles.success}>{success}</span>}
     </div>
   );
 }
 
 export default CourseForm;
+
+
+
 
 
 

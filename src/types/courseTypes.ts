@@ -1,49 +1,53 @@
+import { UseFormRegister, FieldErrors } from 'react-hook-form';
+import { CourseFields } from '../containers/AddCourseContainer.tsx';
+import { UnitFields } from '../containers/AddUnitContainer.tsx';
+
 export interface CourseData {
-  id?: number;
+  id: number;
   title: string;
   price: number;
   level: string;
   topics: Topic[];
+  units: Unit[];
 }
 
 export interface Topic {
-  id: number;
+  id?: number | null;
   description: string;
 }
 
 export interface Unit {
-  id?: number;
+  id: number;
   title: string;
   description: string;
   content: string;
 }
 
 export interface CourseFormProps {
-  values: CourseData;
-  handleChange: (
-    event:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>
-  ) => void;
+  register: UseFormRegister<CourseFields>;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   handleCancel?: () => void;
   handleAddTopic: () => void;
   handleEditTopic: (topicId: number) => void;
+  handleCancelEdit: () => void;
+  handleDeleteTopic: (topicId: number) => void;
+  course: CourseData | null;
   success: string | null;
   error: string | null;
-  errors: { [key: string]: string };
-  isEditing?: boolean;
+  isSubmitting: boolean;
+  errors: FieldErrors<CourseFields>;
   topicsList: Topic[];
 }
 
 export interface UnitFormProps {
-  unitData: Unit; // Datos de la unidad
-  setUnitData: React.Dispatch<React.SetStateAction<Unit>>; // Función para cambiar los datos de la unidad
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void; // Función para manejar el submit del formulario
-  success: string | null; // Mensaje de éxito
-  error: string | null; // Mensaje de error
-  errors: { [key: string]: string }; // Errores de validación por campo
-  courseId: number; // ID del curso
+  register: UseFormRegister<UnitFields>;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  handleCancelEdit: () => void;
+  unit: Unit | null;
+  success: string | null;
+  error: string | null;
+  isSubmitting: boolean;
+  errors: FieldErrors<UnitFields>;
 }
 
 export interface UnitListProps {

@@ -2,6 +2,7 @@ import { CourseListProps } from '../../types';
 import { useAuthStore } from '../../store';
 import { useNavigate } from 'react-router-dom';
 import { CourseData } from '../../types';
+import { useCourseStore } from '../../store';
 
 import styles from './CourseList.module.css';
 
@@ -16,6 +17,7 @@ export default function CourseList({
 }: CourseListProps & { onDelete: (courseId: number) => void; onEdit: (course: CourseData) => void }) {
 
   const admin = useAuthStore(state => state.admin);
+  const { setCourseId } = useCourseStore();
   const navigate = useNavigate();
 
   if (isLoading) {
@@ -28,6 +30,11 @@ export default function CourseList({
 
   if (!Array.isArray(courses)) {
     return <div className={styles.container}>Error: courses is not an array</div>;
+  }
+
+  function seeUnits (courseId : number) {
+    setCourseId(courseId);
+    navigate('/see-units');
   }
 
   return (
@@ -61,7 +68,7 @@ export default function CourseList({
             </div>
 
             <div className={styles.topics}>
-              <h3>Tópicos:</h3>
+              <h3>Topics:</h3>
               {Array.isArray(course.topics) && course.topics.length > 0 ? (
                 <div>
                   {course.topics.map((topic, topicIndex) => (
@@ -75,12 +82,27 @@ export default function CourseList({
               )}
             </div>
 
+             <div className={styles.units}>
+              <h3>Units:</h3>
+              {Array.isArray(course.units) && course.units.length > 0 ? (
+                <div>
+                  {course.units.map((unit, unitIndex) => (
+                    <div key={unit.id || unitIndex} className={styles.topicItem}>
+                      {unit.title}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p>No topics available.</p>
+              )}
+            </div>
+
             {!admin && <button className={styles.addBtn}>Add +</button>}
             {admin && (
               <div className={styles.adminButtons}>
                 <button className={styles.editBtn} onClick={ ()=> onEdit(course)}>Edit</button>
                 <button className={styles.deleteBtn} onClick={() => onDelete(course.id)}>Delete</button>
-                <button className={styles.seeUnits} onClick={() => navigate('/see-units')}>See Units</button>
+                <button className={styles.seeUnits} onClick={() => seeUnits(course.id)}>See Units</button>
               </div>
             )}
           </li>

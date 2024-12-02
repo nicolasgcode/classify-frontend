@@ -17,7 +17,7 @@ type TopicModalProps = {
   handleCancelEdit?: () => void;
 }
 
-function TopicModal({ isOpen, onClose, onTopicAdded, topic, handleCancelEdit }: TopicModalProps) {
+function TopicModal({ isOpen, onClose, topic, }: TopicModalProps) {
 
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);

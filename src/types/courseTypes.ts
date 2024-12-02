@@ -8,6 +8,7 @@ export interface CourseData {
   price: number;
   level: string;
   topics: Topic[];
+  units: Unit[];
 }
 
 export interface Topic {

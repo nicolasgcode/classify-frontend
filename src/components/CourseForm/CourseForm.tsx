@@ -63,14 +63,14 @@ export function CourseForm({
                 <div className={styles.buttons}>
                   <button
                     type="button"
-                    className={styles.btn}
+                    className={styles.editTopicBtn}
                     onClick={() => handleEditTopic(topic.id)}
                   >
                     Edit Topic
                   </button>
                   <button
                     type="button"
-                    className={styles.btn}
+                    className={styles.deleteTopicBtn}
                     onClick={() => handleDeleteTopic(topic.id)}
                   >
                     Delete Topic

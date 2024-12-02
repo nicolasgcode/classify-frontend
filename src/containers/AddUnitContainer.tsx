@@ -25,7 +25,7 @@ function AddUnitContainer({ unit, handleCancelEdit }: UnitFormProps) {
   const [error, setError] = useState <string | null>(null);
   const [success, setSuccess] = useState <string | null>(null);
   
-  const { register, handleSubmit, formState: {errors, isSubmitting}, } = useForm<UnitFields>({defaultValues: unit ? {
+  const { register, handleSubmit, reset, formState: {errors, isSubmitting}, } = useForm<UnitFields>({defaultValues: unit ? {
     title: unit.title,
     description: unit.description,
     content: unit.content,
@@ -47,6 +47,8 @@ function AddUnitContainer({ unit, handleCancelEdit }: UnitFormProps) {
       await addUnitToCourse(courseId, data);
       setSuccess('Unit added successfully!');
       setError(null);
+      reset();
+
     } catch {
       setError('Error adding unit, please try again');
       setSuccess(null);

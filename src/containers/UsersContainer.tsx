@@ -33,7 +33,7 @@ export default function UsersContainer() {
       await deleteUser(userId);
       updateList(userId); 
     } catch (err) {
-      setError('Error deleting course: ' + (err as Error).message);
+      setError('Error deleting user: ' + (err as Error).message);
     }
   }
 

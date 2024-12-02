@@ -1,28 +1,32 @@
-
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 40px 20px; /* Aumento de padding superior/inferior */
   border-radius: 8px;
   width: 100%;
-  max-width: 600px;
+  max-width: 450px; /* Reducción del ancho máximo */
   margin: 0 auto;
 }
 
 .container h2 {
   color: var(--black-opacity);
-  margin: 20px 0px 20px 0px;
+  margin: 20px 0;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  background-color: rgba(72, 175, 243, 0.5);
-  gap: 20px;
+  background-color: #48aff3; /* Azul sólido */
+  padding: 30px; /* Aumentar el padding dentro del formulario */
+  gap: 25px; /* Mayor separación entre los elementos */
   width: 100%;
+  border-radius: 8px;
+  border: none; /* Eliminamos borde */
 }
-
 .form input,
 .form textarea {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);

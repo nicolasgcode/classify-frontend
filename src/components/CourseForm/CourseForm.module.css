@@ -53,33 +53,41 @@
 /* Estilo para los checkbox containers */
 .checkboxContainer {
   display: flex;
-  align-items: center;
-  margin-bottom: 8px;
+  flex-direction: column; /* Cambio a columna para alinear mejor */
+  align-items: flex-start; /* Alineación a la izquierda */
+  margin-bottom: 12px; /* Un poco más de espacio entre elementos */
 }
 
-/* Etiqueta del checkbox */
+/* Estilo para la etiqueta del checkbox */
 .checkboxLabel {
   font-size: 14px;
   color: var(--black-opacity);
   margin-left: 8px;
   cursor: pointer;
+  line-height: 20px; /* Asegurar que esté bien alineada */
 }
 
-/* Mensajes de error para los campos */
-.fieldError {
-  background-color: var(--error-color);
-  color: #fff;
-  padding: 5px;
-  font-size: 12px;
-  width: 250px;
-  text-align: center;
-  border-radius: 5px;
-  margin-top: 5px;
-  opacity: 1;
-  transition: opacity 0.5s ease-out;
+/* Estilo para los botones de editar y eliminar */
+.buttons {
+  display: flex;
+  gap: 8px; /* Separación entre los botones */
+  margin-top: 8px; /* Un poco de margen superior */
 }
 
-/* Botones */
+.deleteTopicBtn,
+.editTopicBtn {
+  padding: 8px 12px; /* Hacer los botones más pequeños */
+  background-color: var(--blue-btn);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px; /* Reducir el tamaño de la fuente */
+  width: auto; /* Ajuste para que no ocupen todo el ancho */
+  max-width: 150px; /* Ajustar el ancho máximo */
+  font-weight: bold;
+}
+
 .btn {
   padding: 12px 15px;
   background-color: var(--blue-btn);
@@ -94,8 +102,24 @@
   font-weight: bold;
 }
 
-.btn:hover {
+.btn:hover,
+.deleteTopicBtn:hover,
+.editTopicBtn:hover {
   background-color: var(--blue-btn-hover);
+}
+
+/* Mensajes de error para los campos */
+.fieldError {
+  background-color: var(--error-color);
+  color: #fff;
+  padding: 5px;
+  font-size: 12px;
+  width: 250px;
+  text-align: center;
+  border-radius: 5px;
+  margin-top: 5px;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
 }
 
 /* Estilo para los mensajes de éxito */

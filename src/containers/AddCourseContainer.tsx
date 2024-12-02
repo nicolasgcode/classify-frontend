@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { createCourse, deleteTopic, updateCourse } from '../services';
+import { createCourse, deleteTopic, updateCourse, updateTopic } from '../services';
 import { loadTopics } from '../utils';
 import { CourseForm, TopicModal } from '../components';
 import { CourseData, Topic } from '../types';
@@ -55,6 +55,7 @@ const { register, handleSubmit, control, setValue, formState: {errors, isSubmitt
   };
 
   const handleEditTopic = (topicId: number) => {
+ 
     const topic = topics.find((t) => t.id === topicId);
     if (topic) {
       setEditingTopic(topic); 
@@ -70,12 +71,16 @@ const { register, handleSubmit, control, setValue, formState: {errors, isSubmitt
     }
   }
 
-const UpdateTopics = (topicId: number) => {
+  const UpdateTopics = (topicId: number) => {
     setTopics((prevTopics) => prevTopics.filter((topic) => topic.id !== topicId));
 
   };
 
   const handleDeleteTopic = (topicId: number ) => {
+    const confirmed = window.confirm('Are you sure you want to delete this topic?');
+    if (!confirmed) {
+      return;
+    }
     borrarTopic(topicId);
     UpdateTopics(topicId);
   }

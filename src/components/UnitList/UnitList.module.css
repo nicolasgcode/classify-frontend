@@ -37,8 +37,8 @@
 
 .courseHeader {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column; /* Los elementos se alinean en columna, uno debajo del otro */
+  gap: 10px;
 }
 
 .coursePrice {

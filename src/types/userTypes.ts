@@ -5,12 +5,12 @@ export interface User {
   surname: string;
   email: string;
   password: string;
-  admin: boolean;
-  PurchaseRecord: Array<{ id: number }>;
+  admin?: boolean;
+  PurchaseRecord?: Array<{ id: number }>;
 }
 
 export interface UserData {
-  id: number;
+  id?: number;
   dni: string;
   name: string;
   surname: string;

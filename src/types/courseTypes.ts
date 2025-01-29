@@ -1,14 +1,14 @@
-import { UseFormRegister, FieldErrors } from 'react-hook-form';
+import { UseFormRegister, FieldErrors, Control } from 'react-hook-form';
 import { CourseFields } from '../containers/AddCourseContainer.tsx';
 import { UnitFields } from '../containers/AddUnitContainer.tsx';
 
 export interface CourseData {
-  id: number;
+  id?: number;
   title: string;
   price: number;
   level: string;
   topics: Topic[];
-  units: Unit[];
+  units?: Unit[];
 }
 
 export interface Topic {
@@ -26,12 +26,13 @@ export interface Unit {
 export interface CourseFormProps {
   register: UseFormRegister<CourseFields>;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  control: Control<CourseFields>;
   handleCancel?: () => void;
   handleAddTopic: () => void;
-  handleEditTopic: (topicId: number) => void;
-  handleCancelEdit: () => void;
-  handleDeleteTopic: (topicId: number) => void;
-  course: CourseData | null;
+  handleEditTopic: (topicId: number | undefined) => void;
+  handleCancelEdit: () => void | undefined;
+  handleDeleteTopic: (topicId: number | undefined) => void;
+  course: CourseData | undefined;
   success: string | null;
   error: string | null;
   isSubmitting: boolean;

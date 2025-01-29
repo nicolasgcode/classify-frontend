@@ -13,7 +13,9 @@ const schema = z.object({
 export type TopicFields = z.infer<typeof schema>;
 
 type TopicModalProps = {
-  topic?: Topic
+  topic?: Topic;
+  isOpen: boolean;
+  onClose: () => void;
   handleCancelEdit?: () => void;
 }
 
@@ -40,7 +42,11 @@ function TopicModal({ isOpen, onClose, topic, }: TopicModalProps) {
   async function onSubmit(data: TopicFields) {
     if (topic) {
       try {
-        await updateTopic(topic.id, data);
+        if (topic.id !== undefined && topic.id !== null) {
+          await updateTopic(topic.id, data);
+        } else {
+          setError('Invalid topic ID');
+        }
         setSuccess('Topic updated successfully!');
         setError(null);
         onClose();

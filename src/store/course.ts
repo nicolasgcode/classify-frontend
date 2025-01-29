@@ -6,7 +6,7 @@ type CourseState = {
 };
 
 type CourseActions = {
-  setCourseId: (id: number) => void; // Función para establecer el courseId
+  setCourseId: (id: number | undefined) => void; // Función para establecer el courseId
   resetCourseId: () => void; // Función para resetear el courseId
 };
 
@@ -14,7 +14,7 @@ export const useCourseStore = create(
   persist<CourseState & CourseActions>(
     (set) => ({
       courseId: null, // Valor inicial de courseId
-      setCourseId: (id: number) =>
+      setCourseId: (id: number | undefined) =>
         set({
           courseId: id, // Establecer el courseId
         }),

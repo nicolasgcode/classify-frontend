@@ -2,13 +2,13 @@ import { loginFormProps } from '../../types'
 import styles from './LoginForm.module.css'
 import { NavLink } from 'react-router-dom';
 
-function LoginForm<FormFields>({
+function LoginForm({
   register,
   onSubmit,
   error,
   errors,
   isSubmitting
-}: loginFormProps<FormFields>) {
+}: loginFormProps) {
  
    return (
     <div className={styles.loginform}>

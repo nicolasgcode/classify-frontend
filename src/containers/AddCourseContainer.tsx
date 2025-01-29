@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { createCourse, deleteTopic, updateCourse, updateTopic } from '../services';
+import { useForm, UseFormSetValue } from 'react-hook-form';
+import { createCourse, deleteTopic, updateCourse } from '../services';
 import { loadTopics } from '../utils';
 import { CourseForm, TopicModal } from '../components';
 import { CourseData, Topic } from '../types';
@@ -21,14 +21,15 @@ export type CourseFields = z.infer<typeof schema>;
 type CourseFormProps = {
   course? : CourseData
   handleCancelEdit?: () => void;
+  setValue: UseFormSetValue<CourseFields>;
 }
 
-function AddCourseContainer({ course, handleCancelEdit }: CourseFormProps) {
+function AddCourseContainer({ course, handleCancelEdit = () => {} }: CourseFormProps) {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [topics, setTopics] = useState<Topic[]>([]); 
   const [isTopicModalOpen, setIsTopicModalOpen] = useState(false); 
-  const [editingTopic, setEditingTopic] = useState<Topic | null>(null); 
+  const [editingTopic, setEditingTopic] = useState<Topic | null | undefined>(undefined); 
   const navigate = useNavigate();
   const { setCourseId } = useCourseStore();
   const courseId = useCourseStore((state) => state.courseId);
@@ -37,7 +38,7 @@ const { register, handleSubmit, control, setValue, formState: {errors, isSubmitt
   title: course.title,
   price: course.price.toString(),
   level: course.level,
-  topics: course.topics.map((topic) => topic.id.toString()),
+  topics: course.topics.map((topic) => topic.id?.toString()),
  } : undefined, 
  resolver: zodResolver(schema)});
 
@@ -54,7 +55,7 @@ const { register, handleSubmit, control, setValue, formState: {errors, isSubmitt
     setIsTopicModalOpen(false);
   };
 
-  const handleEditTopic = (topicId: number) => {
+  const handleEditTopic = (topicId: number | undefined) => {
  
     const topic = topics.find((t) => t.id === topicId);
     if (topic) {
@@ -63,7 +64,10 @@ const { register, handleSubmit, control, setValue, formState: {errors, isSubmitt
     }
   };
 
-  const borrarTopic = async (topicId: number) => {
+  const borrarTopic = async (topicId: number | undefined) => {
+    if (topicId == undefined) {
+      return
+    }
     try {
       await deleteTopic(topicId);
     } catch (err) {
@@ -76,11 +80,16 @@ const { register, handleSubmit, control, setValue, formState: {errors, isSubmitt
 
   };
 
-  const handleDeleteTopic = (topicId: number ) => {
+  const handleDeleteTopic = (topicId: number | undefined) => {
     const confirmed = window.confirm('Are you sure you want to delete this topic?');
     if (!confirmed) {
       return;
     }
+    
+    if (topicId == undefined) {
+      return
+    }
+
     borrarTopic(topicId);
     UpdateTopics(topicId);
   }
@@ -89,6 +98,7 @@ const { register, handleSubmit, control, setValue, formState: {errors, isSubmitt
 
     const price = parseFloat(data.price);
     const topics = data.topics.map((topicId) => parseInt(topicId, 10));
+  
 
     const updatedData = {
       ...data,
@@ -108,6 +118,7 @@ const { register, handleSubmit, control, setValue, formState: {errors, isSubmitt
       }
     } else {
     try {
+      console.log(updatedData)
       const createdCourse = await createCourse(updatedData);
       setSuccess('Course created successfully!');
       setCourseId(createdCourse.course.courseCreated.id);
@@ -146,7 +157,6 @@ const { register, handleSubmit, control, setValue, formState: {errors, isSubmitt
         topic={editingTopic}
         isOpen={isTopicModalOpen}
         onClose={closeTopicModal}
-        topicToEdit={editingTopic} 
       />
     </div>
   );

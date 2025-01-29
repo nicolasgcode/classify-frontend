@@ -52,7 +52,7 @@ export const createCourse = async (data: CourseData): Promise<CourseData> => {
 };
 
 export const updateCourse = async (
-  id: number,
+  id: number | undefined,
   data: CourseData
 ): Promise<CourseData> => {
   try {

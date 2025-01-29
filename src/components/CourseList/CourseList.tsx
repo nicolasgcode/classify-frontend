@@ -14,7 +14,7 @@ export default function CourseList({
   searchTerm,
   onDelete,
   onEdit
-}: CourseListProps & { onDelete: (courseId: number) => void; onEdit: (course: CourseData) => void }) {
+}: CourseListProps & { onDelete: (courseId: number | undefined) => void; onEdit: (course: CourseData) => void }) {
 
   const admin = useAuthStore(state => state.admin);
   const { setCourseId } = useCourseStore();
@@ -32,7 +32,7 @@ export default function CourseList({
     return <div className={styles.container}>Error: courses is not an array</div>;
   }
 
-  function seeUnits (courseId : number) {
+  function seeUnits (courseId : number | undefined) {
     setCourseId(courseId);
     navigate('/see-units');
   }

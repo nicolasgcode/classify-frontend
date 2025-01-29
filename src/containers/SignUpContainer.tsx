@@ -38,6 +38,10 @@ export default function SignUpContainer({ user, handleCancelEdit }: UserFormProp
 
   async function onSubmit(data: SignUpFields) {
     if (user) {
+      if (user.id === undefined || user.id === null) {
+        setError('Invalid user ID');
+        return;
+      }
       try {
         await updateUser(user.id, data);
         setSuccess('User updated successfully!');

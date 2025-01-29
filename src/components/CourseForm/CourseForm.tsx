@@ -3,7 +3,7 @@ import styles from './CourseForm.module.css';
 import Select from 'react-select';
 import { Controller } from 'react-hook-form';
 
-export function CourseForm({
+function CourseForm({
   register,
   onSubmit,
   success,
@@ -52,7 +52,7 @@ export function CourseForm({
                 <input
                   type="checkbox"
                   id={`topic-${topic.id}`}
-                  value={topic.id.toString()}
+                  value={topic.id?.toString()}
                   {...register('topics')}
                   className={styles.input}
                 />
@@ -64,14 +64,14 @@ export function CourseForm({
                   <button
                     type="button"
                     className={styles.editTopicBtn}
-                    onClick={() => handleEditTopic(topic.id)}
+                    onClick={() => topic.id !== null && handleEditTopic(topic.id)}
                   >
                     Edit Topic
                   </button>
                   <button
                     type="button"
                     className={styles.deleteTopicBtn}
-                    onClick={() => handleDeleteTopic(topic.id)}
+                    onClick={() => topic.id !== null && handleDeleteTopic(topic.id)}
                   >
                     Delete Topic
                   </button>

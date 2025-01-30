@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useForm, UseFormSetValue } from 'react-hook-form';
-import { createCourse, deleteTopic, updateCourse } from '../services';
+import { createCourse, deleteTopic, updateCourse, updateTopic } from '../services';
 import { loadTopics } from '../utils';
 import { CourseForm, TopicModal } from '../components';
 import { CourseData, Topic } from '../types';
@@ -10,10 +10,10 @@ import {z} from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const schema = z.object({
-  title: z.string().min(1),
-  price: z.string().min(1),
+  title: z.string().min(1, { message: "Title is required" }),
+  price: z.string().min(1, { message: "Price is required" }),
   level: z.string().min(1),
-  topics: z.array(z.string()).min(1),
+  topics: z.array(z.string()).min(1, { message: "At least one topic is required" }),
 });
 
 export type CourseFields = z.infer<typeof schema>;
@@ -46,6 +46,7 @@ const { register, handleSubmit, control, setValue, formState: {errors, isSubmitt
     loadTopics(setTopics, setError); 
   }, []);
 
+
   const openTopicModal = () => {
     setEditingTopic(null); 
     setIsTopicModalOpen(true);
@@ -53,6 +54,7 @@ const { register, handleSubmit, control, setValue, formState: {errors, isSubmitt
 
   const closeTopicModal = () => {
     setIsTopicModalOpen(false);
+    loadTopics(setTopics, setError);
   };
 
   const handleEditTopic = (topicId: number | undefined) => {
@@ -85,7 +87,7 @@ const { register, handleSubmit, control, setValue, formState: {errors, isSubmitt
     if (!confirmed) {
       return;
     }
-    
+
     if (topicId == undefined) {
       return
     }
@@ -98,7 +100,6 @@ const { register, handleSubmit, control, setValue, formState: {errors, isSubmitt
 
     const price = parseFloat(data.price);
     const topics = data.topics.map((topicId) => parseInt(topicId, 10));
-  
 
     const updatedData = {
       ...data,

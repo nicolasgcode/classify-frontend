@@ -19,7 +19,7 @@ type TopicModalProps = {
   handleCancelEdit?: () => void;
 }
 
-function TopicModal({ isOpen, onClose, topic, }: TopicModalProps) {
+function TopicModal({ isOpen, onClose, topic }: TopicModalProps) {
 
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -47,7 +47,6 @@ function TopicModal({ isOpen, onClose, topic, }: TopicModalProps) {
         } else {
           setError('Invalid topic ID');
         }
-        setSuccess('Topic updated successfully!');
         setError(null);
         onClose();
       } catch {
@@ -57,7 +56,6 @@ function TopicModal({ isOpen, onClose, topic, }: TopicModalProps) {
     } else {
     try {
       await createTopic(data);
-      setSuccess('Topic created successfully!');
       onClose();
       setError(null);
     } catch {

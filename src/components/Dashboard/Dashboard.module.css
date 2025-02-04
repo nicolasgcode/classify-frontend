@@ -1,6 +1,7 @@
 .dashboard {
   width: 100%;
   background-color: var(--light-blue-opacity);
+  position: relative;
 }
 
 .dashboard ul {
@@ -95,4 +96,129 @@
   font-size: 16px; /* Un tamaño de fuente más pequeño para el mensaje */
   font-weight: normal; /* Normal para el subtítulo */
   margin-top: 0; /* Sin margen extra arriba */
+}
+
+.dashboard {
+  width: 100%;
+  background-color: var(--light-blue-opacity);
+  position: relative; /* Esto es necesario para el posicionamiento del botón del carrito */
+}
+
+.dashboard ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.dashboard ul li {
+  margin: 0 15px;
+}
+
+.dashboard a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  position: relative;
+  padding: 10px 15px;
+  display: inline-block;
+}
+
+.dashboard a:hover {
+  color: #0057b3c2;
+}
+
+.logoutbtn:hover {
+  color: #c82333c4;
+}
+
+.dashboard a::after,
+.logoutbtn::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+.dashboard a::after {
+  background-color: var(--blue-btn-hover);
+}
+
+.logoutbtn::after {
+  background-color: #c82333c4;
+}
+
+.dashboard a:hover::after,
+.logoutbtn:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.logoutbtn {
+  color: var(--default-white);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.3s;
+  font-size: 16px;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  position: relative;
+  padding: 10px 15px;
+}
+
+.cart {
+  position: absolute; /* Para sacarlo del flujo normal */
+  top: 50%; /* Centrado verticalmente */
+  right: 50px; /* Alejado del borde derecho */
+  transform: translateY(
+    -50%
+  ); /* Ajusta para que quede perfectamente centrado */
+  background-color: var(--default-white); /* Color de fondo del botón */
+  border: 1px black;
+  padding: 8px 12px;
+  border-radius: 50%; /* Forma circular */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.cart:hover {
+  background-color: #e6e6e6; /* Hover con un color más oscuro */
+  transform: translateY(-50%) scale(1.1); /* Efecto de zoom */
+}
+
+.cart::before {
+  content: ''; /* Espacio para un ícono */
+  background-image: url('/public/imgs/shopping-cart.png'); /* Aquí pones el ícono del carrito */
+  background-size: cover;
+  width: 20px; /* Tamaño del ícono */
+  height: 20px; /* Tamaño del ícono */
+}
+
+.cart .itemCount {
+  position: absolute;
+  bottom: -4px; /* Coloca el contador ligeramente abajo */
+  right: -4px; /* Coloca el contador ligeramente a la derecha */
+  width: 18px; /* Tamaño del círculo */
+  height: 18px; /* Tamaño del círculo */
+  background-color: red; /* Fondo rojo */
+  color: white; /* Texto blanco */
+  border-radius: 50%; /* Círculo perfecto */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px; /* Tamaño del texto */
+  font-weight: bold;
+  padding: 2px; /* Espacio interno alrededor del número */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra ligera para resaltar el círculo */
 }

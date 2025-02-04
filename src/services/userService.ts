@@ -52,7 +52,7 @@ export const deleteUser = async (userId: number): Promise<void> => {
     await axios.delete(`/api/users/${userId}`);
   } catch (error) {
     throw new Error(
-      'Error deleting user: ' +
+      'Error deleting course: ' +
         (error instanceof Error ? error.message : 'Unknown error')
     );
   }

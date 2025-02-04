@@ -97,7 +97,7 @@ export default function CourseList({
               )}
             </div>
 
-            {!admin && <button className={styles.addBtn}>Add +</button>}
+            {!admin && <button className={styles.addBtn}> + Add to Cart</button>}
             {admin && (
               <div className={styles.adminButtons}>
                 <button className={styles.editBtn} onClick={ ()=> onEdit(course)}>Edit</button>

@@ -2,7 +2,7 @@ import { getUsers } from '../services';
 import { User } from '../types';
 
 export const loadUsers = async (
-  setCourses: React.Dispatch<React.SetStateAction<User[]>>,
+  setUsers: React.Dispatch<React.SetStateAction<User[]>>,
   setError: React.Dispatch<React.SetStateAction<string>>,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
@@ -10,7 +10,7 @@ export const loadUsers = async (
   try {
     const data = await getUsers();
     if (Array.isArray(data)) {
-      setCourses(data);
+      setUsers(data);
     } else {
       setError('Expected an array of courses');
     }

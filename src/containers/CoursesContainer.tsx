@@ -31,6 +31,7 @@ const CoursesContainer: React.FC = () => {
     }
     try {
       await deleteCourse(courseId);
+      console.log('hey there!')
       updateList(courseId); 
     } catch (err) {
       setError('Error deleting course: ' + (err as Error).message);
@@ -39,6 +40,7 @@ const CoursesContainer: React.FC = () => {
 
   const updateList = (courseId: number) => {
     setCourses((prevCourses) => prevCourses.filter((course) => course.id !== courseId));
+    console.log('im here!', courses)
   }
 
   const handleCancelEdit = () => {

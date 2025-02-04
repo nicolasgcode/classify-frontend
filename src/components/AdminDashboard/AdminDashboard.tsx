@@ -24,11 +24,11 @@ function AdminDashboard() {
   return (
     <nav className={styles.dashboard}>
       <ul>
-        <li>
+        {/* <li>
           <NavLink to="/admin/reports">Reports</NavLink>
-        </li>
+        </li> */}
         <li>
-          <NavLink to="admin/courses">Courses</NavLink>
+          <NavLink to="admin/courses">Manage Courses</NavLink>
         </li>
         <li>
           <NavLink to="/admin/users">Manage Users</NavLink>

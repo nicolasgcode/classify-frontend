@@ -28,7 +28,7 @@ function UserDashboard() {
           <NavLink to="/home">Home</NavLink>
         </li>
         <li>
-          <NavLink to="/courses">Courses</NavLink>
+          <NavLink to="/courses">Store</NavLink>
         </li>
         <li>
           <NavLink to="/account">Account</NavLink>
@@ -36,6 +36,9 @@ function UserDashboard() {
         <li>
           <button onClick={handleLogout} className={styles.logoutbtn}>Logout</button>
         </li>
+        <button className={styles.cart}>
+          <div className={styles.itemCount}>3</div>
+        </button>
       </ul>
       
       </nav>

@@ -4,12 +4,14 @@ import { User } from '../types';
 import { UserList } from '../components';
 import { SignUpContainer } from '../containers';
 import { deleteUser } from '../services';	
+import { useNavigate } from 'react-router-dom';
 
 export default function UsersContainer() {
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadUsers(setUsers, setError, setIsLoading);
@@ -26,12 +28,13 @@ export default function UsersContainer() {
 
    const handleDelete = async (userId: number) => {
     const isConfirmed = window.confirm('Are you sure you want to delete this user?');
-    if (!isConfirmed) {
-      return;
-    }
+      if (!isConfirmed) {
+        return;
+      }
     try {
       await deleteUser(userId);
-      updateList(userId); 
+      updateList(userId);
+      console.log('User deleted successfully');
     } catch (err) {
       setError('Error deleting user: ' + (err as Error).message);
     }
@@ -39,8 +42,10 @@ export default function UsersContainer() {
 
   const updateList = (userId: number) => {
     setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+    console.log('im here!', users)
   }
 
+ 
   return (
     <div>
       {selectedUser ? (

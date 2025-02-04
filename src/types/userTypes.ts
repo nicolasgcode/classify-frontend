@@ -26,4 +26,5 @@ export interface UserListProps {
   users: User[];
   isLoading: boolean;
   error: string;
+  onDelete: (userId: number) => void;
 }

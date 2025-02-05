@@ -6,12 +6,13 @@ import { useNavigate } from 'react-router-dom'
 import styles from '../Dashboard/Dashboard.module.css'
 
 
-import { useAuthStore } from '../../store'
+import { useAuthStore, useCartStore } from '../../store'
 
 
 function UserDashboard() {
 
   const logout = useAuthStore(state => state.logout)
+  const { items } = useCartStore();
 
 
   const navigate = useNavigate()
@@ -37,7 +38,7 @@ function UserDashboard() {
           <button onClick={handleLogout} className={styles.logoutbtn}>Logout</button>
         </li>
         <button className={styles.cart}>
-          <div className={styles.itemCount}>3</div>
+          <div className={styles.itemCount}>{items.length}</div>
         </button>
       </ul>
       

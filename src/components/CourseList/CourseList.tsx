@@ -2,7 +2,7 @@ import { CourseListProps } from '../../types';
 import { useAuthStore } from '../../store';
 import { useNavigate } from 'react-router-dom';
 import { CourseData } from '../../types';
-import { useCourseStore } from '../../store';
+import { useCourseStore, useCartStore } from '../../store';
 
 import styles from './CourseList.module.css';
 
@@ -17,6 +17,7 @@ export default function CourseList({
 }: CourseListProps & { onDelete: (courseId: number | undefined) => void; onEdit: (course: CourseData) => void }) {
 
   const admin = useAuthStore(state => state.admin);
+   const { items, addItem, removeItem } = useCartStore();
   const { setCourseId } = useCourseStore();
   const navigate = useNavigate();
 
@@ -97,7 +98,28 @@ export default function CourseList({
               )}
             </div>
 
-            {!admin && <button className={styles.addBtn}> + Add to Cart</button>}
+           {!admin && (
+              <>
+                {/* Botón "Add to Cart" */}
+                <button 
+                  className={`${styles.addBtn} ${items.includes(course.id) ? styles.disabled : ''}`} 
+                  onClick={() => course.id !== undefined && addItem(course.id)} 
+                  disabled={items.includes(course.id)} // Deshabilitar si ya está en el carrito
+                >
+                  + Add to Cart
+                </button>
+
+                {/* Botón "Remove from Cart" */}
+                {items.includes(course.id) && (
+                  <button 
+                    className={styles.removeBtn} 
+                    onClick={() => course.id !== undefined && removeItem(course.id)}
+                  >
+                    - Remove from Cart
+                  </button>
+                )}
+              </>
+            )}
             {admin && (
               <div className={styles.adminButtons}>
                 <button className={styles.editBtn} onClick={ ()=> onEdit(course)}>Edit</button>

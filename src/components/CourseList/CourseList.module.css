@@ -80,6 +80,7 @@
 }
 
 .addBtn,
+.removeBtn,
 .editBtn,
 .deleteBtn,
 .seeUnits {
@@ -92,6 +93,14 @@
   margin-left: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
+}
+
+.removeBtn {
+  background-color: var(--red-btn);
+}
+
+.removeBtn:hover {
+  background-color: var(--red-btn-hover);
 }
 
 .addBtn:hover,

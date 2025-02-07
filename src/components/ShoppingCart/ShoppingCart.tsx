@@ -14,7 +14,7 @@ export function ShoppingCart() {
       </div>
 
       {items.length === 0 ? (
-        <p>Your cart is empty!</p>
+        <p className={styles.cartEmpty}>Your cart is empty!</p>
       ) : (
         <>
           <ul style={{ listStyleType: 'none', padding: 0 }}>
@@ -37,7 +37,9 @@ export function ShoppingCart() {
         </>
       )}
 
+    { items.length > 0 && 
       <button className={styles.checkoutBtn}>Checkout</button>
+    }
     </div>
   );
 }

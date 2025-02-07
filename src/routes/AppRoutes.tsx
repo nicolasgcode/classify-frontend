@@ -14,7 +14,8 @@ import {
   SignUpPage,
   AddCoursePage,
   AddUnitPage,
-  UnitsPage
+  UnitsPage,
+  CartPage
 } from '../pages';
 
 import { PrivateRoutes, AdminRoutes } from '../routes'
@@ -50,6 +51,7 @@ function AppRoutes() {
           <Route path="/" element={<PrivateLayout />}>
             <Route path="/home" element={<HomePage />} />
             <Route path="/courses" element={<CoursesPage />} />
+            <Route path="/cart" element={<CartPage />} />
           </Route>
         </Route>
 

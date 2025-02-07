@@ -6,3 +6,4 @@ export * from './SignUpPage';
 export * from './AddCoursePage';
 export * from './AddUnitPage';
 export * from './UnitsPage';
+export * from './CartPage';

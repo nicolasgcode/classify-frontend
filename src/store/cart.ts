@@ -1,34 +1,39 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-// Interfaz para el store del carrito
+type CartItem = {
+  id: number;
+  title: string;
+  price: number;
+};
+
 interface CartStore {
-  items: number[]; // Lista de IDs de los cursos en el carrito
-  addItem: (courseId: number) => void; // Agregar un curso al carrito
-  removeItem: (courseId: number) => void; // Eliminar un curso del carrito
-  getTotalItems: () => number; // Obtener el número total de cursos en el carrito
+  items: CartItem[];
+  addItem: (id: number, title: string, price: number) => void;
+  removeItem: (id: number) => void;
+  getTotalItems: () => number;
 }
 
 export const useCartStore = create(
   persist<CartStore>(
     (set) => ({
-      items: [], // Lista vacía por defecto
-      addItem: (courseId: number) =>
+      items: [],
+      addItem: (id: number, title: string, price: number) =>
         set((state) => {
-          const updatedItems = [...state.items, courseId]; // Agregar un curso al carrito
+          const updatedItems = [...state.items, { id, title, price }];
           return { items: updatedItems };
         }),
-      removeItem: (courseId: number) =>
+      removeItem: (id: number) =>
         set((state) => {
-          const updatedItems = state.items.filter((item) => item !== courseId); // Eliminar un curso del carrito
+          const updatedItems = state.items.filter((item) => item.id !== id);
           return { items: updatedItems };
         }),
       getTotalItems: () => {
-        return 0;
+        return 0; // Este método no cambia nada si solo necesitas el número de artículos.
       },
     }),
     {
-      name: 'cart-items', // Nombre de la clave en localStorage
+      name: 'cart-items',
     }
   )
 );

@@ -100,17 +100,15 @@ export default function CourseList({
 
            {!admin && (
               <>
-                {/* Botón "Add to Cart" */}
                 <button 
-                  className={`${styles.addBtn} ${items.includes(course.id) ? styles.disabled : ''}`} 
-                  onClick={() => course.id !== undefined && addItem(course.id)} 
-                  disabled={items.includes(course.id)} // Deshabilitar si ya está en el carrito
+                  className={`${styles.addBtn} ${items.some(item => item.id === course.id) ? styles.disabled : ''}`} 
+                  onClick={() => course.id !== undefined && addItem(course.id, course.title, course.price)} 
+                  disabled={items.some(item => item.id === course.id)} 
                 >
                   + Add to Cart
                 </button>
 
-                {/* Botón "Remove from Cart" */}
-                {items.includes(course.id) && (
+                {course.id !== undefined && items.some(item => item.id === course.id) && (
                   <button 
                     className={styles.removeBtn} 
                     onClick={() => course.id !== undefined && removeItem(course.id)}

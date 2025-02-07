@@ -122,3 +122,12 @@
   width: 300px;
   border: 1px solid rgba(0, 0, 0, 0.603);
 }
+
+.disabled {
+  background-color: #d3d3d3; /* Gris claro */
+  color: #a9a9a9; /* Gris oscuro para el texto */
+  cursor: not-allowed; /* Cambiar el cursor para indicar que está deshabilitado */
+  pointer-events: none; /* Deshabilitar clics */
+  opacity: 0.7; /* Reduce la opacidad para que se vea apagado */
+  border: 1px solid #d3d3d3; /* Igual que el color de fondo */
+}

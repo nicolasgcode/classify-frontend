@@ -7,3 +7,5 @@ export * from './AddCoursePage';
 export * from './AddUnitPage';
 export * from './UnitsPage';
 export * from './CartPage';
+export * from './SuccessPage';
+export * from './CancelPage';

@@ -15,3 +15,4 @@ export {
 } from './courseService';
 export { loginRequest } from './authService';
 export { createUser, getUsers, updateUser, deleteUser } from './userService';
+export { createCheckout } from './checkoutService';

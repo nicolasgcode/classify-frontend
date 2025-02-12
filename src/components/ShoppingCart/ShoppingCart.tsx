@@ -1,11 +1,28 @@
 import styles from './ShoppingCart.module.css';
 import { useCartStore } from '../../store';
+import { createCheckout } from '../../services'
 
 export function ShoppingCart() {
   const { items, removeItem } = useCartStore((state) => state);
 
   // Calcular el total
   const total = items.reduce((acc, course) => acc + course.price, 0).toFixed(2); // Aseguramos que el total tenga dos decimales
+
+   async function onSubmit() {
+    const data = items.map((course) => ({
+      name: course.title,  // Nombre del curso
+      price: course.price * 100,  // El precio debe ser en centavos
+    }));
+    try {
+      const response = await createCheckout(data);
+      window.location.href = response.url;
+      return response;
+    } catch (error) {
+      console.log('Error creating checkout, please try again');
+      throw error;
+    }
+  }
+  
 
   return (
     <div className={styles.container}>
@@ -38,7 +55,7 @@ export function ShoppingCart() {
       )}
 
     { items.length > 0 && 
-      <button className={styles.checkoutBtn}>Checkout</button>
+      <button className={styles.checkoutBtn} onClick={onSubmit}>Checkout</button>
     }
     </div>
   );

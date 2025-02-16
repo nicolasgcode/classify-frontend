@@ -14,5 +14,11 @@ export {
   updateUnit,
 } from './courseService';
 export { loginRequest } from './authService';
-export { createUser, getUsers, updateUser, deleteUser } from './userService';
+export {
+  createUser,
+  getUsers,
+  updateUser,
+  deleteUser,
+  getUserCourses,
+} from './userService';
 export { createCheckout } from './checkoutService';

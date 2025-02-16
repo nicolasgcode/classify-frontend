@@ -1,5 +1,11 @@
 import axios from '../libs/axios';
-import { User, usersResponse, UserData } from '../types';
+import {
+  User,
+  usersResponse,
+  UserData,
+  userCourses,
+  CourseData,
+} from '../types';
 
 export const getUsers = async (): Promise<User[]> => {
   try {
@@ -54,6 +60,30 @@ export const deleteUser = async (userId: number): Promise<void> => {
     throw new Error(
       'Error deleting course: ' +
         (error instanceof Error ? error.message : 'Unknown error')
+    );
+  }
+};
+
+export const getUserCourses = async (userId: number): Promise<userCourses> => {
+  try {
+    const response = await axios.get<{ courses: CourseData[][] }>(
+      `/api/users/${userId}/courses`
+    );
+
+    // Check if the courses are properly structured and flatten them if needed
+    if (response.data.courses && Array.isArray(response.data.courses)) {
+      // Flatten the nested array structure
+      const flatCourses = response.data.courses.flat();
+
+      // Return the flattened courses
+      return { courses: flatCourses };
+    } else {
+      throw new Error('Unexpected response structure');
+    }
+  } catch (err) {
+    throw new Error(
+      'Error fetching users: ' +
+        (err instanceof Error ? err.message : 'Unknown error')
     );
   }
 };

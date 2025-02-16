@@ -1,2 +1,2 @@
 export { loadCourses, loadTopics, loadUnits, removeUnit } from './courseUtils';
-export { loadUsers } from './userUtils';
+export { loadUsers, loadUserCourses } from './userUtils';

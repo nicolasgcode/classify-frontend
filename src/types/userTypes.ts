@@ -1,3 +1,5 @@
+import { CourseData } from './';
+
 export interface User {
   id: number;
   dni: number;
@@ -24,6 +26,10 @@ export interface UserData {
 
 export interface usersResponse {
   users: User[];
+}
+
+export interface userCourses {
+  courses: CourseData[];
 }
 
 export interface UserListProps {

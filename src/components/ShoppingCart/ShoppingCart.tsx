@@ -1,20 +1,22 @@
 import styles from './ShoppingCart.module.css';
-import { useCartStore } from '../../store';
+import { useCartStore, useAuthStore } from '../../store';
 import { createCheckout } from '../../services'
 
 export function ShoppingCart() {
   const { items, removeItem } = useCartStore((state) => state);
+  const { userId } = useAuthStore((state) => state);
 
   // Calcular el total
   const total = items.reduce((acc, course) => acc + course.price, 0).toFixed(2); // Aseguramos que el total tenga dos decimales
 
    async function onSubmit() {
     const data = items.map((course) => ({
-      name: course.title,  // Nombre del curso
-      price: course.price * 100,  // El precio debe ser en centavos
+      id: course.id,
+      name: course.title,  
+      price: course.price * 100,  
     }));
     try {
-      const response = await createCheckout(data);
+      const response = await createCheckout(data, userId);
       window.location.href = response.url;
       return response;
     } catch (error) {

@@ -5,11 +5,13 @@ interface CheckoutResponse {
 }
 
 export const createCheckout = async (
-  data: { name: string; price: number }[]
+  data: { id: number; name: string; price: number }[],
+  userId: number
 ): Promise<CheckoutResponse> => {
   try {
     const response = await axios.post<CheckoutResponse>('/api/checkout', {
       data,
+      userId,
     });
     console.log(response);
     return response.data;

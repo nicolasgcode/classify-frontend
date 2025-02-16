@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f5f5f5;
+  text-align: center;
+}
+
+.container h1 {
+  font-family: 'Arial', sans-serif;
+  font-size: 3rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.container p {
+  font-family: 'Arial', sans-serif;
+  font-size: 1.25rem;
+  color: #666;
+  margin-top: 0;
+}

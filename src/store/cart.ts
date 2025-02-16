@@ -12,6 +12,7 @@ interface CartStore {
   addItem: (id: number, title: string, price: number) => void;
   removeItem: (id: number) => void;
   getTotalItems: () => number;
+  clearCart: () => void;
 }
 
 export const useCartStore = create(
@@ -31,6 +32,7 @@ export const useCartStore = create(
       getTotalItems: () => {
         return 0; // Este método no cambia nada si solo necesitas el número de artículos.
       },
+      clearCart: () => set({ items: [] }),
     }),
     {
       name: 'cart-items',

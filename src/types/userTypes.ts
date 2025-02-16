@@ -6,7 +6,11 @@ export interface User {
   email: string;
   password: string;
   admin?: boolean;
-  PurchaseRecord?: Array<{ id: number }>;
+  coursePurchaseRecords?: Array<{
+    id: number;
+    purchaseAt: Date;
+    courses: Array<{ title: string }>;
+  }>;
 }
 
 export interface UserData {

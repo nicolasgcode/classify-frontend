@@ -17,7 +17,6 @@ import {
   UnitsPage,
   CartPage,
   SuccessPage,
-  CancelPage
 } from '../pages';
 
 import { PrivateRoutes, AdminRoutes } from '../routes'
@@ -55,7 +54,6 @@ function AppRoutes() {
             <Route path="/courses" element={<CoursesPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/success" element={<SuccessPage />} />
-            <Route path="/cancel" element={<CancelPage />} />
           </Route>
         </Route>
 

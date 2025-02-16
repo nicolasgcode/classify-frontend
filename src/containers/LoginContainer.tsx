@@ -17,6 +17,8 @@ export type FormFields = z.infer<typeof schema>;
 function LoginContainer () {
   const setToken = useAuthStore(state => state.setToken)
   const setAdmin = useAuthStore(state => state.setAdmin)
+  const userId = useAuthStore(state => state.setUserId)
+
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const { register, handleSubmit, formState: {errors, isSubmitting}, } = useForm<FormFields>({resolver: zodResolver(schema)});
@@ -25,10 +27,11 @@ function LoginContainer () {
       try {
       const resLogin = await loginRequest(data);
       setToken(resLogin.data.token)
-      setAdmin(resLogin.data.admin)
+      setAdmin(resLogin.data.profile.admin)
+      userId(resLogin.data.profile.id)
       navigate('/home');
       console.log("Logged in!")
-      console.log(resLogin)
+      console.log(resLogin.data.profile)
     } catch {
       setError('Error logging in: invalid credentials' );
       console.log(data)

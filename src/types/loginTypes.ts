@@ -19,5 +19,10 @@ export interface loginResponse {
   status: number;
   success: boolean;
   token: string;
-  admin: boolean;
+  profile: {
+    id: number;
+    email: string;
+    name: string;
+    admin: boolean;
+  };
 }

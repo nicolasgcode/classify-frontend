@@ -1,0 +1,23 @@
+.profileContainer {
+  display: flex;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+  height: 100vh; /* Utiliza toda la altura de la ventana */
+  background-color: #f4f4f4; /* Fondo gris claro */
+  font-family: 'Arial', sans-serif; /* Fuente simple */
+}
+
+.welcomeUser {
+  text-align: center; /* Centra el texto dentro del contenedor */
+  background-color: white; /* Fondo blanco */
+  padding: 20px 30px; /* Espaciado interno */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.welcomeUser h1 {
+  font-size: 24px; /* Tamaño de fuente del título */
+  color: #333; /* Color de texto oscuro para contraste */
+  font-weight: 400; /* Peso de fuente normal */
+  margin: 0; /* Elimina el margen del h1 */
+}

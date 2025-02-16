@@ -18,6 +18,8 @@ function LoginContainer () {
   const setToken = useAuthStore(state => state.setToken)
   const setAdmin = useAuthStore(state => state.setAdmin)
   const userId = useAuthStore(state => state.setUserId)
+  const setUserName = useAuthStore(state => state.setUserName)
+
 
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
@@ -29,9 +31,9 @@ function LoginContainer () {
       setToken(resLogin.data.token)
       setAdmin(resLogin.data.profile.admin)
       userId(resLogin.data.profile.id)
+      setUserName(resLogin.data.profile.name)
       navigate('/home');
       console.log("Logged in!")
-      console.log(resLogin.data.profile)
     } catch {
       setError('Error logging in: invalid credentials' );
       console.log(data)

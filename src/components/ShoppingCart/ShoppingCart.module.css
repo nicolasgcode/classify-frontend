@@ -93,9 +93,9 @@
   text-align: center;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #555; /* Gris suave para el texto */
-  background-color: #f8f9fa; /* Fondo gris muy suave */
-  border: 2px solid #e1e1e1; /* Borde suave para enmarcar el mensaje */
+  color: #555;
+  background-color: #f8f9fa;
+  border: 2px solid #e1e1e1;
   border-radius: 8px;
   padding: 15px;
   margin-top: 30px;
@@ -104,6 +104,6 @@
 }
 
 .cartEmpty:hover {
-  background-color: #e9ecef; /* Fondo ligeramente más oscuro al pasar el mouse */
-  transform: translateY(-2px); /* Efecto sutil al pasar el mouse */
+  background-color: #e9ecef;
+  transform: translateY(-2px);
 }

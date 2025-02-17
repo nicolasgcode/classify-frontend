@@ -1,8 +1,5 @@
 import axios from '../libs/axios';
-
-interface CheckoutResponse {
-  url: string;
-}
+import { CheckoutResponse } from '../types';
 
 export const createCheckout = async (
   data: { id: number; name: string; price: number }[],

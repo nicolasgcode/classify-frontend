@@ -93,41 +93,39 @@
 }
 
 .welcomeMessage {
-  text-align: center; /* Centrar el contenido */
-  font-family: 'Arial', sans-serif; /* Fuente sencilla y legible */
-  padding: 40px 20px; /* Espaciado alrededor del mensaje */
-  background-color: #48aff3; /* Azul del formulario de login */
-  color: white; /* Texto blanco para contraste */
-  border-radius: 8px; /* Bordes redondeados */
-  max-width: 600px; /* Ancho máximo */
-  margin: 50px auto; /* Centrado horizontal y separación vertical */
-  box-sizing: border-box; /* Aseguramos que el padding no afecte el tamaño total */
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  padding: 40px 20px;
+  background-color: #48aff3;
+  color: white;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 50px auto;
+  box-sizing: border-box;
 }
 
 .welcomeMessage span {
-  display: block; /* Aseguramos que el título ocupe toda la línea */
-  font-size: 24px; /* Tamaño de fuente más grande para el título */
-  font-weight: bold; /* Negrita para el título */
-  margin-bottom: 10px; /* Espacio entre el título y el subtítulo */
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .welcomeMessage p {
-  font-size: 16px; /* Un tamaño de fuente más pequeño para el mensaje */
-  font-weight: normal; /* Normal para el subtítulo */
-  margin-top: 0; /* Sin margen extra arriba */
+  font-size: 16px;
+  font-weight: normal;
+  margin-top: 0;
 }
 
 .cart {
-  position: absolute; /* Para sacarlo del flujo normal */
-  top: 50%; /* Centrado verticalmente */
-  right: 50px; /* Alejado del borde derecho */
-  transform: translateY(
-    -50%
-  ); /* Ajusta para que quede perfectamente centrado */
-  background-color: var(--default-white); /* Color de fondo del botón */
+  position: absolute;
+  top: 50%;
+  right: 50px;
+  transform: translateY(-50%);
+  background-color: var(--default-white);
   border: 1px black;
   padding: 8px 12px;
-  border-radius: 50%; /* Forma circular */
+  border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -137,32 +135,32 @@
 }
 
 .cart:hover {
-  background-color: #e6e6e6; /* Hover con un color más oscuro */
-  transform: translateY(-50%) scale(1.1); /* Efecto de zoom */
+  background-color: #e6e6e6;
+  transform: translateY(-50%) scale(1.1);
 }
 
 .cart::before {
-  content: ''; /* Espacio para un ícono */
-  background-image: url('/imgs/shopping-cart.png'); /* Aquí pones el ícono del carrito */
+  content: '';
+  background-image: url('/imgs/shopping-cart.png');
   background-size: cover;
-  width: 20px; /* Tamaño del ícono */
-  height: 20px; /* Tamaño del ícono */
+  width: 20px;
+  height: 20px;
 }
 
 .cart .itemCount {
   position: absolute;
-  bottom: -4px; /* Coloca el contador ligeramente abajo */
-  right: -4px; /* Coloca el contador ligeramente a la derecha */
-  width: 18px; /* Tamaño del círculo */
-  height: 18px; /* Tamaño del círculo */
-  background-color: red; /* Fondo rojo */
-  color: white; /* Texto blanco */
-  border-radius: 50%; /* Círculo perfecto */
+  bottom: -4px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px; /* Tamaño del texto */
+  font-size: 12px;
   font-weight: bold;
-  padding: 2px; /* Espacio interno alrededor del número */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra ligera para resaltar el círculo */
+  padding: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }

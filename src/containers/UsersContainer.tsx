@@ -4,14 +4,12 @@ import { User } from '../types';
 import { UserList } from '../components';
 import { SignUpContainer } from '../containers';
 import { deleteUser } from '../services';	
-import { useNavigate } from 'react-router-dom';
 
 export default function UsersContainer() {
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     loadUsers(setUsers, setError, setIsLoading);

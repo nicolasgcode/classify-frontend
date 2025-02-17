@@ -27,7 +27,6 @@ export const getCourses = async (): Promise<CourseData[]> => {
 export const getCourse = async (courseId: number): Promise<CourseData> => {
   try {
     const response = await axios.get<courseDetails>(`/api/courses/${courseId}`);
-    console.log(response.data.course);
 
     return response.data.course;
   } catch (err) {
@@ -44,7 +43,6 @@ export const createCourse = async (data: CourseData): Promise<CourseData> => {
       ...data,
       price: Number(data.price),
     });
-    console.log(response);
     return response.data;
   } catch (err) {
     throw new Error('Error creating user: ' + (err as Error).message);
@@ -60,7 +58,6 @@ export const updateCourse = async (
       ...data,
       price: Number(data.price),
     });
-    console.log(response);
     return response.data;
   } catch (err) {
     throw new Error('Error creating user: ' + (err as Error).message);
@@ -95,7 +92,6 @@ export const createTopic = async (data: Topic): Promise<Topic> => {
     const response = await axios.post<Topic>('/api/topics', {
       ...data,
     });
-    console.log(response);
     return response.data;
   } catch (err) {
     throw new Error('Error creating user: ' + (err as Error).message);
@@ -107,7 +103,6 @@ export const updateTopic = async (id: number, data: Topic): Promise<Topic> => {
     const response = await axios.put<Topic>(`/api/topics/${id}`, {
       ...data,
     });
-    console.log(response);
     return response.data;
   } catch (err) {
     throw new Error('Error creating user: ' + (err as Error).message);
@@ -175,7 +170,6 @@ export const updateUnit = async (id: number, data: Unit): Promise<Unit> => {
     const response = await axios.put<Unit>(`/api/units/${id}`, {
       ...data,
     });
-    console.log(response);
     return response.data;
   } catch (err) {
     throw new Error('Error updating unit: ' + (err as Error).message);

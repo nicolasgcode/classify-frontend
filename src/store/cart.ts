@@ -1,19 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-type CartItem = {
-  id: number;
-  title: string;
-  price: number;
-};
-
-interface CartStore {
-  items: CartItem[];
-  addItem: (id: number, title: string, price: number) => void;
-  removeItem: (id: number) => void;
-  getTotalItems: () => number;
-  clearCart: () => void;
-}
+import { CartStore } from '../types';
 
 export const useCartStore = create(
   persist<CartStore>(

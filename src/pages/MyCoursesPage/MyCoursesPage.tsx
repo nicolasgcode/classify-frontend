@@ -25,7 +25,6 @@ return (
           <li key={course.id} className={styles.courseItem}>
             <h3 className={styles.courseTitle}>{course.title}</h3>
 
-            {/* Topics */}
             {course.topics && course.topics.length > 0 && (
               <div className={styles.courseTopics}>
                 <h4>Topics:</h4>
@@ -39,7 +38,6 @@ return (
               </div>
             )}
 
-            {/* Units */}
             {course.units && course.units.length > 0 && (
               <div className={styles.courseUnits}>
                 <h4>Units:</h4>

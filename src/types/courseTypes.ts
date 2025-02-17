@@ -2,28 +2,28 @@ import { UseFormRegister, FieldErrors, Control } from 'react-hook-form';
 import { CourseFields } from '../containers/AddCourseContainer.tsx';
 import { UnitFields } from '../containers/AddUnitContainer.tsx';
 
-export interface CourseData {
+export type CourseData = {
   id?: number;
   title: string;
   price: number;
   level: string;
   topics: Topic[];
   units?: Unit[];
-}
+};
 
-export interface Topic {
+export type Topic = {
   id?: number | null;
   description: string;
-}
+};
 
-export interface Unit {
+export type Unit = {
   id: number;
   title: string;
   description: string;
   content: string;
-}
+};
 
-export interface CourseFormProps {
+export type CourseFormProps = {
   register: UseFormRegister<CourseFields>;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   control: Control<CourseFields>;
@@ -38,9 +38,9 @@ export interface CourseFormProps {
   isSubmitting: boolean;
   errors: FieldErrors<CourseFields>;
   topicsList: Topic[];
-}
+};
 
-export interface UnitFormProps {
+export type UnitFormProps = {
   register: UseFormRegister<UnitFields>;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   handleCancelEdit: () => void;
@@ -49,37 +49,47 @@ export interface UnitFormProps {
   error: string | null;
   isSubmitting: boolean;
   errors: FieldErrors<UnitFields>;
-}
+};
 
-export interface UnitListProps {
+export type UnitListProps = {
   units: Unit[];
   isLoading: boolean;
   error: string | null;
   handleSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
   searchTerm: string;
   onDeleteUnit: (unitId: number) => void;
-}
+};
 
-export interface coursesResponse {
+export type coursesResponse = {
   courses: CourseData[];
-}
+};
 
-export interface courseDetails {
+export type courseDetails = {
   course: CourseData;
-}
+};
 
-export interface CreateCourseResponse {
+export type CreateCourseResponse = {
   message: string;
   course: {
     courseCreated: CourseData;
   };
-}
+};
 
-export interface CourseListProps {
+export type CourseListProps = {
   handleSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
   searchTerm: string;
   courses: CourseData[];
   isLoading: boolean;
   error: string;
   onDelete: (courseId: number) => void;
-}
+};
+
+// COURSE ZUSTAND TYPES
+export type CourseState = {
+  courseId: number | null;
+};
+
+export type CourseActions = {
+  setCourseId: (id: number | undefined) => void;
+  resetCourseId: () => void;
+};

@@ -60,17 +60,14 @@ export const loadTopics = async (
 };
 
 export const loadUnits = async (
-  courseId: number, // Recibe el courseId
+  courseId: number,
   setUnits: React.Dispatch<React.SetStateAction<Unit[]>>,
   setError: React.Dispatch<React.SetStateAction<string | null>>,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   setIsLoading(true);
   try {
-    // Pasa el courseId a la función getUnitsByCourse
     const data = await getUnitsByCourse(courseId);
-
-    // Verificar que los datos recibidos sean una lista de unidades
     if (
       Array.isArray(data) &&
       data.every(
@@ -89,7 +86,6 @@ export const loadUnits = async (
       setError('An unknown error occurred');
     }
   } finally {
-    // Asegúrate de que setIsLoading se actualice en el bloque finally
     setIsLoading(false);
   }
 };

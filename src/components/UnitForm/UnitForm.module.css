@@ -2,10 +2,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px; /* Aumento de padding superior/inferior */
+  padding: 40px 20px;
   border-radius: 8px;
   width: 100%;
-  max-width: 450px; /* Reducción del ancho máximo */
+  max-width: 450px;
   margin: 0 auto;
 }
 
@@ -20,12 +20,12 @@
 .form {
   display: flex;
   flex-direction: column;
-  background-color: #48aff3; /* Azul sólido */
-  padding: 30px; /* Aumentar el padding dentro del formulario */
-  gap: 25px; /* Mayor separación entre los elementos */
+  background-color: #48aff3;
+  padding: 30px;
+  gap: 25px;
   width: 100%;
   border-radius: 8px;
-  border: none; /* Eliminamos borde */
+  border: none;
 }
 .form input,
 .form textarea {

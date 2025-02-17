@@ -54,12 +54,14 @@
   font-size: 1em;
   color: #555;
   line-height: 1.6;
+  text-decoration: none;
 }
 
 .unitItem h5 {
   font-size: 1.2em;
   font-weight: bold;
   margin-bottom: 5px;
+  text-decoration: none;
 }
 
 .unitItem p {

@@ -2,7 +2,7 @@ import { UseFormRegister, FieldErrors } from 'react-hook-form';
 import { SignUpFields } from '../containers/SignUpContainer.tsx';
 import { User } from './userTypes.ts';
 
-export interface SignUpFormProps {
+export type SignUpFormProps = {
   register: UseFormRegister<SignUpFields>;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   isSubmitting: boolean;
@@ -11,4 +11,4 @@ export interface SignUpFormProps {
   handleCancelEdit: () => void;
   errors: FieldErrors<SignUpFields>;
   error: string | null;
-}
+};

@@ -30,7 +30,6 @@ export const createUser = async (data: UserData): Promise<UserData> => {
       ...data,
       dni: Number(data.dni),
     });
-    console.log(response);
     return response.data;
   } catch (err) {
     throw new Error('Error creating user: ' + (err as Error).message);
@@ -46,7 +45,6 @@ export const updateUser = async (
       ...data,
       dni: Number(data.dni),
     });
-    console.log(response);
     return response.data;
   } catch (err) {
     throw new Error('Error creating user: ' + (err as Error).message);
@@ -70,12 +68,9 @@ export const getUserCourses = async (userId: number): Promise<userCourses> => {
       `/api/users/${userId}/courses`
     );
 
-    // Check if the courses are properly structured and flatten them if needed
     if (response.data.courses && Array.isArray(response.data.courses)) {
-      // Flatten the nested array structure
       const flatCourses = response.data.courses.flat();
 
-      // Return the flattened courses
       return { courses: flatCourses };
     } else {
       throw new Error('Unexpected response structure');

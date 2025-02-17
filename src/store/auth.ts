@@ -1,21 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-type State = {
-  token: string;
-  userId: number;
-  admin: boolean;
-  isAuth: boolean;
-  username: string;
-};
-
-type Actions = {
-  setToken: (token: string) => void;
-  setAdmin: (admin: boolean) => void;
-  setUserName: (username: string) => void;
-  setUserId: (userId: number) => void;
-  logout: () => void;
-};
+import { State, Actions } from '../types';
 
 export const useAuthStore = create(
   persist<State & Actions>(

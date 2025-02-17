@@ -37,7 +37,7 @@
 
 .courseHeader {
   display: flex;
-  flex-direction: column; /* Los elementos se alinean en columna, uno debajo del otro */
+  flex-direction: column;
   gap: 10px;
 }
 

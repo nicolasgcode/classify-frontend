@@ -1,20 +1,20 @@
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
 import { FormFields } from '../containers/LoginContainer.tsx';
 
-export interface loginFormProps {
+export type loginFormProps = {
   register: UseFormRegister<FormFields>;
   onSubmit: (e: React.BaseSyntheticEvent) => Promise<void>;
   error: string | null;
   errors: FieldErrors<FormFields>;
   isSubmitting: boolean;
-}
+};
 
-export interface loginRequestData {
+export type loginRequestData = {
   email: string;
   password: string;
-}
+};
 
-export interface loginResponse {
+export type loginResponse = {
   message: string;
   status: number;
   success: boolean;
@@ -25,4 +25,4 @@ export interface loginResponse {
     name: string;
     admin: boolean;
   };
-}
+};

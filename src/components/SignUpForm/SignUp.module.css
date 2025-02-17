@@ -1,12 +1,11 @@
-/* Estilos para el formulario de registro */
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px; /* Aumento de padding superior/inferior */
+  padding: 40px 20px;
   border-radius: 8px;
   width: 100%;
-  max-width: 450px; /* Reducción del ancho máximo */
+  max-width: 450px;
   margin: 0 auto;
 }
 
@@ -21,54 +20,49 @@
 .form {
   display: flex;
   flex-direction: column;
-  background-color: #48aff3; /* Azul sólido */
-  padding: 30px; /* Aumentar el padding dentro del formulario */
-  gap: 25px; /* Mayor separación entre los elementos */
+  background-color: #48aff3;
+  padding: 30px;
+  gap: 25px;
   width: 100%;
   border-radius: 8px;
-  border: none; /* Eliminamos borde */
+  border: none;
 }
 
-/* Agrupación de cada par label + input */
 .formgroup {
   display: flex;
-  flex-direction: row; /* Cambiar a fila para alinear label e input horizontalmente */
-  align-items: center; /* Alinear los elementos verticalmente */
-  gap: 10px; /* Espacio entre el label y el input */
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
   width: 100%;
 }
 
-/* Etiquetas alineadas a la izquierda y al mismo nivel que los inputs */
 .form label {
   color: var(--black-opacity);
   font-size: 14px;
   font-weight: bold;
-  text-align: left; /* Alineación de los labels a la izquierda */
-  margin-bottom: 0; /* Eliminamos margen inferior para que no haya desplazamiento */
-  width: 70px; /* Ancho fijo para los labels */
-  line-height: 40px; /* Ajustar el line-height para alinear el texto verticalmente */
+  text-align: left;
+  margin-bottom: 0;
+  width: 70px;
+  line-height: 40px;
 }
 
-/* Estilo para los inputs */
 .input {
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
   width: 100%;
-  max-width: 300px; /* Reducir el ancho de los inputs */
+  max-width: 300px;
   box-sizing: border-box;
   background-color: white;
-  line-height: 20px; /* Ajustar line-height para que coincida con el de los labels */
+  line-height: 20px;
 }
 
-/* Focus en los inputs */
 .input:focus {
   outline: none;
   border: 1px solid var(--border-highlighter);
 }
 
-/* Estilos para errores */
 .error {
   color: red;
   font-size: 14px;
@@ -87,7 +81,6 @@
   transition: opacity 0.5s ease-out;
 }
 
-/* Estilo para el botón */
 .btn {
   padding: 12px 15px;
   background-color: var(--blue-btn);
@@ -97,8 +90,8 @@
   cursor: pointer;
   font-size: 16px;
   width: 100%;
-  max-width: 300px; /* Aseguramos que el botón tenga el mismo ancho que los inputs */
-  margin: 0 auto; /* Alineación centrada */
+  max-width: 300px;
+  margin: 0 auto;
   font-weight: bold;
 }
 
@@ -106,7 +99,6 @@
   background-color: var(--blue-btn-hover);
 }
 
-/* Mensajes de éxito y error */
 .success {
   color: green;
   font-size: 14px;
@@ -139,12 +131,12 @@
 }
 
 input[type='number'] {
-  -webkit-appearance: none; /* For Safari and Chrome */
-  -moz-appearance: textfield; /* For Firefox */
-  appearance: none; /* Standard property */
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  appearance: none;
 }
 input[type='number']::-webkit-outer-spin-button,
 input[type='number']::-webkit-inner-spin-button {
-  -webkit-appearance: none; /* Oculta los botones */
+  -webkit-appearance: none;
   margin: 0;
 }

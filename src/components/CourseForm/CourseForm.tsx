@@ -3,7 +3,7 @@ import styles from './CourseForm.module.css';
 import Select from 'react-select';
 import { Controller } from 'react-hook-form';
 
-function CourseForm({
+export function CourseForm({
   register,
   onSubmit,
   success,
@@ -21,7 +21,6 @@ function CourseForm({
     <div className={styles.container}>
       <h2>{course ? 'Edit Course' : 'Add Course'}</h2>
       <form className={styles.form} onSubmit={onSubmit}>
-        
         <div className={styles.formgroup}>
           <label htmlFor="title">Title</label>
           <input
@@ -30,7 +29,9 @@ function CourseForm({
             {...register('title')}
             className={styles.input}
           />
-          {errors.title && <span className={styles.fieldError}>{errors.title.message}</span>}
+          {errors.title && (
+            <span className={styles.fieldError}>{errors.title.message}</span>
+          )}
         </div>
 
         <div className={styles.formgroup}>
@@ -41,7 +42,9 @@ function CourseForm({
             {...register('price')}
             className={styles.input}
           />
-          {errors.price && <span className={styles.fieldError}>{errors.price.message}</span>}
+          {errors.price && (
+            <span className={styles.fieldError}>{errors.price.message}</span>
+          )}
         </div>
 
         <div className={styles.formgroup}>
@@ -56,7 +59,10 @@ function CourseForm({
                   {...register('topics')}
                   className={styles.input}
                 />
-                <label htmlFor={`topic-${topic.id}`} className={styles.checkboxLabel}>
+                <label
+                  htmlFor={`topic-${topic.id}`}
+                  className={styles.checkboxLabel}
+                >
                   {topic.description}
                 </label>
 
@@ -64,14 +70,18 @@ function CourseForm({
                   <button
                     type="button"
                     className={styles.editTopicBtn}
-                    onClick={() => topic.id !== null && handleEditTopic(topic.id)}
+                    onClick={() =>
+                      topic.id !== null && handleEditTopic(topic.id)
+                    }
                   >
                     Edit Topic
                   </button>
                   <button
                     type="button"
                     className={styles.deleteTopicBtn}
-                    onClick={() => topic.id !== null && handleDeleteTopic(topic.id)}
+                    onClick={() =>
+                      topic.id !== null && handleDeleteTopic(topic.id)
+                    }
                   >
                     Delete Topic
                   </button>
@@ -79,10 +89,16 @@ function CourseForm({
               </div>
             ))}
           </div>
-          {errors.topics && <span className={styles.fieldError}>{errors.topics.message}</span>}
+          {errors.topics && (
+            <span className={styles.fieldError}>{errors.topics.message}</span>
+          )}
 
           <div className={styles.buttons}>
-            <button type="button" className={styles.btn} onClick={handleAddTopic}>
+            <button
+              type="button"
+              className={styles.btn}
+              onClick={handleAddTopic}
+            >
               Add New Topic
             </button>
           </div>
@@ -99,17 +115,23 @@ function CourseForm({
                 options={[
                   { value: 'beginner', label: 'Beginner' },
                   { value: 'intermediate', label: 'Intermediate' },
-                  { value: 'advanced', label: 'Advanced' }
+                  { value: 'advanced', label: 'Advanced' },
                 ]}
                 onChange={(selectedOption) => {
                   console.log('Selected value:', selectedOption?.value);
                   field.onChange(selectedOption?.value);
                 }}
-                value={field.value ? { value: field.value, label: field.value } : null}
+                value={
+                  field.value
+                    ? { value: field.value, label: field.value }
+                    : null
+                }
               />
             )}
           />
-          {errors.level && <span className={styles.fieldError}>{errors.level.message}</span>}
+          {errors.level && (
+            <span className={styles.fieldError}>{errors.level.message}</span>
+          )}
         </div>
 
         <button type="submit" className={styles.btn}>
@@ -128,14 +150,3 @@ function CourseForm({
     </div>
   );
 }
-
-export default CourseForm;
-
-
-
-
-
-
-
-
-

@@ -1,6 +1,6 @@
 import styles from './ShoppingCart.module.css';
 import { useCartStore, useAuthStore } from '../../store';
-import { createCheckout } from '../../services'
+import { createCheckout } from '../../services';
 
 export function ShoppingCart() {
   const { items, removeItem } = useCartStore((state) => state);
@@ -9,11 +9,11 @@ export function ShoppingCart() {
   // Calcular el total
   const total = items.reduce((acc, course) => acc + course.price, 0).toFixed(2); // Aseguramos que el total tenga dos decimales
 
-   async function onSubmit() {
+  async function onSubmit() {
     const data = items.map((course) => ({
       id: course.id,
-      name: course.title,  
-      price: course.price * 100,  
+      name: course.title,
+      price: course.price * 100,
     }));
     try {
       const response = await createCheckout(data, userId);
@@ -24,7 +24,6 @@ export function ShoppingCart() {
       throw error;
     }
   }
-  
 
   return (
     <div className={styles.container}>
@@ -41,8 +40,13 @@ export function ShoppingCart() {
               <li key={index} className={styles.courseItem}>
                 <div className={styles.courseHeader}>
                   <strong>{course.title}</strong>
-                  <span className={styles.coursePrice}>Price: ${course.price.toFixed(2)}</span>
-                  <button className={styles.removeBtn} onClick={() => removeItem(course.id)}>
+                  <span className={styles.coursePrice}>
+                    Price: ${course.price.toFixed(2)}
+                  </span>
+                  <button
+                    className={styles.removeBtn}
+                    onClick={() => removeItem(course.id)}
+                  >
                     X
                   </button>
                 </div>
@@ -56,9 +60,11 @@ export function ShoppingCart() {
         </>
       )}
 
-    { items.length > 0 && 
-      <button className={styles.checkoutBtn} onClick={onSubmit}>Checkout</button>
-    }
+      {items.length > 0 && (
+        <button className={styles.checkoutBtn} onClick={onSubmit}>
+          Checkout
+        </button>
+      )}
     </div>
   );
 }

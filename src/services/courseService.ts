@@ -39,11 +39,12 @@ export const getCourse = async (courseId: number): Promise<CourseData> => {
 
 export const createCourse = async (data: CourseData): Promise<CourseData> => {
   try {
-    const response = await axios.post<CourseData>('/api/courses', {
+    const response = await axios.post<courseDetails>('/api/courses', {
       ...data,
       price: Number(data.price),
     });
-    return response.data;
+    console.log(response);
+    return response.data.course;
   } catch (err) {
     throw new Error('Error creating user: ' + (err as Error).message);
   }

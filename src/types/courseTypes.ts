@@ -1,13 +1,14 @@
 import { UseFormRegister, FieldErrors, Control } from 'react-hook-form';
-import { CourseFields } from '../containers/AddCourseContainer.tsx';
-import { UnitFields } from '../containers/AddUnitContainer.tsx';
+import { courseSchema, unitSchema } from '../utils';
+import { z } from 'zod';
+import { UseFormSetValue } from 'react-hook-form';
 
 export type CourseData = {
   id?: number;
   title: string;
   price: number;
   level: string;
-  topics: Topic[];
+  topics: Topic[] | number[];
   units?: Unit[];
 };
 
@@ -17,11 +18,13 @@ export type Topic = {
 };
 
 export type Unit = {
-  id: number;
+  id?: number;
   title: string;
   description: string;
   content: string;
 };
+
+export type UnitFields = z.infer<typeof unitSchema>;
 
 export type CourseFormProps = {
   register: UseFormRegister<CourseFields>;
@@ -38,9 +41,16 @@ export type CourseFormProps = {
   isSubmitting: boolean;
   errors: FieldErrors<CourseFields>;
   topicsList: Topic[];
+  setValue: UseFormSetValue<CourseFields>;
+};
+
+export type AddCourseProps = {
+  course: CourseData | undefined;
+  handleCancelEdit: () => void;
 };
 
 export type UnitFormProps = {
+  courseId: number;
   register: UseFormRegister<UnitFields>;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   handleCancelEdit: () => void;
@@ -51,13 +61,19 @@ export type UnitFormProps = {
   errors: FieldErrors<UnitFields>;
 };
 
+export type AddUnitProps = {
+  unit: Unit | null;
+  handleCancelEdit: () => void;
+};
+
 export type UnitListProps = {
   units: Unit[];
   isLoading: boolean;
   error: string | null;
   handleSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
   searchTerm: string;
-  onDeleteUnit: (unitId: number) => void;
+  onEdit: (unit: Unit) => void;
+  onDelete: (unitId: number) => void;
 };
 
 export type coursesResponse = {
@@ -81,8 +97,11 @@ export type CourseListProps = {
   courses: CourseData[];
   isLoading: boolean;
   error: string;
-  onDelete: (courseId: number) => void;
+  onEdit: (course: CourseData) => void;
+  onDelete: (courseId: number) => Promise<void> | void;
 };
+
+export type CourseFields = z.infer<typeof courseSchema>;
 
 // COURSE ZUSTAND TYPES
 export type CourseState = {

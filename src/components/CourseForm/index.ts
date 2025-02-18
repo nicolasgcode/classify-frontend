@@ -1,1 +1,1 @@
-export { default as CourseForm } from './CourseForm';
+export { CourseForm } from './CourseForm';

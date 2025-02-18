@@ -1,23 +1,21 @@
 import { CourseListProps } from '../../types';
 import { useAuthStore } from '../../store';
 import { useNavigate } from 'react-router-dom';
-import { CourseData } from '../../types';
 import { useCourseStore, useCartStore } from '../../store';
 
 import styles from './CourseList.module.css';
 
-export default function CourseList({
+export function CourseList({
   courses,
   isLoading,
   error,
   handleSearch,
   searchTerm,
   onDelete,
-  onEdit
-}: CourseListProps & { onDelete: (courseId: number | undefined) => void; onEdit: (course: CourseData) => void }) {
-
-  const admin = useAuthStore(state => state.admin);
-   const { items, addItem, removeItem } = useCartStore();
+  onEdit,
+}: CourseListProps) {
+  const admin = useAuthStore((state) => state.admin);
+  const { items, addItem, removeItem } = useCartStore();
   const { setCourseId } = useCourseStore();
   const navigate = useNavigate();
 
@@ -30,10 +28,12 @@ export default function CourseList({
   }
 
   if (!Array.isArray(courses)) {
-    return <div className={styles.container}>Error: courses is not an array</div>;
+    return (
+      <div className={styles.container}>Error: courses is not an array</div>
+    );
   }
 
-  function seeUnits (courseId : number | undefined) {
+  function seeUnits(courseId: number | undefined) {
     setCourseId(courseId);
     navigate('/see-units');
   }
@@ -41,7 +41,10 @@ export default function CourseList({
   return (
     <div className={styles.container}>
       {admin && (
-        <button className={styles.addCourseBtn} onClick={() => navigate('/add-course')}>
+        <button
+          className={styles.addCourseBtn}
+          onClick={() => navigate('/add-course')}
+        >
           Add Course
         </button>
       )}
@@ -73,8 +76,17 @@ export default function CourseList({
               {Array.isArray(course.topics) && course.topics.length > 0 ? (
                 <div>
                   {course.topics.map((topic, topicIndex) => (
-                    <div key={topic.id || topicIndex} className={styles.topicItem}>
-                      {topic.description}
+                    <div
+                      key={
+                        typeof topic === 'object' && topic !== null
+                          ? topic.id
+                          : topicIndex
+                      }
+                      className={styles.topicItem}
+                    >
+                      {typeof topic === 'object' && topic !== null
+                        ? topic.description
+                        : topic}
                     </div>
                   ))}
                 </div>
@@ -83,12 +95,15 @@ export default function CourseList({
               )}
             </div>
 
-             <div className={styles.units}>
+            <div className={styles.units}>
               <h3>Units:</h3>
               {Array.isArray(course.units) && course.units.length > 0 ? (
                 <div>
                   {course.units.map((unit, unitIndex) => (
-                    <div key={unit.id || unitIndex} className={styles.topicItem}>
+                    <div
+                      key={unit.id || unitIndex}
+                      className={styles.topicItem}
+                    >
                       {unit.title}
                     </div>
                   ))}
@@ -98,38 +113,61 @@ export default function CourseList({
               )}
             </div>
 
-           {!admin && (
+            {!admin && (
               <>
-                <button 
-                  className={`${styles.addBtn} ${items.some(item => item.id === course.id) ? styles.disabled : ''}`} 
-                  onClick={() => course.id !== undefined && addItem(course.id, course.title, course.price)} 
-                  disabled={items.some(item => item.id === course.id)} 
+                <button
+                  className={`${styles.addBtn} ${
+                    items.some((item) => item.id === course.id)
+                      ? styles.disabled
+                      : ''
+                  }`}
+                  onClick={() =>
+                    course.id !== undefined &&
+                    addItem(course.id, course.title, course.price)
+                  }
+                  disabled={items.some((item) => item.id === course.id)}
                 >
                   + Add to Cart
                 </button>
 
-                {course.id !== undefined && items.some(item => item.id === course.id) && (
-                  <button 
-                    className={styles.removeBtn} 
-                    onClick={() => course.id !== undefined && removeItem(course.id)}
-                  >
-                    - Remove from Cart
-                  </button>
-                )}
+                {course.id !== undefined &&
+                  items.some((item) => item.id === course.id) && (
+                    <button
+                      className={styles.removeBtn}
+                      onClick={() =>
+                        course.id !== undefined && removeItem(course.id)
+                      }
+                    >
+                      - Remove from Cart
+                    </button>
+                  )}
               </>
             )}
             {admin && (
               <div className={styles.adminButtons}>
-                <button className={styles.editBtn} onClick={ ()=> onEdit(course)}>Edit</button>
-                <button className={styles.deleteBtn} onClick={() => onDelete(course.id)}>Delete</button>
-                <button className={styles.seeUnits} onClick={() => seeUnits(course.id)}>See Units</button>
+                <button
+                  className={styles.editBtn}
+                  onClick={() => onEdit(course)}
+                >
+                  Edit
+                </button>
+                <button
+                  className={styles.deleteBtn}
+                  onClick={() => course.id !== undefined && onDelete(course.id)}
+                >
+                  Delete
+                </button>
+                <button
+                  className={styles.seeUnits}
+                  onClick={() => seeUnits(course.id)}
+                >
+                  See Units
+                </button>
               </div>
             )}
           </li>
         ))}
       </ul>
-
     </div>
   );
 }
-

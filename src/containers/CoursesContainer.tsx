@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
-import { loadCourses } from '../utils'
-import { CourseData } from '../types'
-import { CourseList }  from '../components'
-import { deleteCourse } from '../services'
-import AddCourseContainer from './AddCourseContainer.tsx'
+import { useEffect, useState } from 'react';
+import { loadCourses } from '../utils';
+import { CourseData } from '../types';
+import { CourseList } from '../components';
+import { deleteCourse } from '../services';
+import { AddCourseContainer } from '.';
 
-const CoursesContainer: React.FC = () => {
+export function CoursesContainer() {
   const [courses, setCourses] = useState<CourseData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
@@ -25,48 +25,55 @@ const CoursesContainer: React.FC = () => {
   };
 
   const handleDelete = async (courseId: number) => {
-    const isConfirmed = window.confirm('Are you sure you want to delete this course?');
+    const isConfirmed = window.confirm(
+      'Are you sure you want to delete this course?'
+    );
     if (!isConfirmed) {
       return;
     }
     try {
       await deleteCourse(courseId);
-      console.log('hey there!')
-      updateList(courseId); 
+      console.log('hey there!');
+      updateList(courseId);
     } catch (err) {
       setError('Error deleting course: ' + (err as Error).message);
     }
   };
 
   const updateList = (courseId: number) => {
-    setCourses((prevCourses) => prevCourses.filter((course) => course.id !== courseId));
-    console.log('im here!', courses)
-  }
+    setCourses((prevCourses) =>
+      prevCourses.filter((course) => course.id !== courseId)
+    );
+    console.log('im here!', courses);
+  };
 
   const handleCancelEdit = () => {
     setSelectedCourse(null);
-    loadCourses(setCourses, setError, setIsLoading); 
+    loadCourses(setCourses, setError, setIsLoading);
   };
 
   const filteredCourses = courses.filter((course) =>
-    `${course.title}`
-      .toLowerCase()
-      .includes(searchTerm)
+    `${course.title}`.toLowerCase().includes(searchTerm)
   );
 
   return (
     <div>
       {selectedCourse ? (
-        <AddCourseContainer 
-          course={selectedCourse} 
-          handleCancelEdit={handleCancelEdit} 
+        <AddCourseContainer
+          course={selectedCourse}
+          handleCancelEdit={handleCancelEdit}
         />
       ) : (
-        <CourseList courses={filteredCourses} isLoading={isLoading} error={error} onEdit={handleEdit} onDelete={handleDelete} handleSearch={handleSearch} searchTerm={searchTerm}/>
+        <CourseList
+          courses={filteredCourses}
+          isLoading={isLoading}
+          error={error}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          handleSearch={handleSearch}
+          searchTerm={searchTerm}
+        />
       )}
     </div>
-  )
+  );
 }
-
-
-export default CoursesContainer;

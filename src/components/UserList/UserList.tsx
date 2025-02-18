@@ -1,4 +1,4 @@
-import { UserListProps, User } from '../../types';
+import { UserListProps } from '../../types';
 import styles from './UserList.module.css';
 
 export default function UserList({
@@ -7,9 +7,7 @@ export default function UserList({
   error,
   onEdit,
   onDelete,
-}: UserListProps & { onEdit: (user: User) => void } & {
-  onDelete: (userId: number | undefined) => void;
-}) {
+}: UserListProps) {
   if (isLoading) {
     return <div className={styles.container}>Loading users...</div>;
   }
@@ -43,7 +41,7 @@ export default function UserList({
             </div>
             <div className={styles.purchaseRecord}>
               <h3>Course Purchase Records:</h3>
-              {Array.isArray(user.coursePurchaseRecords)  &&
+              {Array.isArray(user.coursePurchaseRecords) &&
               user.coursePurchaseRecords.length > 0 ? (
                 <div>
                   {user.coursePurchaseRecords.map((purchase, purchaseIndex) => (

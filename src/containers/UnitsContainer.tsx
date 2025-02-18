@@ -5,12 +5,12 @@ import { UnitList } from '../components';
 import { AddUnitContainer } from '../containers';
 import { useCourseStore } from '../store';
 
-function UnitsContainer() {
+export function UnitsContainer() {
   const [units, setUnits] = useState<Unit[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [selectedUnit, setSelectedUnit] = useState<Unit | null >(null);
+  const [selectedUnit, setSelectedUnit] = useState<Unit | null>(null);
   const courseId = useCourseStore((state) => state.courseId);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function UnitsContainer() {
 
   const handleCancelEdit = () => {
     if (selectedUnit !== null) {
-    setSelectedUnit(null);
+      setSelectedUnit(null);
     }
   };
 
@@ -32,12 +32,14 @@ function UnitsContainer() {
   }
 
   const handleDeleteUnit = async (unitId: number) => {
-    const isConfirmed = window.confirm('Are you sure you want to delete this unit?');
+    const isConfirmed = window.confirm(
+      'Are you sure you want to delete this unit?'
+    );
     if (!isConfirmed) {
       return;
     }
     try {
-      await removeUnit(unitId); 
+      await removeUnit(unitId);
       updateList(unitId);
     } catch (err) {
       setError('Error deleting unit: ' + (err as Error).message);
@@ -52,12 +54,16 @@ function UnitsContainer() {
     unit.title.toLowerCase().includes(searchTerm)
   );
 
-  console.log(selectedUnit)
+  console.log(selectedUnit);
 
   return (
     <div>
-      {selectedUnit ? ( <AddUnitContainer unit={selectedUnit} handleCancelEdit={handleCancelEdit}/> ) 
-      : (
+      {selectedUnit ? (
+        <AddUnitContainer
+          unit={selectedUnit}
+          handleCancelEdit={handleCancelEdit}
+        />
+      ) : (
         <UnitList
           units={filteredUnits}
           isLoading={isLoading}
@@ -65,12 +71,9 @@ function UnitsContainer() {
           onEdit={handleEdit}
           handleSearch={handleSearch}
           searchTerm={searchTerm}
-          onDelete={handleDeleteUnit} 
+          onDelete={handleDeleteUnit}
         />
       )}
     </div>
   );
 }
-
-export default UnitsContainer;
-

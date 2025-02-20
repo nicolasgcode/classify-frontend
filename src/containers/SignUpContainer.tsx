@@ -39,6 +39,7 @@ export function SignUpContainer({ user, handleCancelEdit }: UserFormProps) {
         await updateUser(user.id, data);
         setSuccess('User updated successfully!');
         setError(null);
+        window.location.reload();
       } catch {
         setError('Error updating user, please try again');
         setSuccess(null);

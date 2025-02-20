@@ -1,5 +1,6 @@
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
-import { FormFields } from '../containers/LoginContainer.tsx';
+import { loginSchema } from '../utils';
+import { z } from 'zod';
 
 export type loginFormProps = {
   register: UseFormRegister<FormFields>;
@@ -8,6 +9,8 @@ export type loginFormProps = {
   errors: FieldErrors<FormFields>;
   isSubmitting: boolean;
 };
+
+export type FormFields = z.infer<typeof loginSchema>;
 
 export type loginRequestData = {
   email: string;

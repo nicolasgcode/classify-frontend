@@ -14,7 +14,9 @@ export function UnitsContainer() {
   const courseId = useCourseStore((state) => state.courseId);
 
   useEffect(() => {
-    loadUnits(courseId, setUnits, setError, setIsLoading);
+    if (courseId !== null) {
+      loadUnits(courseId, setUnits, setError, setIsLoading);
+    }
   }, [courseId]);
 
   const handleEdit = (unit: Unit) => {

@@ -43,7 +43,7 @@ export function CourseList({
       {admin && (
         <button
           className={styles.addCourseBtn}
-          onClick={() => navigate('/add-course')}
+          onClick={() => navigate('/createcourse')}
         >
           Add Course
         </button>

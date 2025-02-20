@@ -37,5 +37,5 @@ export type UserListProps = {
   isLoading: boolean;
   error: string;
   onDelete: (userId: number) => void;
-  onEdit: (user: User) => void;
+  onEdit: (user: UserData) => void;
 };

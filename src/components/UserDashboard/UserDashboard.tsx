@@ -30,7 +30,7 @@ function UserDashboard() {
                 <NavLink to="/home">Home</NavLink>
               </li>
               <li>
-                <NavLink to="/courses">Store</NavLink>
+                <NavLink to="/store">Store</NavLink>
               </li>
               <li>
                 <button
@@ -51,7 +51,6 @@ function UserDashboard() {
               </button>
             </>
           ) : (
-            
             <li className={styles.accountMenu}>
               <button onClick={toggleAccountMenu} className={styles.backBtn}>
                 &lt;
@@ -61,7 +60,7 @@ function UserDashboard() {
                   <NavLink to="account/profile">Profile</NavLink>
                 </li>
                 <li>
-                  <NavLink to="account/myCourses">My Courses</NavLink>
+                  <NavLink to="account/mycourses">My Courses</NavLink>
                 </li>
               </ul>
             </li>

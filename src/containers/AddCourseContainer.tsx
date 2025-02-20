@@ -112,6 +112,7 @@ export function AddCourseContainer({
         await updateCourse(course.id, updatedData);
         setSuccess('Course updated successfully!');
         setError(null);
+        window.location.reload();
       } catch {
         setError('Error updating course, please try again');
         console.log(updatedData);
@@ -123,7 +124,7 @@ export function AddCourseContainer({
         setSuccess('Course created successfully!');
         setCourseId(createdCourse.id);
         setError(null);
-        navigate('/add-units');
+        navigate('/addunits');
       } catch {
         setError('Error creating course, please try again');
         setSuccess(null);

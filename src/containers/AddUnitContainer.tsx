@@ -6,11 +6,13 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AddUnitProps, UnitFields } from '../types';
 import { unitSchema } from '../utils';
+import { useNavigate } from 'react-router-dom';
 
 export function AddUnitContainer({ unit, handleCancelEdit }: AddUnitProps) {
   const courseId = useCourseStore((state) => state.courseId);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -54,6 +56,12 @@ export function AddUnitContainer({ unit, handleCancelEdit }: AddUnitProps) {
         setSuccess('Unit added successfully!');
         setError(null);
         reset();
+        const confirmed = window.confirm(
+          `${success} Do you want to add another unit?`
+        );
+        if (!confirmed) {
+          navigate('/courses');
+        }
       } catch {
         setError('Error adding unit, please try again');
         setSuccess(null);
@@ -69,7 +77,6 @@ export function AddUnitContainer({ unit, handleCancelEdit }: AddUnitProps) {
           onSubmit={handleSubmit(onSubmit)}
           errors={errors}
           error={error}
-          success={success}
           isSubmitting={isSubmitting}
           unit={unit}
           courseId={Number(courseId)}

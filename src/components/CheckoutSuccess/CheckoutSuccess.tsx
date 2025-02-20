@@ -14,7 +14,7 @@ export function CheckoutSuccess() {
     <div className={styles.container}>
       <h1>Checkout Success</h1>
       <p>Thank you for your purchase!</p>
-      <a href="/account/myCourses">View Purchase</a>
+      <a href="/account/mycourses">View Purchase</a>
     </div>
   );
 }

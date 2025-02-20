@@ -55,7 +55,6 @@ export type UnitFormProps = {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   handleCancelEdit: () => void;
   unit: Unit | null;
-  success: string | null;
   error: string | null;
   isSubmitting: boolean;
   errors: FieldErrors<UnitFields>;

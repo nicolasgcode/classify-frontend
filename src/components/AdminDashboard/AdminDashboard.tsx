@@ -22,10 +22,10 @@ export function AdminDashboard() {
           <NavLink to="/admin/reports">Reports</NavLink>
         </li> */}
         <li>
-          <NavLink to="admin/courses">Manage Courses</NavLink>
+          <NavLink to="/courses">Manage Courses</NavLink>
         </li>
         <li>
-          <NavLink to="/admin/users">Manage Users</NavLink>
+          <NavLink to="/users">Manage Users</NavLink>
         </li>
         <li>
           <button onClick={handleLogout} className={styles.logoutbtn}>

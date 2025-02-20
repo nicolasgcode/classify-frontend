@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { loadUsers } from '../utils';
-import { User } from '../types';
+import { UserData, User } from '../types';
 import { UserList } from '../components';
 import { SignUpContainer } from '../containers';
 import { deleteUser } from '../services';
@@ -9,13 +9,13 @@ export function UsersContainer() {
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
 
   useEffect(() => {
     loadUsers(setUsers, setError, setIsLoading);
   }, []);
 
-  const handleEdit = (user: User) => {
+  const handleEdit = (user: UserData) => {
     setSelectedUser(user);
   };
 

@@ -1,6 +1,6 @@
 import styles from './LoadingSpinner.module.css';
 
-function LoadingSpinner() {
+export function LoadingSpinner() {
   return (
     <div className={styles.loadingContainer}>
       <div className={styles.loadingSpinner}></div>
@@ -8,5 +8,3 @@ function LoadingSpinner() {
     </div>
   );
 }
-
-export default LoadingSpinner;

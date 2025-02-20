@@ -14,11 +14,10 @@
 
 .modalContent {
   background-color: rgba(14, 154, 247, 0.5);
-  /* Fondo similar al del formulario de unidades */
   padding: 20px;
   border-radius: 8px;
   width: 100%;
-  max-width: 600px; /* Ajuste de tamaño del modal */
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   gap: 20px;

@@ -11,3 +11,6 @@ export * from './CourseForm';
 export * from './UnitForm';
 export * from './TopicModal';
 export * from './UnitList';
+export * from './ShoppingCart';
+export * from './CheckoutSuccess';
+export * from './Profile';

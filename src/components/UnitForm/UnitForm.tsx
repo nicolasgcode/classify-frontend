@@ -1,20 +1,18 @@
 import { UnitFormProps } from '../../types';
 import styles from './UnitForm.module.css';
 
-function UnitForm({ register,
+function UnitForm({
+  register,
   onSubmit,
-  success,
   error,
   errors,
   unit,
   handleCancelEdit,
-  }: UnitFormProps) {
-
+}: UnitFormProps) {
   return (
     <div className={styles.container}>
-      <h2>{unit ? "Update course unit" : "Add unit to course"}</h2>
+      <h2>{unit ? 'Update course unit' : 'Add unit to course'}</h2>
       {error && <div className="error">{error}</div>}
-      {success && <div className="success">{success}</div>}
 
       <form className={styles.form} onSubmit={onSubmit}>
         <div>
@@ -26,7 +24,9 @@ function UnitForm({ register,
             required
             className={styles.input}
           />
-          {errors.title && <div className="fieldError">{errors.title.message}</div>}
+          {errors.title && (
+            <div className="fieldError">{errors.title.message}</div>
+          )}
         </div>
 
         <div>
@@ -38,7 +38,9 @@ function UnitForm({ register,
             required
             className={styles.input}
           />
-          {errors.description && <div className="fieldError">{errors.description.message}</div>}
+          {errors.description && (
+            <div className="fieldError">{errors.description.message}</div>
+          )}
         </div>
 
         <div>
@@ -49,11 +51,15 @@ function UnitForm({ register,
             required
             className={styles.input}
           />
-          {errors.content && <div className="fieldError">{errors.content.message}</div>}
+          {errors.content && (
+            <div className="fieldError">{errors.content.message}</div>
+          )}
         </div>
 
-        <button type="submit" className={styles.btn}>{unit ? "Update Unit" : "Add Unit"}</button>
-         {unit && (
+        <button type="submit" className={styles.btn}>
+          {unit ? 'Update Unit' : 'Add Unit'}
+        </button>
+        {unit && (
           <button onClick={handleCancelEdit} className={styles.btn}>
             Cancel Edit
           </button>
@@ -64,9 +70,3 @@ function UnitForm({ register,
 }
 
 export default UnitForm;
-
-
-
-
-
-

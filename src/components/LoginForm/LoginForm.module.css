@@ -1,41 +1,40 @@
-/* Estilos para el formulario principal */
 .loginform {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 100px; /* Aumentamos el padding para dar más espacio en la parte superior e inferior */
+  padding: 100px;
   border-radius: 8px;
   width: 100%;
-  max-width: 450px; /* Reducimos el ancho máximo del formulario */
+  max-width: 450px;
   margin: 0 auto;
 }
 
 .formgroup {
   display: flex;
-  flex-direction: row; /* Alineamos los elementos en fila (horizontalmente) */
-  gap: 10px; /* Espacio entre el label y el input */
-  align-items: center; /* Alineamos verticalmente al centro */
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
   width: 100%;
 }
 
 .loginform form {
   display: flex;
   flex-direction: column;
-  background-color: #48aff3; /* Azul sólido */
-  padding: 30px; /* Aumentamos el padding dentro del formulario */
-  gap: 25px; /* Aumentamos el gap entre los elementos dentro del formulario */
+  background-color: #48aff3;
+  padding: 30px;
+  gap: 25px;
   width: 100%;
   border-radius: 8px;
-  border: none; /* Eliminar borde */
+  border: none;
 }
 
 .loginform label {
   color: var(--black-opacity);
   font-size: 13px;
   font-weight: bold;
-  margin-bottom: 0; /* Eliminamos el margen inferior para que no se desalineen */
-  width: 65px; /* Ancho fijo para los labels, puedes ajustarlo si es necesario */
-  text-align: right; /* Alineamos el texto del label a la derecha para mayor claridad */
+  margin-bottom: 0;
+  width: 65px;
+  text-align: right;
 }
 
 .loginform input {
@@ -43,8 +42,8 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
-  width: 100%; /* Hacemos que el input ocupe el 100% del espacio restante */
-  max-width: 300px; /* Reducimos el max-width de los inputs para hacerlos un poco más estrechos */
+  width: 100%;
+  max-width: 300px;
   box-sizing: border-box;
   background-color: white;
 }
@@ -110,6 +109,6 @@
 }
 
 .loginBtn:disabled {
-  background-color: #aaa7a7; /* Cambia el color cuando el botón está deshabilitado */
+  background-color: #aaa7a7;
   cursor: not-allowed;
 }

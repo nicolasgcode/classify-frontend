@@ -1,4 +1,6 @@
-export interface User {
+import { CourseData } from './';
+
+export type User = {
   id: number;
   dni: number;
   name: string;
@@ -6,24 +8,34 @@ export interface User {
   email: string;
   password: string;
   admin?: boolean;
-  PurchaseRecord?: Array<{ id: number }>;
-}
+  coursePurchaseRecords?: Array<{
+    id: number;
+    purchaseAt: Date;
+    courses: Array<{ title: string }>;
+  }>;
+};
 
-export interface UserData {
+export type UserData = {
   id?: number;
   dni: string;
   name: string;
   surname: string;
   email: string;
   password: string;
-}
+};
 
-export interface usersResponse {
+export type usersResponse = {
   users: User[];
-}
+};
 
-export interface UserListProps {
+export type userCourses = {
+  courses: CourseData[];
+};
+
+export type UserListProps = {
   users: User[];
   isLoading: boolean;
   error: string;
-}
+  onDelete: (userId: number) => void;
+  onEdit: (user: UserData) => void;
+};

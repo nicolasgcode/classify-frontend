@@ -1,5 +1,11 @@
 import axios from '../libs/axios';
-import { User, usersResponse, UserData } from '../types';
+import {
+  User,
+  usersResponse,
+  UserData,
+  userCourses,
+  CourseData,
+} from '../types';
 
 export const getUsers = async (): Promise<User[]> => {
   try {
@@ -24,7 +30,6 @@ export const createUser = async (data: UserData): Promise<UserData> => {
       ...data,
       dni: Number(data.dni),
     });
-    console.log(response);
     return response.data;
   } catch (err) {
     throw new Error('Error creating user: ' + (err as Error).message);
@@ -40,7 +45,6 @@ export const updateUser = async (
       ...data,
       dni: Number(data.dni),
     });
-    console.log(response);
     return response.data;
   } catch (err) {
     throw new Error('Error creating user: ' + (err as Error).message);
@@ -52,8 +56,29 @@ export const deleteUser = async (userId: number): Promise<void> => {
     await axios.delete(`/api/users/${userId}`);
   } catch (error) {
     throw new Error(
-      'Error deleting user: ' +
+      'Error deleting course: ' +
         (error instanceof Error ? error.message : 'Unknown error')
+    );
+  }
+};
+
+export const getUserCourses = async (userId: number): Promise<userCourses> => {
+  try {
+    const response = await axios.get<{ courses: CourseData[][] }>(
+      `/api/users/${userId}/courses`
+    );
+
+    if (response.data.courses && Array.isArray(response.data.courses)) {
+      const flatCourses = response.data.courses.flat();
+
+      return { courses: flatCourses };
+    } else {
+      throw new Error('Unexpected response structure');
+    }
+  } catch (err) {
+    throw new Error(
+      'Error fetching users: ' +
+        (err instanceof Error ? err.message : 'Unknown error')
     );
   }
 };

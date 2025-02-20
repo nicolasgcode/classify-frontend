@@ -1,9 +1,11 @@
 .dashboard {
   width: 100%;
   background-color: var(--light-blue-opacity);
+  position: relative;
 }
 
-.dashboard ul {
+.dashboard ul,
+.accountOptions {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -11,11 +13,13 @@
   justify-content: center;
 }
 
-.dashboard ul li {
+.dashboard ul li,
+.accountOptions li {
   margin: 0 15px;
 }
 
-.dashboard a {
+.dashboard a,
+.accountOptions a {
   text-decoration: none;
   color: rgb(255, 255, 255);
   position: relative;
@@ -23,7 +27,9 @@
   display: inline-block;
 }
 
-.dashboard a:hover {
+.dashboard a:hover,
+.accountbtn:hover,
+.backBtn:hover {
   color: #0057b3c2;
 }
 
@@ -32,7 +38,10 @@
 }
 
 .dashboard a::after,
-.logoutbtn::after {
+.accountOptions a::after,
+.logoutbtn::after,
+.accountbtn::after,
+.backBtn::after {
   content: '';
   position: absolute;
   left: 0;
@@ -44,7 +53,9 @@
   transition: transform 0.3s ease;
 }
 
-.dashboard a::after {
+.dashboard a::after,
+.accountbtn::after,
+.backBtn::after {
   background-color: var(--blue-btn-hover);
 }
 
@@ -53,12 +64,16 @@
 }
 
 .dashboard a:hover::after,
-.logoutbtn:hover::after {
+.logoutbtn:hover::after,
+.accountbtn:hover::after,
+.backBtn:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.logoutbtn {
+.logoutbtn,
+.accountbtn,
+.backBtn {
   color: var(--default-white);
   background: none;
   border: none;
@@ -72,27 +87,80 @@
   padding: 10px 15px;
 }
 
+.accountMenu {
+  display: flex;
+  align-items: center;
+}
+
 .welcomeMessage {
-  text-align: center; /* Centrar el contenido */
-  font-family: 'Arial', sans-serif; /* Fuente sencilla y legible */
-  padding: 40px 20px; /* Espaciado alrededor del mensaje */
-  background-color: #48aff3; /* Azul del formulario de login */
-  color: white; /* Texto blanco para contraste */
-  border-radius: 8px; /* Bordes redondeados */
-  max-width: 600px; /* Ancho máximo */
-  margin: 50px auto; /* Centrado horizontal y separación vertical */
-  box-sizing: border-box; /* Aseguramos que el padding no afecte el tamaño total */
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  padding: 40px 20px;
+  background-color: #48aff3;
+  color: white;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 50px auto;
+  box-sizing: border-box;
 }
 
 .welcomeMessage span {
-  display: block; /* Aseguramos que el título ocupe toda la línea */
-  font-size: 24px; /* Tamaño de fuente más grande para el título */
-  font-weight: bold; /* Negrita para el título */
-  margin-bottom: 10px; /* Espacio entre el título y el subtítulo */
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .welcomeMessage p {
-  font-size: 16px; /* Un tamaño de fuente más pequeño para el mensaje */
-  font-weight: normal; /* Normal para el subtítulo */
-  margin-top: 0; /* Sin margen extra arriba */
+  font-size: 16px;
+  font-weight: normal;
+  margin-top: 0;
+}
+
+.cart {
+  position: absolute;
+  top: 50%;
+  right: 50px;
+  transform: translateY(-50%);
+  background-color: var(--default-white);
+  border: 1px black;
+  padding: 8px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.cart:hover {
+  background-color: #e6e6e6;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.cart::before {
+  content: '';
+  background-image: url('/imgs/shopping-cart.png');
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+}
+
+.cart .itemCount {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }

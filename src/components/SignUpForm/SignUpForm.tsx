@@ -1,27 +1,26 @@
 import { SignUpFormProps } from '../../types';
 import styles from './SignUp.module.css';
 
-function SignUpForm({
+export function SignUpForm({
   register,
   onSubmit,
   success,
   errors,
   error,
   user,
-  handleCancelEdit
+  handleCancelEdit,
 }: SignUpFormProps) {
   return (
     <div className={styles.container}>
       <h2>{user ? 'Edit user' : 'Create Account'}</h2>
       <form onSubmit={onSubmit} className={styles.form}>
-        
         <div className={styles.formgroup}>
           <label htmlFor="dni">DNI:</label>
           <input
             type="number"
             id="dni"
             min="0"
-            {...register("dni")}
+            {...register('dni')}
             className={styles.input}
           />
           {errors.dni && <p style={{ color: 'red' }}>{errors.dni.message}</p>}
@@ -32,7 +31,7 @@ function SignUpForm({
           <input
             type="text"
             id="name"
-            {...register("name")}
+            {...register('name')}
             className={styles.input}
           />
           {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
@@ -43,10 +42,12 @@ function SignUpForm({
           <input
             type="text"
             id="surname"
-            {...register("surname")}
+            {...register('surname')}
             className={styles.input}
           />
-          {errors.surname && <p style={{ color: 'red' }}>{errors.surname.message}</p>}
+          {errors.surname && (
+            <p style={{ color: 'red' }}>{errors.surname.message}</p>
+          )}
         </div>
 
         <div className={styles.formgroup}>
@@ -54,10 +55,12 @@ function SignUpForm({
           <input
             type="email"
             id="email"
-            {...register("email")}
+            {...register('email')}
             className={styles.input}
           />
-          {errors.email && <p style={{ color: 'red' }}>{errors.email.message}</p>}
+          {errors.email && (
+            <p style={{ color: 'red' }}>{errors.email.message}</p>
+          )}
         </div>
 
         <div className={styles.formgroup}>
@@ -65,10 +68,12 @@ function SignUpForm({
           <input
             type="password"
             id="password"
-            {...register("password")}
+            {...register('password')}
             className={styles.input}
           />
-          {errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}
+          {errors.password && (
+            <p style={{ color: 'red' }}>{errors.password.message}</p>
+          )}
         </div>
 
         <button type="submit" className={styles.btn}>
@@ -87,7 +92,3 @@ function SignUpForm({
     </div>
   );
 }
-
-export default SignUpForm;
-
-

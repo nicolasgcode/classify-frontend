@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styles from './TopicModal.module.css'; 
+import styles from './TopicModal.module.css';
 import { useForm } from 'react-hook-form';
 import { createTopic, updateTopic } from '../../services';
 import { Topic } from '../../types';
@@ -13,31 +13,38 @@ const schema = z.object({
 export type TopicFields = z.infer<typeof schema>;
 
 type TopicModalProps = {
-  topic?: Topic;
+  topic?: Topic | null;
   isOpen: boolean;
   onClose: () => void;
   handleCancelEdit?: () => void;
-}
+};
 
 function TopicModal({ isOpen, onClose, topic }: TopicModalProps) {
-
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
- const { register, handleSubmit, reset,  formState: {errors, isSubmitting}, } = useForm<TopicFields>({defaultValues: topic ? {
-    description: topic.description
- } : undefined, 
- resolver: zodResolver(schema)});
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<TopicFields>({
+    defaultValues: topic
+      ? {
+          description: topic.description,
+        }
+      : undefined,
+    resolver: zodResolver(schema),
+  });
 
- const [hasInitialized, setHasInitialized] = useState(false);
+  const [hasInitialized, setHasInitialized] = useState(false);
 
   useEffect(() => {
     if (topic && !hasInitialized) {
       reset({ description: topic.description });
-      setHasInitialized(true); 
+      setHasInitialized(true);
     }
   }, [topic, reset, hasInitialized]);
-
 
   async function onSubmit(data: TopicFields) {
     if (topic) {
@@ -54,16 +61,16 @@ function TopicModal({ isOpen, onClose, topic }: TopicModalProps) {
         setSuccess(null);
       }
     } else {
-    try {
-      await createTopic(data);
-      onClose();
-      setError(null);
-    } catch {
-      setError('Error creating topic, please try again');
-      setSuccess(null);
+      try {
+        await createTopic(data);
+        onClose();
+        setError(null);
+      } catch {
+        setError('Error creating topic, please try again');
+        setSuccess(null);
+      }
     }
   }
-  };
 
   if (!isOpen) return null;
 
@@ -80,11 +87,19 @@ function TopicModal({ isOpen, onClose, topic }: TopicModalProps) {
               {...register('description')}
               className={styles.input}
             />
-            {errors.description && <div className={styles.fieldError}>{errors.description.message}</div>}
+            {errors.description && (
+              <div className={styles.fieldError}>
+                {errors.description.message}
+              </div>
+            )}
           </div>
 
           <div className={styles.buttons}>
-            <button type="submit" className={styles.addBtn} disabled={isSubmitting}>
+            <button
+              type="submit"
+              className={styles.addBtn}
+              disabled={isSubmitting}
+            >
               {topic ? 'Save Changes' : 'Add Topic'}
             </button>
             <button type="button" onClick={onClose} className={styles.closeBtn}>
@@ -100,8 +115,3 @@ function TopicModal({ isOpen, onClose, topic }: TopicModalProps) {
 }
 
 export default TopicModal;
-
-
-
-
-

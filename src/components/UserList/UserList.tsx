@@ -39,35 +39,40 @@ export default function UserList({
             <div className={styles.userEmail}>
               <span>{user.email}</span>
             </div>
-            <div className={styles.purchaseRecord}>
-              <h3>Course Purchase Records:</h3>
-              {Array.isArray(user.coursePurchaseRecords) &&
-              user.coursePurchaseRecords.length > 0 ? (
-                <div>
-                  {user.coursePurchaseRecords.map((purchase, purchaseIndex) => (
-                    <div
-                      key={purchase.id || purchaseIndex}
-                      className={styles.purchaseItem}
-                    >
-                      <div>
-                        <strong>Purchase date:</strong>{' '}
-                        {new Date(purchase.purchaseAt).toLocaleDateString()}
-                      </div>
-                      <div>
-                        <strong>Courses:</strong>
-                        <ul>
-                          {purchase.courses.map((course, index) => (
-                            <li key={index}>{course.title}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p>No purchase records available.</p>
-              )}
-            </div>
+            {!user.admin && (
+              <div className={styles.purchaseRecord}>
+                <h3>Course Purchase Records:</h3>
+                {Array.isArray(user.coursePurchaseRecords) &&
+                user.coursePurchaseRecords.length > 0 ? (
+                  <div>
+                    {user.coursePurchaseRecords.map(
+                      (purchase, purchaseIndex) => (
+                        <div
+                          key={purchase.id || purchaseIndex}
+                          className={styles.purchaseItem}
+                        >
+                          <div>
+                            <strong>Purchase date:</strong>{' '}
+                            {new Date(purchase.purchaseAt).toLocaleDateString()}
+                          </div>
+                          <div>
+                            <strong>Courses:</strong>
+                            <ul>
+                              {purchase.courses.map((course, index) => (
+                                <li key={index}>{course.title}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      )
+                    )}
+                  </div>
+                ) : (
+                  <p>No purchase records available.</p>
+                )}
+              </div>
+            )}
+
             <div className={styles.adminButtons}>
               <button className={styles.editBtn} onClick={() => onEdit(user)}>
                 Edit

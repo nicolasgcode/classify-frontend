@@ -21,7 +21,11 @@ export const loginSchema = z.object({
 });
 
 export const signUpSchema = z.object({
-  dni: z.string(),
+  dni: z
+    .string() // Asumimos que viene como string (por ejemplo, por el input de tipo "number")
+    .min(1, { message: 'DNI is required' })
+    .transform((val) => Number(val)) // Convertir el valor a número
+    .refine((val) => !isNaN(val), { message: 'DNI must be a valid number' }),
   name: z.string(),
   surname: z.string(),
   email: z.string().email(),

@@ -108,7 +108,7 @@ export function CourseForm({
           <Controller
             name="level"
             control={control}
-            defaultValue={course ? course.level : 'Beginner'}
+            defaultValue={course ? course.level : 'beginner'}
             render={({ field }) => (
               <Select
                 {...field}

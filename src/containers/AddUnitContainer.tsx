@@ -52,13 +52,15 @@ export function AddUnitContainer({ unit, handleCancelEdit }: AddUnitProps) {
         } else {
           setError('Course ID is null');
           setSuccess(null);
+          console.log('Course ID is null');
         }
         setSuccess('Unit added successfully!');
-        setError(null);
-        reset();
+        console.log(success);
         const confirmed = window.confirm(
-          `${success} Do you want to add another unit?`
+          'Unit added successfully! Do you want to add another unit?'
         );
+        reset();
+
         if (!confirmed) {
           navigate('/courses');
         }

@@ -35,7 +35,7 @@ export function CourseList({
 
   function seeUnits(courseId: number | undefined) {
     setCourseId(courseId);
-    navigate('/see-units');
+    navigate('/seeunits');
   }
 
   return (
@@ -111,6 +111,12 @@ export function CourseList({
               ) : (
                 <p>No topics available.</p>
               )}
+            </div>
+
+            <div className={styles.level}>
+              <span>
+                <strong>Level {course.level}</strong>
+              </span>
             </div>
 
             {!admin && (

@@ -7,8 +7,8 @@ Welcome to **Classify**! This is a course management system designed to provide 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/nicolasgcode/dsw-tp-backend/tree/development
-cd dsw-tp-backend
+git clone https://github.com/nicolasgcode/dsw-tp-frontend/tree/development
+cd dsw-tp-frontend
 ```
 
 ### 2. Install Dependencies

@@ -14,7 +14,6 @@ export type AuthProviderProps = {
 // AUTH ZUSTAND TYPES
 
 export type State = {
-  token: string;
   userId: number;
   admin: boolean;
   isAuth: boolean;
@@ -22,7 +21,7 @@ export type State = {
 };
 
 export type Actions = {
-  setToken: (token: string) => void;
+  setIsAuth: (isAuth: boolean) => void;
   setAdmin: (admin: boolean) => void;
   setUserName: (username: string) => void;
   setUserId: (userId: number) => void;

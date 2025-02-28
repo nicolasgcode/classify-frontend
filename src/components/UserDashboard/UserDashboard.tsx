@@ -1,20 +1,15 @@
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react'; // Importar useState para gestionar el estado
+import { useState } from 'react';
 import styles from '../Dashboard/Dashboard.module.css';
-import { useAuthStore, useCartStore } from '../../store';
+import { useCartStore } from '../../store';
+import { useLogout } from '../../hooks';
 
 function UserDashboard() {
   const [isAccountOpen, setIsAccountOpen] = useState(false); // Estado para controlar el despliegue de opciones en "Account"
-  const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
+  const { handleLogout } = useLogout();
   const { items } = useCartStore();
-
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
-
   const toggleAccountMenu = () => {
     setIsAccountOpen(!isAccountOpen); // Cambiar el estado para mostrar u ocultar el menú
   };

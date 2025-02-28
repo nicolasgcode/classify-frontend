@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 type ValidateFunction<T> = (values: T) => { [key: string]: string };
 
-function useForm<T>(initialValues: T, validate: ValidateFunction<T>) {
+export function useForm<T>(initialValues: T, validate: ValidateFunction<T>) {
   const [values, setValues] = useState<T>(initialValues);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -67,5 +67,3 @@ function useForm<T>(initialValues: T, validate: ValidateFunction<T>) {
     errors,
   };
 }
-
-export default useForm;

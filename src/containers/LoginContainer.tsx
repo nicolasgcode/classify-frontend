@@ -9,10 +9,10 @@ import { loginSchema } from '../utils';
 import { useAuthStore } from '../store';
 
 export function LoginContainer() {
-  const setToken = useAuthStore((state) => state.setToken);
   const setAdmin = useAuthStore((state) => state.setAdmin);
   const userId = useAuthStore((state) => state.setUserId);
   const setUserName = useAuthStore((state) => state.setUserName);
+  const setIsAuth = useAuthStore((state) => state.setIsAuth);
 
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
@@ -25,10 +25,11 @@ export function LoginContainer() {
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
       const resLogin = await loginRequest(data);
-      setToken(resLogin.data.token);
+      console.log(data);
       setAdmin(resLogin.data.profile.admin);
       userId(resLogin.data.profile.id);
       setUserName(resLogin.data.profile.name);
+      setIsAuth(true);
       navigate('/home');
       console.log('Logged in!');
     } catch {

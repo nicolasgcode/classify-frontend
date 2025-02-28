@@ -13,7 +13,7 @@ export {
   addUnitToCourse,
   updateUnit,
 } from './courseService';
-export { loginRequest } from './authService';
+export { loginRequest, logoutRequest } from './authService';
 export {
   createUser,
   getUsers,

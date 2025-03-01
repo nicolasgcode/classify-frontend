@@ -7,7 +7,7 @@ export function ShoppingCart() {
   const { userId } = useAuthStore((state) => state);
 
   // Calcular el total
-  const total = items.reduce((acc, course) => acc + course.price, 0).toFixed(2); // Aseguramos que el total tenga dos decimales
+  const total = items.reduce((acc, course) => acc + course.price, 0).toFixed(2);
 
   async function onSubmit() {
     const data = items.map((course) => ({

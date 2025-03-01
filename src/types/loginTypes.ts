@@ -27,5 +27,6 @@ export type loginResponse = {
     email: string;
     name: string;
     admin: boolean;
+    token: string;
   };
 };

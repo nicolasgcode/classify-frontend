@@ -1,20 +1,10 @@
 import { NavLink } from 'react-router-dom';
-
-import { useNavigate } from 'react-router-dom';
+import { useLogout } from '../../hooks';
 
 import styles from '../Dashboard/Dashboard.module.css';
 
-import { useAuthStore } from '../../store';
-
 export function AdminDashboard() {
-  const logout = useAuthStore((state) => state.logout);
-
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
+  const { handleLogout } = useLogout();
   return (
     <nav className={styles.dashboard}>
       <ul>

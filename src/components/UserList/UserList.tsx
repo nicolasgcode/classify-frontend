@@ -57,7 +57,12 @@ export default function UserList({
                           </div>
                           <div>
                             <strong>Courses:</strong>
-                            <ul>
+                            <ul
+                              style={{
+                                listStyleType: 'none',
+                                paddingLeft: '0',
+                              }}
+                            >
                               {purchase.courses.map((course, index) => (
                                 <li key={index}>{course.title}</li>
                               ))}

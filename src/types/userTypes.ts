@@ -17,7 +17,7 @@ export type User = {
 
 export type UserData = {
   id?: number;
-  dni: string;
+  dni: number;
   name: string;
   surname: string;
   email: string;

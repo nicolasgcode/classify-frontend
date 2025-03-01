@@ -1,78 +1,115 @@
 .coursesContainer {
-  padding: 20px;
   max-width: 900px;
   margin: 0 auto;
-  background-color: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  border-radius: 10px;
 }
 
 .loadingText,
 .errorText {
   text-align: center;
-  font-size: 1.2em;
-  color: #777;
-}
-
-.errorText {
-  color: var(--color-danger);
+  font-size: 1.2rem;
+  color: #333;
 }
 
 .courseList {
-  list-style: none;
+  list-style-type: none;
   padding: 0;
-  margin: 0;
 }
 
 .courseItem {
-  border-bottom: 1px solid #ddd;
-  padding: 15px 0;
+  background-color: var(--default-white);
+  border-radius: 10px;
+  padding: 20px;
   margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.courseItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 .courseTitle {
-  font-size: 1.8em;
-  color: #333;
-  margin-bottom: 10px;
+  font-size: 1.6rem;
   font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
 }
 
 .courseTopics,
 .courseUnits {
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .courseTopics h4,
 .courseUnits h4 {
-  font-size: 1.3em;
-  margin-bottom: 10px;
-  color: #333;
+  font-size: 1.2rem;
+  color: #444;
+  margin-bottom: 8px;
 }
 
 .topicItem,
 .unitItem {
-  font-size: 1em;
-  color: #555;
-  line-height: 1.6;
-  text-decoration: none;
+  background-color: #f8f9fa;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.topicItem:hover,
+.unitItem:hover {
+  background-color: #e9ecef;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
 }
 
 .unitItem h5 {
-  font-size: 1.2em;
+  font-size: 1.1rem;
   font-weight: bold;
   margin-bottom: 5px;
-  text-decoration: none;
+  color: #333;
 }
 
 .unitItem p {
-  font-size: 1em;
-  margin: 5px 0;
+  font-size: 0.9rem;
   color: #555;
 }
 
-/* No courses message */
-.noCursesMessage {
-  font-size: 1.2em;
-  color: #555;
+.level {
+  margin-top: 15px;
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-style: italic;
+}
+
+.noCoursesFound {
   text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #666;
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.noCoursesFound::before {
+  content: '🔍';
+  font-size: 1.5rem;
+  margin-right: 10px;
+}
+
+.noCoursesFound {
+  display: inline-flex;
+  align-items: center;
 }

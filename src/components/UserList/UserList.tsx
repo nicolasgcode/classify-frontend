@@ -42,35 +42,32 @@ export default function UserList({
             {!user.admin && (
               <div className={styles.purchaseRecord}>
                 <h3>Course Purchase Records:</h3>
-                {Array.isArray(user.coursePurchaseRecords) &&
-                user.coursePurchaseRecords.length > 0 ? (
+                {Array.isArray(user.orders) && user.orders.length > 0 ? (
                   <div>
-                    {user.coursePurchaseRecords.map(
-                      (purchase, purchaseIndex) => (
-                        <div
-                          key={purchase.id || purchaseIndex}
-                          className={styles.purchaseItem}
-                        >
-                          <div>
-                            <strong>Purchase date:</strong>{' '}
-                            {new Date(purchase.purchaseAt).toLocaleDateString()}
-                          </div>
-                          <div>
-                            <strong>Courses:</strong>
-                            <ul
-                              style={{
-                                listStyleType: 'none',
-                                paddingLeft: '0',
-                              }}
-                            >
-                              {purchase.courses.map((course, index) => (
-                                <li key={index}>{course.title}</li>
-                              ))}
-                            </ul>
-                          </div>
+                    {user.orders.map((order, purchaseIndex) => (
+                      <div
+                        key={order.id || purchaseIndex}
+                        className={styles.purchaseItem}
+                      >
+                        <div>
+                          <strong>Purchase date:</strong>{' '}
+                          {new Date(order.orderDate).toLocaleDateString()}
                         </div>
-                      )
-                    )}
+                        <div>
+                          <strong>Courses:</strong>
+                          <ul
+                            style={{
+                              listStyleType: 'none',
+                              paddingLeft: '0',
+                            }}
+                          >
+                            {order.orderLines.map((orderLine, index) => (
+                              <li key={index}>{orderLine.course.title}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 ) : (
                   <p>No purchase records available.</p>

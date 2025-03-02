@@ -8,10 +8,15 @@ export type User = {
   email: string;
   password: string;
   admin?: boolean;
-  coursePurchaseRecords?: Array<{
+  orders?: Array<{
     id: number;
-    purchaseAt: Date;
-    courses: Array<{ title: string }>;
+    orderDate: Date;
+    status: string;
+    orderLines: Array<{
+      id: number;
+      subtotal: number;
+      course: CourseData;
+    }>;
   }>;
 };
 
